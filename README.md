@@ -1,4 +1,5 @@
 # dropboxignore
+![CI](https://github.com/sp1thas/dropboxignore/workflows/CI/badge.svg)
 
 **It's all about the missing `.dropboxignore` file.**
 
