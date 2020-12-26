@@ -128,37 +128,16 @@ function ignore_file() {
 
 # mark matched files as ignored
 function ignore_files() {
-  echo "$1"
-  echo "$2"
-  # will check if specific file is provided
-  if [ "$2" ]; then
-    echo "⚠️ Will ignore $2 only"
-    ignore_file "$2"
-    dropboxignore_file="$(dirname "$2")/$DROPBOX_IGNORE_FILE_NAME"
-    file_name=$(basename "$2")
-    if [ -f "$dropboxignore_file" ]; then
-      if [ $(grep -i "$file_name" "$dropboxignore_file") ]; then
-        echo "♻️ $file_name already exists in $dropboxignore_file"
-      else
-        echo "$file_name" | tee -a "$dropboxignore_file" > /dev/null
-        echo "✅ $file_name has been added in "$dropboxignore_file
-      fi
-    else
-      echo "$file_name" | tee "$dropboxignore_file" > /dev/null
-      echo "✅ $file_name has been added in "$dropboxignore_file
-    fi
-  # otherwise will apply action to whole dropbox folder
-  else
-    find_dropboxignore_files "${1}"
-    for dropboxignore_file in $DROPBOX_IGNORE_FILES; do
-      total_results=0
-      for file_pattern in $(grep -v '^\s*$\|^\s*\#' "${dropboxignore_file}"); do
-        n_results=$(find $(dirname "${dropboxignore_file}") -type f -name ""${file_pattern}"" -printf '.' -exec ignore_file '{}' \; | wc -l)
-        total_results=$((total_results+n_results))
-      done
-      echo "✅ Ignored files because of "${dropboxignore_file}": $total_results"
+  find_dropboxignore_files "${1}"
+  for dropboxignore_file in $DROPBOX_IGNORE_FILES; do
+    total_results=0
+    for file_pattern in $(grep -v '^\s*$\|^\s*\#' "${dropboxignore_file}"); do
+      file_pattern=${file_pattern%/}
+      n_results=$(find $(dirname "${dropboxignore_file}") -iwholename ""${file_pattern}"" -printf '.' -exec attr -s com.dropbox.ignored -V 1 '{}' \; | wc -l)
+      total_results=$((total_results+n_results))
     done
-  fi
+    echo "✅ Ignored files because of "${dropboxignore_file}": $total_results"
+  done
 }
 
 
