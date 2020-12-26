@@ -1,4 +1,4 @@
-# dropboxignore1
+# dropboxignore
 
 **It's all about the missing `.dropboxignore` file.**
 
