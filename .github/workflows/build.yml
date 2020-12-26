@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install packages
+        run: |
+          apt -y update
+          apt -y install attr
+
+      - name: Install droboxignore
+        run: |
+          cp dropboxignore.sh /usr/local/bin/dropboxignore
+          chmod +x /usr/local/bin/dropboxignore
+      
+      - name: Run dropboxignore
+        run: dropboxignore version
