@@ -17,13 +17,13 @@ jobs:
 
       - name: Install packages
         run: |
-          apt -y update
-          apt -y install attr
+          sudo apt -y update
+          sudo apt -y install attr
 
       - name: Install droboxignore
         run: |
-          cp dropboxignore.sh /usr/local/bin/dropboxignore
-          chmod +x /usr/local/bin/dropboxignore
+          sudo cp dropboxignore.sh /usr/local/bin/dropboxignore
+          sudo chmod +x /usr/local/bin/dropboxignore
       
       - name: Run dropboxignore
         run: dropboxignore version
