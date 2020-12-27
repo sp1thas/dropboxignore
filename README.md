@@ -18,9 +18,9 @@ This is a simple shell script that can be used to exclude files from dropbox usi
 
 ## Getting Started
 
-### Prerequisites
+⚠️ This script is currently available only for Linux. ⚠️
 
-⚠️ This shell is currently working only on Linux. ⚠️
+### Prerequisites
 
 [attr](https://man7.org/linux/man-pages/man1/attr.1.html) should be installed in your system
 
