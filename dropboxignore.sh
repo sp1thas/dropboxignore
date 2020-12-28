@@ -141,7 +141,9 @@ function ignore_files() {
     total_results=0
     for file_pattern in $(grep -v '^\s*$\|^\s*\#' "${dropboxignore_file}"); do
       file_pattern=${file_pattern%/}
-      n_results=$(find $(dirname "${dropboxignore_file}") -iwholename ""${file_pattern}"" -printf '.' -exec attr -s com.dropbox.ignored -V 1 '{}' \; | wc -l)
+      subdir="$(dirname "$file_pattern")"
+      pattern="$(basename "$file_pattern")"
+      n_results=$(find "$(dirname "${dropboxignore_file}")/$subdir" -name ""${pattern}"" -printf '.' -exec attr -s com.dropbox.ignored -V 1 '{}' \; | wc -l)
       total_results=$((total_results+n_results))
     done
     echo "✅ Ignored files because of "${dropboxignore_file}": $total_results"
