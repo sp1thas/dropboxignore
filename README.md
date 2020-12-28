@@ -1,10 +1,10 @@
-![dropboxignore-logo](imgs/logo.png)
+# dropboxignore
+
+**It's all about the missing `.dropboxignore` file.**
 
 <hr/>
 
 ![CI](https://github.com/sp1thas/dropboxignore/workflows/CI/badge.svg)
-
-**It's all about the missing `.dropboxignore` file.**
 
 Exclude files from dropbox using file patterns, existing `.gitignore` files and the missing `.dropboxignore` file.
 
@@ -21,7 +21,7 @@ This is a simple shell script that can be used to exclude files from dropbox usi
 
 ## Getting Started
 
-⚠️ This script is currently available only for Linux. ⚠️
+⚠️ This script is currently available only for Linux.
 
 ### Prerequisites
 
@@ -50,7 +50,7 @@ A common workflow could be the following
  2. Manually update or create `.dropboxignore` files (Optional)
  3. Ignore matched files based on `.dropboxignore` files (`dropboxignore ignore path`)
 
-`dropboxignore help` for more details:
+### More details
 
 ```shell
 $ dropboxignore help
@@ -71,13 +71,19 @@ Usage: dropboxignore command filename_or_folder
 
 ### Examples
 
-Generate `.dropboxignore` files based on existing `.gitignore` files inside your dropbox folder:
+Generate multiple `.dropboxignore` files based on existing `.gitignore` files inside your dropbox folder:
 
 ```shell
 $ dropboxignore generate /home/yourusername/Dropbox
 ```
 
-Ignored the matched files from dropbox
+Generate a `dropboxignore` file based on existing `.gitignore` file in the same directory:
+
+```shell
+$ dropboxignore generate /home/youusername/Dropbox/repository/.dropboxignore
+```
+
+Ignored all files based on `.dropboxignore` files:
 
 ```shell
 $ dropboxignore ignore /home/yourusername/Dropbox
@@ -93,6 +99,6 @@ $ dropboxignore revert /home/yourusername/Dropbox
 ## TODOs
 
  - Support MacOS
- - Update should support deletions
+ - `dropbox update` should support deletions
  - Enhance stdout
  - Add option for verbosity
