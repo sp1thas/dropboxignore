@@ -21,7 +21,7 @@ This is a simple shell script that can be used to exclude files from dropbox usi
 
 ## Getting Started
 
-⚠️ This script is currently available only for Linux.
+⚠️ This script is currently available only for Linux and MacOS.
 
 ### Prerequisites
 
@@ -29,15 +29,15 @@ This is a simple shell script that can be used to exclude files from dropbox usi
 
 For Ubuntu/Debian based:
 ```shell
-$ sudo apt install attr
+$ apt install attr
 ```
 
 ### Installation
 
 ```
 $ git clone https://github.com/sp1thas/dropboxignore.git
-$ sudo cp dropboxignore/dropboxignore.sh /usr/local/bin/dropboxignore
-$ sudo chmod +x /usr/local/bin/dropboxignore
+$ cp dropboxignore/dropboxignore.sh /usr/local/bin/dropboxignore
+$ chmod +x /usr/local/bin/dropboxignore
 ```
 
 ## Usage
@@ -98,7 +98,7 @@ $ dropboxignore revert /home/yourusername/Dropbox
 
 ## TODOs
 
- - Support MacOS
+ - ~~Support MacOS~~
  - `dropbox update` should support deletions
  - Enhance stdout
  - Add option for verbosity

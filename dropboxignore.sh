@@ -32,6 +32,22 @@ VERSION=0.0.12
 VERBOSE=false
 DROPBOX_IGNORE_FILE_NAME=".dropboxignore"
 GIT_IGNORE_FILE_NAME=".gitignore"
+machine="$(uname -s)"
+
+case $machine in
+  Linux)
+    echo "Operating system: $machine"
+    ;;
+  Darwin)
+    machine="MacOS"
+    echo "Operating system: $machine"
+    ;;
+  *)
+    echo "$machine is not supported"
+    exit 3
+    ;;
+
+esac
 
 # check input file or folder
 function check_input() {
@@ -131,7 +147,14 @@ function generate_dropboxignore_files() {
 
 # ignore given file
 function ignore_file() {
-  attr -s com.dropbox.ignored -V 1 "$1"
+  case $machine in
+    Linux)
+      attr -s com.dropbox.ignored -V 1 "$1"
+      ;;
+    MacOS)
+      xattr -w com.dropbox.ignored 1 "$1"
+      ;;
+  esac
 }
 
 # mark matched files as ignored
