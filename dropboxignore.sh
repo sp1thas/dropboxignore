@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # dropboxignore
 # =============
 # Ignore files and folders from dropbox using the .dropbox ignore files
@@ -29,10 +29,10 @@ IFS='
 '
 set -f
 VERSION=0.0.12
-VERBOSE=false
 DROPBOX_IGNORE_FILE_NAME=".dropboxignore"
 GIT_IGNORE_FILE_NAME=".gitignore"
 machine="$(uname -s)"
+PROGRAM_NAME="$(basename "$0")"
 
 case $machine in
   Linux)
@@ -49,11 +49,21 @@ case $machine in
 
 esac
 
-# check input file or folder
+#######################################
+# Check input file or folder.
+# Globals:
+#   DROPBOX_IGNORE_FILE_NAME
+# Arguments:
+#   Input file or folder.
+# Outputs:
+#   Input file/folder or error if not exists.
+# Returns:
+#   0 if file or folder exists, otherwise, returns 2.
+#######################################
 function check_input() {
   if [ -d "$1" ]; then
     echo "Input folder: $1"
-  elif [ -f "$1" ] || ( [ $(basename "$1") == "$DROPBOX_IGNORE_FILE_NAME" ] && [ -d $(dirname "$1") ] ); then
+  elif [ -f "$1" ] || ( [ "$(basename "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ] && [ -d $(dirname "$1") ] ); then
     echo "input file: $1"
   else
     echo "$1 does not exists"
@@ -61,7 +71,13 @@ function check_input() {
   fi
 }
 
-# find all .gitignore files
+#######################################
+# Find all .gitignore files.
+# Globals:
+#   GIT_IGNORE_FILE_NAME
+# Arguments:
+#   Input file or folder.
+#######################################
 function find_gitignore_files() {
   if [ -d "$1" ]; then
     GITIGNORE_FILES=$(find "${1}" -type f -name "${GIT_IGNORE_FILE_NAME}")
@@ -70,7 +86,17 @@ function find_gitignore_files() {
   fi
 }
 
-# delete all .dropboxignore files
+#######################################
+# Delete all .dropboxignore files
+# Globals:
+#   DROPBOX_IGNORE_FILE_NAME
+# Arguments:
+#   Input folder.
+# Outputs:
+#   Warning message if file not found.
+# Returns:
+#   3 if file not found, otherwise, 0.
+#######################################
 function delete_dropboxignore_files() {
   if [ -d "$1" ]; then
     find "$1" -type f -name "$DROPBOX_IGNORE_FILE_NAME" -exec rm '{}' \;
@@ -82,7 +108,14 @@ function delete_dropboxignore_files() {
   fi
 }
 
-# find all dropbox ignore files
+#######################################
+# Find all .dropboxignore files.
+# Globals:
+#   DROPBOX_IGNORE_FILE_NAME
+#   DROPBOX_IGNORE_FILES
+# Arguments:
+#   Input folder or file.
+#######################################
 function find_dropboxignore_files() {
   if [ -d "$1" ]; then
     DROPBOX_IGNORE_FILES=$(find "${1}" -type f -name "$DROPBOX_IGNORE_FILE_NAME")
@@ -91,7 +124,15 @@ function find_dropboxignore_files() {
   fi
 }
 
-# generate a .dropbox ignore file based on .gitignore file
+#######################################
+# Generate a .dropboxignore file based on .gitignore file.
+# Globals:
+#   DROPBOX_IGNORE_FILE_NAME
+# Arguments:
+#   .dropboxignore file path (even if not exists).
+# Outputs:
+#   Status about the generated file.
+#######################################
 function generate_dropboxignore_file() {
   dropboxignore_file_path="$(dirname "${1}")/$DROPBOX_IGNORE_FILE_NAME"
   if [ -f "$dropboxignore_file_path" ]; then
@@ -108,14 +149,20 @@ EOF
   fi
 }
 
-# update a .dropboxignore file base on changes on .gitignore file
+#######################################
+# uUpdate a .dropboxignore file based on changes on .gitignore file.
+# Arguments:
+#   .dropboxingore file path to update.
+# Outputs:
+#   Update status.
+#######################################
 function update_dropboxignore_file() {
   diff_content=$(diff --new-line-format="" --unchanged-line-format="" --ignore-blank-lines --ignore-tab-expansion --ignore-space-change --ignore-trailing-space -I "# [Automatically|-]" "${1}" "${2}")
-  if [ ! -z "$diff_content" ]; then
+  if [ -n "$diff_content" ]; then
     tee "${1}" > /dev/null << EOF
 # Automatically updated .dropboxignore file at "$(date)"
 # ----
-$(echo "${diff_content}")
+${diff_content}
 # ----
 EOF
     echo "✅️ Updated ${2}"
@@ -124,28 +171,46 @@ EOF
   fi
 }
 
-# update all .dropboxignore files
+#######################################
+# Update all .dropboxignore files.
+# Globals:
+#   GITIGNORE_FILES
+#   DROPBOX_IGNORE_FILE_NAME
+# Arguments:
+#   Input folder.
+#######################################
 function update_dropboxignore_files() {
   find_gitignore_files "$1"
   for gitignore_file in $GITIGNORE_FILES; do
     dropboxignore_file="$(dirname "${gitignore_file}")/$DROPBOX_IGNORE_FILE_NAME"
     if [ -f "$dropboxignore_file" ]; then
-      update_dropboxignore_file $gitignore_file $dropboxignore_file
+      update_dropboxignore_file "$gitignore_file" "$dropboxignore_file"
     fi
   done
 }
 
-# generate .dropboxignore files
+#######################################
+# Generate all .dropboxignore files.
+# Globals:
+#   DROPBOX_IGNORE_FILE_NAME
+#   GITIGNORE_FILES
+# Arguments:
+#   Input folder.
+#######################################
 function generate_dropboxignore_files() {
   find_gitignore_files "$1"
   for gitignore_file in $GITIGNORE_FILES; do
     current_dir="$(dirname "${gitignore_file}")"
-    dropboxignore_file="$(dirname "${gitignore_file}")/$DROPBOX_IGNORE_FILE_NAME"
+    dropboxignore_file="$current_dir/$DROPBOX_IGNORE_FILE_NAME"
     generate_dropboxignore_file "$gitignore_file"
   done
 }
 
-# ignore given file
+#######################################
+# Ignore file.
+# Arguments:
+#   Input file.
+#######################################
 function ignore_file() {
   case $machine in
     Linux)
@@ -157,50 +222,77 @@ function ignore_file() {
   esac
 }
 
-# mark matched files as ignored
+#######################################
+# Mark matched files as ignored.
+# Globals:
+#   DROPBOX_IGNORE_FILES
+# Arguments:
+#   Input folder.
+# Outputs:
+#   Number of ignored files.
+#######################################
 function ignore_files() {
   find_dropboxignore_files "${1}"
   for dropboxignore_file in $DROPBOX_IGNORE_FILES; do
     total_results=0
+    # shellcheck disable=SC2013
     for file_pattern in $(grep -v '^\s*$\|^\s*\#' "${dropboxignore_file}"); do
       file_pattern=${file_pattern%/}
       subdir="$(dirname "$file_pattern")"
       pattern="$(basename "$file_pattern")"
-      n_results=$(find "$(dirname "${dropboxignore_file}")/$subdir" -name ""${pattern}"" -printf '.' -exec attr -s com.dropbox.ignored -V 1 '{}' \; | wc -l)
+      n_results=$(find "$(dirname "${dropboxignore_file}")/$subdir" -name "$pattern" -printf '.' -exec attr -s com.dropbox.ignored -V 1 '{}' \; | wc -l)
       total_results=$((total_results+n_results))
     done
-    echo "✅ Ignored files because of "${dropboxignore_file}": $total_results"
+    echo "✅ Ignored files because of '${dropboxignore_file}': $total_results"
   done
 }
 
-
+#######################################
+# Revert ignored file.
+# Arguments:
+#   Input file.
+# Outputs:
+#   Message about the reverted file.
+#######################################
 function revert_ignored(){
-  if [ $(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$1") ]; then
+  if [ "$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$1")" ]; then
     attr -r com.dropbox.ignored "$1"
     echo "⚠️ Ignored file: $1 has been reverted"
   fi
 }
 
-# revert ignored files
+#######################################
+# Revert all ignored files.
+# Arguments:
+#   Input folder.
+# Outputs:
+#   Message about reverted files.
+#######################################
 function revert_ignored_files() {
   if [ -f "$1" ]; then
-    echo "⚠️ Will revert "$1" only"
+    echo "⚠️ Will revert '$1' only"
     revert_ignored "$1"
   else
     echo "⚠️ Will revert every ignored file or path in $1"
+    # shellcheck disable=SC2044
     for file_path in $(find "$1" -type f); do
       revert_ignored "$file_path"
     done
+    # shellcheck disable=SC2044
     for folder_path in $(find "$1" -type d); do
       revert_ignored "$folder_path"
     done
   fi
 }
 
-# print help message
+#######################################
+# Print help message.
+# Outputs:
+#   help message
+#######################################
 display_help() {
   cat << EOF
-Usage: dropboxignore command filename_or_folder
+Usage: "$PROGRAM_NAME" command filename_or_folder
 
   Commands:
 
@@ -216,8 +308,6 @@ Usage: dropboxignore command filename_or_folder
 
 EOF
 }
-
-PROGRAM_NAME="$(basename $0)"
 
 case $1 in
 
@@ -252,9 +342,9 @@ case $1 in
 esac
 
 # check input file or folder
-check_input $2
+check_input "$2"
 
-input_file=$(realpath $2)
+input_file=$(realpath "$2")
 
 if [ "$generate_action" == true ]; then
   generate_dropboxignore_files "$input_file"
