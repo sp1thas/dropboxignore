@@ -71,28 +71,47 @@ Usage: dropboxignore command filename_or_folder
 
 ### Examples
 
-Generate multiple `.dropboxignore` files based on existing `.gitignore` files inside your dropbox folder:
-
+Let's setup our demo folder:
 ```shell
-$ dropboxignore generate /home/yourusername/Dropbox
+$ mkdir ~/demo && git init demo && \
+  echo 'b.txt' > ~/demo/.gitignore && \
+  mkdir ~/demo/subfolder && echo 'a.txt' > ~/demo/subfolder/.gitignore &&
+  touch ~/demo/b.txt ~/demo/subfolder/b.txt ~/demo/subfolder/a.txt
+Initialized empty Git repository in ~/demo/.git/
+$ tree ~/demo -a -I .git
+/home/psimakis/demo
+├── b.txt
+├── .gitignore
+└── subfolder
+    ├── a.txt
+    ├── b.txt
+    └── .gitignore
+
+1 directory, 5 files
 ```
 
-Generate a `dropboxignore` file based on existing `.gitignore` file in the same directory:
+Generate multiple `.dropboxignore` files based on existing `.gitignore` files inside your folder:
 
 ```shell
-$ dropboxignore generate /home/youusername/Dropbox/repository/.dropboxignore
+$  dropboxignore generate ~/demo
+Sat 02 Jan 2021 10:12:11 PM EET [  INFO ] Created file: ~/demo/subfolder/.dropboxignore
+Sat 02 Jan 2021 10:12:11 PM EET [  INFO ] Created file: ~/demo/.dropboxignore
+Sat 02 Jan 2021 10:12:11 PM EET [  INFO ] Total number of generated files: 2
 ```
 
 Ignored all files based on `.dropboxignore` files:
 
 ```shell
-$ dropboxignore ignore /home/yourusername/Dropbox
+$ dropboxignore ignore ~/demo
+Sat 02 Jan 2021 10:16:22 PM EET [  INFO ] Total number of ignored files: 3
 ```
 
 Revert all ignored files:
 
 ```shell
-$ dropboxignore revert /home/yourusername/Dropbox 
+$  dropboxignore revert .
+Sat 02 Jan 2021 10:16:44 PM EET [  INFO ] Number of reverted files: 3
+Sat 02 Jan 2021 10:16:45 PM EET [  INFO ] number of reverted folders: 0
 ```
 
 
@@ -100,5 +119,5 @@ $ dropboxignore revert /home/yourusername/Dropbox
 
  - ~~Support MacOS~~
  - `dropbox update` should support deletions
- - Enhance stdout
- - Add option for verbosity
+ - ~~Enhance stdout~~
+ - ~~Add option for verbosity~~

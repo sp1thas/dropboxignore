@@ -33,7 +33,7 @@ DROPBOX_IGNORE_FILE_NAME=".dropboxignore"
 GIT_IGNORE_FILE_NAME=".gitignore"
 machine="$(uname -s)"
 PROGRAM_NAME="$(basename "$0")"
-VERBOSITY=5
+VERBOSITY=1
 TOTAL_N_IGNORED_FILES=0
 TOTAL_N_REVERTED_FILES=0
 TOTAL_N_GENERATED_FILES=0
@@ -404,19 +404,21 @@ function revert_ignored_files() {
 #######################################
 display_help() {
   cat << EOUSAGE
-Usage: "$PROGRAM_NAME" command filename_or_folder
+Usage: "$PROGRAM_NAME" <command> <file_or_folder> [-v 0-2]
 
   Commands:
 
     generate            Generate .dropboxignore files based on existing .gitignore files.
                         If a .dropboxignore file already exists, will not be updated.
-    update              Update existing .dropboxignore files if at least a .gitignore file have been changed. Provide an existing
-                        .dropboxignore file or update everything by providing the dropbox folder.
-    ignore              Ignore file or folder from dropbox. Related .dropboxignore file will be updated automatically.
+    update              Update existing .dropboxignore files if at least one .gitignore file have been changed.
+    ignore              Ignore file or folder from dropbox.
     revert              Revert ignored file or folder.
     delete              Delete specific .dropboxignore file or every .dropboxignore files under the given directory.
     help                Will print this message and then will exit.
     version             Will print the version and then will exit.
+
+  Options:
+    -v                  Choose verbose level (0: Error, 1: Info, 2: Debug)
 
 EOUSAGE
 }
