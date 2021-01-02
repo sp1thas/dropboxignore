@@ -76,7 +76,7 @@ Usage: "dropboxignore" <command> <file_or_folder> [-v 0-2]
 
 Let's setup our demo folder:
 ```shell
-$ mkdir ~/demo && git init demo && \
+$ mkdir ~/demo && git init ~/demo && \
   echo 'b.txt' > ~/demo/.gitignore && \
   mkdir ~/demo/subfolder && echo 'a.txt' > ~/demo/subfolder/.gitignore &&
   touch ~/demo/b.txt ~/demo/subfolder/b.txt ~/demo/subfolder/a.txt
