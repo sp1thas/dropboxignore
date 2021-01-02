@@ -4,20 +4,20 @@
 
 ---
 
-![CI](https://github.com/sp1thas/dropboxignore/workflows/CI/badge.svg)
+![CI](https://github.com/sp1thas/dropboxignore/workflows/CI/badge.svg) [![GitHub license](https://img.shields.io/github/license/sp1thas/dropboxignore)](https://github.com/sp1thas/dropboxignore/blob/master/LICENSE) [![Code Style](https://img.shields.io/badge/code%20style-google-%234285F4)](https://github.com/google/styleguide)
 
-Exclude files from dropbox using file patterns, existing `.gitignore` files and the missing `.dropboxignore` file.
+Exclude files from dropbox using glob patterns and take advantage of existing `.gitignore` files.
 
-This is a simple shell script that can be used to exclude files from dropbox using file patterns, `.dropboxignore` files and the already existing `.gitignorefiles`. The shell script uses [this](https://help.dropbox.com/files-folders/restore-delete/ignored-files) approach to ignore the selected files.
+This is a simple shell script that can be used to ignore files from dropbox using glob patterns, `.dropboxignore` files and the already existing `.gitignorefiles`. The shell script uses [this](https://help.dropbox.com/files-folders/restore-delete/ignored-files) approach to ignore the matched files.
 
 ## Features
 
- - Ignore folders or files based on file patterns inside the `.dropboxignore` file.
+ - Ignore folders or files based on glob patterns inside the `.dropboxignore` file.
  - Automatically generate `.dropboxignore` files based on existing `.gitignore` files.
- - Ignore specific folders or files via CLI and `.dropboxignore` will be automatically updated.
+ - Ignore specific folders or files via CLI and `.dropboxignore` will automatically be updated.
  - Revert ignored folders or files
  - Delete `.dropboxignore` files
- - Update `.dropboxignore` files when changes are detected in `.gitignore` files.
+ - Update `.dropboxignore` files when changes are detected in corresponding `.gitignore` files.
 
 ## Getting Started
 
