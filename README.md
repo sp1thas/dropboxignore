@@ -35,9 +35,7 @@ $ apt install attr
 ### Installation
 
 ```
-$ git clone https://github.com/sp1thas/dropboxignore.git
-$ cp dropboxignore/dropboxignore.sh /usr/local/bin/dropboxignore
-$ chmod +x /usr/local/bin/dropboxignore
+$ wget -qO- https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh | bash
 ```
 
 ## Usage
