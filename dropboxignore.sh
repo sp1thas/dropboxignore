@@ -28,23 +28,90 @@
 IFS='
 '
 set -f
-VERSION=0.0.12
+VERSION=0.0.14
 DROPBOX_IGNORE_FILE_NAME=".dropboxignore"
 GIT_IGNORE_FILE_NAME=".gitignore"
 machine="$(uname -s)"
 PROGRAM_NAME="$(basename "$0")"
+VERBOSITY=5
+TOTAL_N_IGNORED_FILES=0
+TOTAL_N_REVERTED_FILES=0
+TOTAL_N_GENERATED_FILES=0
+
+#######################################
+# Log info message.
+# Globals:
+#   VERBOSITY
+# Arguments:
+#   Info Message.
+# Outputs:
+#   Info Message
+#######################################
+function log_info() {
+  if [ "$VERBOSITY" -ge 1 ]; then
+    echo -e "$(date) [  INFO ] \e[32m$1\e[39m"
+  fi
+}
+#######################################
+# Log debug message.
+# Globals:
+#   VERBOSITY
+# Arguments:
+#   Debug Message.
+# Outputs:
+#   Debug Message
+#######################################
+function log_debug() {
+  if [ "$VERBOSITY" -ge 2 ]; then
+    echo -e "$(date) \e[34m[ DEBUG ] $1\e[39m"
+  fi
+}
+
+#######################################
+# Log error message.
+# Globals:
+#   VERBOSITY
+# Arguments:
+#   Error Message.
+#   Exit status.
+# Outputs:
+#   Error message.
+#######################################
+function log_error() {
+  if [ "$VERBOSITY" -ge 0 ]; then
+    echo -e "$(date) \e[31m[ ERROR ] $1\e[39m"
+  fi
+  if [ -z "$2" ]; then
+    exit 1
+  else
+    exit "$2"
+  fi
+}
+
+#######################################
+# Log warning message.
+# Globals:
+#   VERBOSITY
+# Arguments:
+#   Warning message.
+# Outputs:
+#   Warning message.
+#######################################
+function log_warning() {
+  if [ "$VERBOSITY" -ge 1 ]; then
+    echo -e "$(date) \e[31m[WARNING] $1\e[39m"
+  fi
+}
 
 case $machine in
   Linux)
-    echo "Operating system: $machine"
+    machine="$machine"
     ;;
   Darwin)
     machine="MacOS"
-    echo "Operating system: $machine"
     ;;
   *)
-    echo "$machine is not supported"
-    exit 3
+    log_error "$machine is not supported" 3
     ;;
 
 esac
@@ -61,13 +128,14 @@ esac
 #   0 if file or folder exists, otherwise, returns 2.
 #######################################
 function check_input() {
-  if [ -d "$1" ]; then
-    echo "Input folder: $1"
-  elif [ -f "$1" ] || ( [ "$(basename "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ] && [ -d $(dirname "$1") ] ); then
-    echo "input file: $1"
+  if [ -z "$1" ]; then
+    log_error "You have to provide a file or folder" 2
+  elif [ -d "$1" ]; then
+    log_debug "Input folder: \"$1\""
+  elif [ -f "$1" ] || { [ "$(basename "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ] && [ -d "$(dirname "$1")" ] ; }; then
+    log_debug "Input file: \"$1\""
   else
-    echo "$1 does not exists"
-    exit 2
+    log_error "\"$1\" does not exists" 2
   fi
 }
 
@@ -99,11 +167,21 @@ function find_gitignore_files() {
 #######################################
 function delete_dropboxignore_files() {
   if [ -d "$1" ]; then
-    find "$1" -type f -name "$DROPBOX_IGNORE_FILE_NAME" -exec rm '{}' \;
+    n_results=0
+    while read -r file_path; do
+      (( n_results++ ))
+      rm "$file_path"
+    done < <(find "$1" -type f -name "$DROPBOX_IGNORE_FILE_NAME")
+    log_info "Deleted files: $n_results"
   elif [ -f "$1" ]; then
-    rm "$1"
+    if [ "$(basename "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ]; then
+      rm "$1"
+      log_info "Removed file: \"$1\""
+    else
+      log_error "Given file is not a $DROPBOX_IGNORE_FILE_NAME file."
+    fi
   else
-    echo "file not found"
+    log_error "file not found" 3
     exit 3
   fi
 }
@@ -136,7 +214,7 @@ function find_dropboxignore_files() {
 function generate_dropboxignore_file() {
   dropboxignore_file_path="$(dirname "${1}")/$DROPBOX_IGNORE_FILE_NAME"
   if [ -f "$dropboxignore_file_path" ]; then
-    echo "♻️ $dropboxignore_file_path already exists"
+    log_debug "Already existing file: $dropboxignore_file_path"
   else
     tee "$dropboxignore_file_path" > /dev/null << EOF
 # ----
@@ -145,7 +223,7 @@ function generate_dropboxignore_file() {
 $(cat "${1}")
 # ----
 EOF
-    echo "✅ $dropboxignore_file_path created"
+    log_info "Created file: $dropboxignore_file_path"
   fi
 }
 
@@ -165,9 +243,9 @@ function update_dropboxignore_file() {
 ${diff_content}
 # ----
 EOF
-    echo "✅️ Updated ${2}"
+    log_info "Updated $2"
   else
-    echo "♻ No changes found: ${2}"
+    log_debug "No changes found: $2"
   fi
 }
 
@@ -202,24 +280,40 @@ function generate_dropboxignore_files() {
   for gitignore_file in $GITIGNORE_FILES; do
     current_dir="$(dirname "${gitignore_file}")"
     dropboxignore_file="$current_dir/$DROPBOX_IGNORE_FILE_NAME"
-    generate_dropboxignore_file "$gitignore_file"
+    if [ -f "$dropboxignore_file" ]; then
+      log_debug "Already existing file: \"$dropboxignore_file\""
+    else
+      generate_dropboxignore_file "$gitignore_file"
+      (( TOTAL_N_GENERATED_FILES++ ))
+    fi
   done
+  log_info "Total number of generated files: $TOTAL_N_GENERATED_FILES"
 }
 
 #######################################
 # Ignore file.
+# Globals:
+#   I
 # Arguments:
 #   Input file.
 #######################################
 function ignore_file() {
-  case $machine in
-    Linux)
-      attr -s com.dropbox.ignored -V 1 "$1"
-      ;;
-    MacOS)
-      xattr -w com.dropbox.ignored 1 "$1"
-      ;;
-  esac
+  attr_value="$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$1")"
+  if [  -z "$attr_value" ] || [ "$attr_value" == 0 ]; then
+    case $machine in
+      Linux)
+        attr -s com.dropbox.ignored -V 1 "$1" > /dev/null
+        (( TOTAL_N_IGNORED_FILES++ ))
+        ;;
+      MacOS)
+        xattr -w com.dropbox.ignored 1 "$1" > /dev/null
+        (( TOTAL_N_IGNORED_FILES++ ))
+        ;;
+    esac
+    log_debug "Ignored file: \"$1\""
+  else
+    log_debug "Already ignored file: \"$1\""
+  fi
 }
 
 #######################################
@@ -233,18 +327,29 @@ function ignore_file() {
 #######################################
 function ignore_files() {
   find_dropboxignore_files "${1}"
-  for dropboxignore_file in $DROPBOX_IGNORE_FILES; do
-    total_results=0
-    # shellcheck disable=SC2013
-    for file_pattern in $(grep -v '^\s*$\|^\s*\#' "${dropboxignore_file}"); do
-      file_pattern=${file_pattern%/}
-      subdir="$(dirname "$file_pattern")"
-      pattern="$(basename "$file_pattern")"
-      n_results=$(find "$(dirname "${dropboxignore_file}")/$subdir" -name "$pattern" -printf '.' -exec attr -s com.dropbox.ignored -V 1 '{}' \; | wc -l)
-      total_results=$((total_results+n_results))
+  if [ "$(basename "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ]; then
+    log_error "Cannot ignore an $DROPBOX_IGNORE_FILE_NAME. Choose another file or folder." 4
+  elif [ -f "$1" ]; then
+    ignore_file "$1"
+  else
+    for dropboxignore_file in $DROPBOX_IGNORE_FILES; do
+      file_total_results=0
+      # shellcheck disable=SC2013
+      for file_pattern in $(grep -v '^\s*$\|^\s*\#' "${dropboxignore_file}"); do
+        file_pattern=${file_pattern%/}
+        subdir="$(dirname "$file_pattern")"
+        pattern="$(basename "$file_pattern")"
+        n_results=0
+        while read -r file_path; do
+          ignore_file "$file_path"
+          (( n_results++ ))
+        done < <(find "$(dirname "${dropboxignore_file}")/$subdir" -name "$pattern")
+        file_total_results=$((total_results+n_results))
+      done
+      log_debug "Matched files because of '${dropboxignore_file}': $file_total_results"
     done
-    echo "✅ Ignored files because of '${dropboxignore_file}': $total_results"
-  done
+    log_info "Total number of ignored files: $TOTAL_N_IGNORED_FILES"
+  fi
 }
 
 #######################################
@@ -256,8 +361,11 @@ function ignore_files() {
 #######################################
 function revert_ignored(){
   if [ "$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$1")" ]; then
-    attr -r com.dropbox.ignored "$1"
-    echo "⚠️ Ignored file: $1 has been reverted"
+    attr -r com.dropbox.ignored "$1" > /dev/null
+    log_debug "Reverted file: \"$1\""
+    (( TOTAL_N_REVERTED_FILES++ ))
+  else
+    log_debug "Already reverted file: \"$1\""
   fi
 }
 
@@ -270,18 +378,22 @@ function revert_ignored(){
 #######################################
 function revert_ignored_files() {
   if [ -f "$1" ]; then
-    echo "⚠️ Will revert '$1' only"
     revert_ignored "$1"
   else
-    echo "⚠️ Will revert every ignored file or path in $1"
-    # shellcheck disable=SC2044
-    for file_path in $(find "$1" -type f); do
-      revert_ignored "$file_path"
-    done
-    # shellcheck disable=SC2044
-    for folder_path in $(find "$1" -type d); do
-      revert_ignored "$folder_path"
-    done
+    while read -r file_path; do
+      if [ "$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$file_path")" ]; then
+        revert_ignored "$file_path"
+      fi
+    done < <(find "$1" -type f)
+    log_info "Number of reverted files: $TOTAL_N_REVERTED_FILES"
+    TOTAL_N_REVERTED_FILES=0
+    while read -r file_path; do
+      if [ "$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$file_path")" ]; then
+        revert_ignored "$file_path"
+        (( n_results++ ))
+      fi
+    done < <(find "$1" -type d)
+    log_info "number of reverted folders: $TOTAL_N_REVERTED_FILES"
   fi
 }
 
@@ -291,7 +403,7 @@ function revert_ignored_files() {
 #   help message
 #######################################
 display_help() {
-  cat << EOF
+  cat << EOUSAGE
 Usage: "$PROGRAM_NAME" command filename_or_folder
 
   Commands:
@@ -306,25 +418,35 @@ Usage: "$PROGRAM_NAME" command filename_or_folder
     help                Will print this message and then will exit.
     version             Will print the version and then will exit.
 
-EOF
+EOUSAGE
 }
 
 case $1 in
 
+  "")
+    echo "You have to specify an action."
+    echo "See '$PROGRAM_NAME help'"
+    exit 3
+    ;;
   generate)
     generate_action=true
+    shift
     ;;
   update)
     update_action=true
+    shift
     ;;
   ignore)
     ignore_action=true
+    shift
     ;;
   revert)
     revert_action=true
+    shift
     ;;
   delete)
     delete_action=true
+    shift
     ;;
   help)
     display_help
@@ -341,19 +463,36 @@ case $1 in
     ;;
 esac
 
+input_f="$1"
+
+shift
+
+while getopts ':v:' opt; do
+  case "$opt" in
+    v) VERBOSITY="$OPTARG"
+       ;;
+   \?) echo "Unknown option: -$OPTARG"
+       exit 3
+       ;;
+  esac
+done
+
+log_debug "Operating system: $machine"
+
 # check input file or folder
-check_input "$2"
+check_input "$input_f"
 
-input_file=$(realpath "$2")
+input_f=$(realpath "$input_f")
 
+# run action
 if [ "$generate_action" == true ]; then
-  generate_dropboxignore_files "$input_file"
+  generate_dropboxignore_files "$input_f"
 elif [ "$update_action" == true ]; then
-  update_dropboxignore_files "$input_file"
+  update_dropboxignore_files "$input_f"
 elif [ "$ignore_action" == true ]; then
-  ignore_files "$input_file"
+  ignore_files "$input_f"
 elif [ "$delete_action" == true ]; then
-  delete_dropboxignore_files "$input_file"
+  delete_dropboxignore_files "$input_f"
 elif [ "$revert_action" == true ]; then
-  revert_ignored_files "$input_file"
+  revert_ignored_files "$input_f"
 fi
