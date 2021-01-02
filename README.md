@@ -82,7 +82,7 @@ $ mkdir ~/demo && git init ~/demo && \
   touch ~/demo/b.txt ~/demo/subfolder/b.txt ~/demo/subfolder/a.txt
 Initialized empty Git repository in ~/demo/.git/
 $ tree ~/demo -a -I .git
-/home/psimakis/demo
+~/demo
 ├── b.txt
 ├── .gitignore
 └── subfolder
