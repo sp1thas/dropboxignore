@@ -128,9 +128,9 @@ Sat 02 Jan 2021 10:16:45 PM EET [  INFO ] number of reverted folders: 0
 List ignored files and folders:
 ```shell
 $ dropboxignore list ~/demo
-Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] File: /home/psimakis/demo/subfolder/a.txt
-Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] File: /home/psimakis/demo/subfolder/b.txt
-Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] File: /home/psimakis/demo/b.txt
+Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] File: ~/demo/subfolder/a.txt
+Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] File: ~/demo/subfolder/b.txt
+Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] File: ~/demo/b.txt
 Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] Total number of ignored files: 3
 Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] Total number of ignored folders: 0
 ```
