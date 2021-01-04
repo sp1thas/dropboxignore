@@ -12,12 +12,13 @@ This is a simple shell script that can be used to ignore files from dropbox usin
 
 ## Features
 
- - Ignore folders or files based on glob patterns inside the `.dropboxignore` file.
- - Automatically generate `.dropboxignore` files based on existing `.gitignore` files.
- - Ignore specific folders or files via CLI and `.dropboxignore` will automatically be updated.
- - Revert ignored folders or files
- - Delete `.dropboxignore` files
- - Update `.dropboxignore` files when changes are detected in corresponding `.gitignore` files.
+ - 🤚🏿 Ignore folders or files based on glob patterns inside the `.dropboxignore` file.
+ - 📝 Automatically generate `.dropboxignore` files based on existing `.gitignore` files.
+ - 🔬 Ignore specific folders or files via CLI.
+ - ↩ Revert ignored folders or files
+ - ❌ Delete `.dropboxignore` files
+ - ♻️ Update `.dropboxignore` files when changes are detected in corresponding `.gitignore` files.
+ - 🗒 List ignored files and folders
 
 ## Getting Started
 
@@ -33,9 +34,16 @@ $ apt install attr
 ```
 
 ### Installation
-
-```
+#### Automatic
+```shell
 $ wget -qO- https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh | bash
+```
+
+#### Manual
+```shell
+$ git clone https://github.com/sp1thas/dropboxignore.git
+$ cp dropboxignore/dropboxignore.sh /usr/local/bin/dropboxignore
+$ chmod +x /usr/local/bin/dropboxignore
 ```
 
 ## Usage
@@ -64,9 +72,11 @@ Usage: "dropboxignore" <command> <file_or_folder> [-v 0-2]
     delete              Delete specific .dropboxignore file or every .dropboxignore files under the given directory.
     help                Will print this message and then will exit.
     version             Will print the version and then will exit.
+    list                List ignored files and folders
 
   Options:
     -v                  Choose verbose level (0: Error, 1: Info, 2: Debug)
+    -p                  Filtering pattern
 
 ```
 
@@ -115,10 +125,16 @@ Sat 02 Jan 2021 10:16:44 PM EET [  INFO ] Number of reverted files: 3
 Sat 02 Jan 2021 10:16:45 PM EET [  INFO ] number of reverted folders: 0
 ```
 
+List ignored files and folders:
+```shell
+$ dropboxignore list ~/demo
+Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] File: /home/psimakis/demo/subfolder/a.txt
+Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] File: /home/psimakis/demo/subfolder/b.txt
+Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] File: /home/psimakis/demo/b.txt
+Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] Total number of ignored files: 3
+Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] Total number of ignored folders: 0
+```
 
 ## TODOs
 
- - ~~Support MacOS~~
  - `dropbox update` should support deletions
- - ~~Enhance stdout~~
- - ~~Add option for verbosity~~

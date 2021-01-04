@@ -28,7 +28,7 @@
 IFS='
 '
 set -f
-VERSION=0.0.14
+VERSION=0.0.15
 DROPBOX_IGNORE_FILE_NAME=".dropboxignore"
 GIT_IGNORE_FILE_NAME=".gitignore"
 machine="$(uname -s)"
@@ -335,7 +335,7 @@ function ignore_files() {
     for dropboxignore_file in $DROPBOX_IGNORE_FILES; do
       file_total_results=0
       # shellcheck disable=SC2013
-      for file_pattern in $(grep -v '^\s*$\|^\s*\#' "${dropboxignore_file}"); do
+      for file_pattern in $(grep -v '^\s*$\|^\s*\#|^!' "$dropboxignore_file"); do
         file_pattern=${file_pattern%/}
         subdir="$(dirname "$file_pattern")"
         pattern="$(basename "$file_pattern")"
@@ -344,13 +344,55 @@ function ignore_files() {
           ignore_file "$file_path"
           (( n_results++ ))
         done < <(find "$(dirname "${dropboxignore_file}")/$subdir" -name "$pattern")
-        file_total_results=$((total_results+n_results))
+        file_total_results=$((file_total_results+n_results))
+      done
+      # shellcheck disable=SC2013
+      for file_pattern in $(grep '^!' "$dropboxignore_file"); do
+        file_pattern=${file_pattern%/}
+        file_pattern="${file_pattern:1:${#file_pattern}}"
+        subdir="$(dirname "$file_pattern")"
+        pattern="$(basename "$file_pattern")"
+        while read -r file_path; do
+          revert_ignored "$file_path"
+        done < <(find "$(dirname "${dropboxignore_file}")/$subdir" -name "$pattern")
       done
       log_debug "Matched files because of '${dropboxignore_file}': $file_total_results"
     done
     log_info "Total number of ignored files: $TOTAL_N_IGNORED_FILES"
   fi
 }
+#######################################
+# List ignored files and folders.
+# Arguments:
+#   Input folder.
+#   Filtering pattern
+# Outputs:
+#   Ignored files and folders
+#######################################
+function list_ignored() {
+  total_ignored_files=0
+  total_ignored_folders=0
+  if [ -z "$2" ]; then
+    filtering_pattern='*'
+  else
+    filtering_pattern="$2"
+  fi
+  while read -r f_path; do
+    attr_value="$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$f_path")"
+    if [ -n "$attr_value" ]; then
+      if [ -f "$f_path" ]; then
+        log_info "File: $f_path"
+        (( total_ignored_files++ ))
+      elif [ -d "$f_path" ]; then
+        log_info "Folder: $f_path"
+        (( total_ignored_folders++ ))
+      fi
+    fi
+  done < <(find "$1" -name "$filtering_pattern")
+  log_info "Total number of ignored files: $total_ignored_files"
+  log_info "Total number of ignored folders: $total_ignored_folders"
+}
+
 
 #######################################
 # Revert ignored file.
@@ -416,9 +458,11 @@ Usage: "$PROGRAM_NAME" <command> <file_or_folder> [-v 0-2]
     delete              Delete specific .dropboxignore file or every .dropboxignore files under the given directory.
     help                Will print this message and then will exit.
     version             Will print the version and then will exit.
+    list                List ignored files and folders
 
   Options:
     -v                  Choose verbose level (0: Error, 1: Info, 2: Debug)
+    -p                  Filtering pattern
 
 EOUSAGE
 }
@@ -458,6 +502,10 @@ case $1 in
     echo "$PROGRAM_NAME: $VERSION"
     exit 0
     ;;
+  list)
+    list_action=true
+    shift
+    ;;
   *)
     echo "$PROGRAM_NAME: '$1' is not a $PROGRAM_NAME command."
     echo "See '$PROGRAM_NAME help'"
@@ -469,13 +517,17 @@ input_f="$1"
 
 shift
 
-while getopts ':v:' opt; do
+while getopts ':vp:' opt; do
   case "$opt" in
     v) VERBOSITY="$OPTARG"
        ;;
-   \?) echo "Unknown option: -$OPTARG"
-       exit 3
-       ;;
+    p)
+      FILTERING_PATTERN="$OPTARG"
+      ;;
+    \?)
+      echo "Unknown option: -$OPTARG"
+      exit 3
+      ;;
   esac
 done
 
@@ -497,4 +549,6 @@ elif [ "$delete_action" == true ]; then
   delete_dropboxignore_files "$input_f"
 elif [ "$revert_action" == true ]; then
   revert_ignored_files "$input_f"
+elif [ "$list_action" == true ]; then
+  list_ignored "$input_f" "$FILTERING_PATTERN"
 fi
