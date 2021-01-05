@@ -158,9 +158,9 @@ function check_input() {
 #######################################
 function find_gitignore_files() {
   if [ -d "$1" ]; then
-    GITIGNORE_FILES=$(find "${1}" -type f -name "${GIT_IGNORE_FILE_NAME}")
+    GITIGNORE_FILES=$(find "$1" -type f -name "$GIT_IGNORE_FILE_NAME")
   else
-    GITIGNORE_FILES=$(find "$(dirname "$1")" -maxdepth 1 -type f -name "${GIT_IGNORE_FILE_NAME}")
+    GITIGNORE_FILES=$(find "$(dirname "$1")" -maxdepth 1 -type f -name "$GIT_IGNORE_FILE_NAME")
   fi
 }
 
@@ -205,11 +205,7 @@ function delete_dropboxignore_files() {
 #   Input folder or file.
 #######################################
 function find_dropboxignore_files() {
-  if [ -d "$1" ]; then
-    DROPBOX_IGNORE_FILES=$(find "${1}" -type f -name "$DROPBOX_IGNORE_FILE_NAME")
-  else
-    DROPBOX_IGNORE_FILES=$(find "$(dirname "$1")" -maxdepth 1 -type f -name "$DROPBOX_IGNORE_FILE_NAME")
-  fi
+  DROPBOX_IGNORE_FILES=$(find "$1" -type f -name "$DROPBOX_IGNORE_FILE_NAME")
 }
 
 #######################################
@@ -247,10 +243,10 @@ EOF
 function update_dropboxignore_file() {
   diff_content=$(diff --new-line-format="" --unchanged-line-format="" --ignore-blank-lines --ignore-tab-expansion --ignore-space-change --ignore-trailing-space -I "# [Automatically|-]" "${1}" "${2}")
   if [ -n "$diff_content" ]; then
-    tee "${1}" > /dev/null << EOF
+    tee "$1" > /dev/null << EOF
 # Automatically updated .dropboxignore file at "$(date)"
 # ----
-${diff_content}
+$diff_content
 # ----
 EOF
     echo -e "$GREEN Updated $(realpath --relative-to="$BASE_FOLDER" "$2") $DEFAULT"
@@ -270,7 +266,7 @@ EOF
 function update_dropboxignore_files() {
   find_gitignore_files "$1"
   for gitignore_file in $GITIGNORE_FILES; do
-    dropboxignore_file="$(dirname "${gitignore_file}")/$DROPBOX_IGNORE_FILE_NAME"
+    dropboxignore_file="$(dirname "$gitignore_file")/$DROPBOX_IGNORE_FILE_NAME"
     if [ -f "$dropboxignore_file" ]; then
       update_dropboxignore_file "$gitignore_file" "$dropboxignore_file"
     fi
@@ -288,7 +284,7 @@ function update_dropboxignore_files() {
 function generate_dropboxignore_files() {
   find_gitignore_files "$1"
   for gitignore_file in $GITIGNORE_FILES; do
-    current_dir="$(dirname "${gitignore_file}")"
+    current_dir="$(dirname "$gitignore_file")"
     dropboxignore_file="$current_dir/$DROPBOX_IGNORE_FILE_NAME"
     if [ -f "$dropboxignore_file" ]; then
       log_debug "Already existing file: $(realpath --relative-to="$BASE_FOLDER" "$dropboxignore_file")"
@@ -338,12 +334,12 @@ function ignore_file() {
 #   Number of ignored files.
 #######################################
 function ignore_files() {
-  find_dropboxignore_files "${1}"
   if [ "$(basename "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ]; then
     log_error "Cannot ignore an $DROPBOX_IGNORE_FILE_NAME. Choose another file or folder." 4
   elif [ -f "$1" ]; then
     ignore_file "$1"
-  else
+  elif [ -d "$1" ]; then
+    find_dropboxignore_files "$1"
     for dropboxignore_file in $DROPBOX_IGNORE_FILES; do
       file_total_results=0
       # shellcheck disable=SC2013
@@ -355,7 +351,7 @@ function ignore_files() {
         while read -r file_path; do
           ignore_file "$file_path"
           (( n_results++ ))
-        done < <(find "$(dirname "${dropboxignore_file}")/$subdir" -name "$pattern")
+        done < <(find "$(dirname "$dropboxignore_file")/$subdir" -name "$pattern")
         file_total_results=$((file_total_results+n_results))
       done
       # shellcheck disable=SC2013
@@ -366,9 +362,9 @@ function ignore_files() {
         pattern="$(basename "$file_pattern")"
         while read -r file_path; do
           revert_ignored "$file_path"
-        done < <(find "$(dirname "${dropboxignore_file}")/$subdir" -name "$pattern")
+        done < <(find "$(dirname "$dropboxignore_file")/$subdir" -name "$pattern")
       done
-      log_debug "Matched files because of '${dropboxignore_file}': $file_total_results"
+      log_debug "Matched files because of '$dropboxignore_file': $file_total_results"
     done
     echo -e "$BLUE
   Total number of ignored files: $TOTAL_N_IGNORED_FILES $DEFAULT
