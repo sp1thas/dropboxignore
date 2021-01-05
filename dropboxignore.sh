@@ -28,7 +28,7 @@
 IFS='
 '
 set -f
-VERSION=0.0.15
+VERSION="0.1.0 beta"
 DROPBOX_IGNORE_FILE_NAME=".dropboxignore"
 GIT_IGNORE_FILE_NAME=".gitignore"
 machine="$(uname -s)"
@@ -37,6 +37,13 @@ VERBOSITY=1
 TOTAL_N_IGNORED_FILES=0
 TOTAL_N_REVERTED_FILES=0
 TOTAL_N_GENERATED_FILES=0
+BASE_FOLDER="$PWD"
+
+DEFAULT="\e[0m"
+GREEN="\e[32m"
+BLUE="\e[34m"
+RED="\e[31m"
+YELLOW="\e[33m"
 
 #######################################
 # Log info message.
@@ -49,7 +56,7 @@ TOTAL_N_GENERATED_FILES=0
 #######################################
 function log_info() {
   if [ "$VERBOSITY" -ge 1 ]; then
-    echo -e "$(date) [  INFO ] \e[32m$1\e[39m"
+    echo -e "$(date) $GREEN [  INFO ] $1 $DEFAULT"
   fi
 }
 #######################################
@@ -63,7 +70,7 @@ function log_info() {
 #######################################
 function log_debug() {
   if [ "$VERBOSITY" -ge 2 ]; then
-    echo -e "$(date) \e[34m[ DEBUG ] $1\e[39m"
+    echo -e "$(date) $BLUE [ DEBUG ] $1 $DEFAULT"
   fi
 }
 
@@ -79,7 +86,7 @@ function log_debug() {
 #######################################
 function log_error() {
   if [ "$VERBOSITY" -ge 0 ]; then
-    echo -e "$(date) \e[31m[ ERROR ] $1\e[39m"
+    echo -e "$(date) $RED [ ERROR ] $1 $DEFAULT"
   fi
   if [ -z "$2" ]; then
     exit 1
@@ -99,7 +106,7 @@ function log_error() {
 #######################################
 function log_warning() {
   if [ "$VERBOSITY" -ge 1 ]; then
-    echo -e "$(date) \e[31m[WARNING] $1\e[39m"
+    echo -e "$(date) $YELLOW [WARNING] $1 $DEFAULT"
   fi
 }
 
@@ -120,6 +127,7 @@ esac
 # Check input file or folder.
 # Globals:
 #   DROPBOX_IGNORE_FILE_NAME
+#   BASE_FOLDER
 # Arguments:
 #   Input file or folder.
 # Outputs:
@@ -132,8 +140,10 @@ function check_input() {
     log_error "You have to provide a file or folder" 2
   elif [ -d "$1" ]; then
     log_debug "Input folder: \"$1\""
+    BASE_FOLDER="$1"
   elif [ -f "$1" ] || { [ "$(basename "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ] && [ -d "$(dirname "$1")" ] ; }; then
     log_debug "Input file: \"$1\""
+    BASE_FOLDER="$(dirname "$1")"
   else
     log_error "\"$1\" does not exists" 2
   fi
@@ -172,11 +182,11 @@ function delete_dropboxignore_files() {
       (( n_results++ ))
       rm "$file_path"
     done < <(find "$1" -type f -name "$DROPBOX_IGNORE_FILE_NAME")
-    log_info "Deleted files: $n_results"
+    echo -e "$YELLOW Deleted files: $n_results $DEFAULT"
   elif [ -f "$1" ]; then
     if [ "$(basename "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ]; then
       rm "$1"
-      log_info "Removed file: \"$1\""
+      echo -e "$YELLOW Removed file: $(realpath --relative-to="$BASE_FOLDER" "$1") $DEFAULT"
     else
       log_error "Given file is not a $DROPBOX_IGNORE_FILE_NAME file."
     fi
@@ -212,9 +222,9 @@ function find_dropboxignore_files() {
 #   Status about the generated file.
 #######################################
 function generate_dropboxignore_file() {
-  dropboxignore_file_path="$(dirname "${1}")/$DROPBOX_IGNORE_FILE_NAME"
+  dropboxignore_file_path="$(dirname "$1")/$DROPBOX_IGNORE_FILE_NAME"
   if [ -f "$dropboxignore_file_path" ]; then
-    log_debug "Already existing file: $dropboxignore_file_path"
+    log_debug "Already existing file: $(realpath --relative-to="$BASE_FOLDER" "$dropboxignore_file_path")"
   else
     tee "$dropboxignore_file_path" > /dev/null << EOF
 # ----
@@ -223,7 +233,7 @@ function generate_dropboxignore_file() {
 $(cat "${1}")
 # ----
 EOF
-    log_info "Created file: $dropboxignore_file_path"
+    echo -e "$GREEN Created file: $(realpath --relative-to="$BASE_FOLDER" "$dropboxignore_file_path") $DEFAULT"
   fi
 }
 
@@ -243,9 +253,9 @@ function update_dropboxignore_file() {
 ${diff_content}
 # ----
 EOF
-    log_info "Updated $2"
+    echo -e "$GREEN Updated $(realpath --relative-to="$BASE_FOLDER" "$2") $DEFAULT"
   else
-    log_debug "No changes found: $2"
+    log_debug "No changes found: $(realpath --relative-to="$BASE_FOLDER" "$2")"
   fi
 }
 
@@ -281,13 +291,15 @@ function generate_dropboxignore_files() {
     current_dir="$(dirname "${gitignore_file}")"
     dropboxignore_file="$current_dir/$DROPBOX_IGNORE_FILE_NAME"
     if [ -f "$dropboxignore_file" ]; then
-      log_debug "Already existing file: \"$dropboxignore_file\""
+      log_debug "Already existing file: $(realpath --relative-to="$BASE_FOLDER" "$dropboxignore_file")"
     else
       generate_dropboxignore_file "$gitignore_file"
       (( TOTAL_N_GENERATED_FILES++ ))
     fi
   done
-  log_info "Total number of generated files: $TOTAL_N_GENERATED_FILES"
+  echo -e "$YELLOW
+  Total number of generated files: $TOTAL_N_GENERATED_FILES $DEFAULT
+  "
 }
 
 #######################################
@@ -310,9 +322,9 @@ function ignore_file() {
         (( TOTAL_N_IGNORED_FILES++ ))
         ;;
     esac
-    log_debug "Ignored file: \"$1\""
+    log_debug "Ignored file: $(realpath --relative-to="$BASE_FOLDER" "$1")"
   else
-    log_debug "Already ignored file: \"$1\""
+    log_debug "Already ignored file: $(realpath --relative-to="$BASE_FOLDER" "$1")"
   fi
 }
 
@@ -358,7 +370,9 @@ function ignore_files() {
       done
       log_debug "Matched files because of '${dropboxignore_file}': $file_total_results"
     done
-    log_info "Total number of ignored files: $TOTAL_N_IGNORED_FILES"
+    echo -e "$BLUE
+  Total number of ignored files: $TOTAL_N_IGNORED_FILES $DEFAULT
+  "
   fi
 }
 #######################################
@@ -380,17 +394,18 @@ function list_ignored() {
   while read -r f_path; do
     attr_value="$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$f_path")"
     if [ -n "$attr_value" ]; then
+      realpath --relative-to="$BASE_FOLDER" "$f_path"
       if [ -f "$f_path" ]; then
-        log_info "File: $f_path"
         (( total_ignored_files++ ))
       elif [ -d "$f_path" ]; then
-        log_info "Folder: $f_path"
         (( total_ignored_folders++ ))
       fi
     fi
   done < <(find "$1" -name "$filtering_pattern")
-  log_info "Total number of ignored files: $total_ignored_files"
-  log_info "Total number of ignored folders: $total_ignored_folders"
+  echo -e "$YELLOW
+  Total number of ignored files: $total_ignored_files
+  Total number of ignored folders: $total_ignored_folders $DEFAULT
+"
 }
 
 
@@ -404,10 +419,10 @@ function list_ignored() {
 function revert_ignored(){
   if [ "$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$1")" ]; then
     attr -r com.dropbox.ignored "$1" > /dev/null
-    log_debug "Reverted file: \"$1\""
+    log_debug "Reverted file: $(realpath --relative-to="$BASE_FOLDER" "$1")"
     (( TOTAL_N_REVERTED_FILES++ ))
   else
-    log_debug "Already reverted file: \"$1\""
+    log_debug "Already reverted file: $(realpath --relative-to="$BASE_FOLDER" "$f_path")"
   fi
 }
 
@@ -427,7 +442,8 @@ function revert_ignored_files() {
         revert_ignored "$file_path"
       fi
     done < <(find "$1" -type f)
-    log_info "Number of reverted files: $TOTAL_N_REVERTED_FILES"
+    echo -e "$BLUE
+  Total number of reverted files: $TOTAL_N_REVERTED_FILES $DEFAULT"
     TOTAL_N_REVERTED_FILES=0
     while read -r file_path; do
       if [ "$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$file_path")" ]; then
@@ -435,7 +451,9 @@ function revert_ignored_files() {
         (( n_results++ ))
       fi
     done < <(find "$1" -type d)
-    log_info "number of reverted folders: $TOTAL_N_REVERTED_FILES"
+    echo -e "$BLUE
+  Total number of reverted folders: $TOTAL_N_REVERTED_FILES $DEFAULT
+  "
   fi
 }
 
