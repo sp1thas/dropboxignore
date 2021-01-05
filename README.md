@@ -60,7 +60,7 @@ A common workflow could be the following
 
 ```shell
 $ dropboxignore help
-Usage: "dropboxignore" <command> <file_or_folder> [-v 0-2]
+Usage: "dropboxignore" <command> <path> [-v 0-2] [-p pattern]
 
   Commands:
 
@@ -105,36 +105,47 @@ Generate multiple `.dropboxignore` files based on existing `.gitignore` files in
 
 ```shell
 $  dropboxignore generate ~/demo
-Sat 02 Jan 2021 10:12:11 PM EET [  INFO ] Created file: ~/demo/subfolder/.dropboxignore
-Sat 02 Jan 2021 10:12:11 PM EET [  INFO ] Created file: ~/demo/.dropboxignore
-Sat 02 Jan 2021 10:12:11 PM EET [  INFO ] Total number of generated files: 2
+ Created file: subfolder/.dropboxignore
+ Created file: .dropboxignore
+
+  Total number of generated files: 2
+
 ```
 
 Ignored all files based on `.dropboxignore` files:
 
 ```shell
 $ dropboxignore ignore ~/demo
-Sat 02 Jan 2021 10:16:22 PM EET [  INFO ] Total number of ignored files: 3
-```
 
-Revert all ignored files:
+  Total number of ignored files: 3
 
-```shell
-$  dropboxignore revert .
-Sat 02 Jan 2021 10:16:44 PM EET [  INFO ] Number of reverted files: 3
-Sat 02 Jan 2021 10:16:45 PM EET [  INFO ] number of reverted folders: 0
 ```
 
 List ignored files and folders:
 ```shell
 $ dropboxignore list ~/demo
-Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] File: ~/demo/subfolder/a.txt
-Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] File: ~/demo/subfolder/b.txt
-Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] File: ~/demo/b.txt
-Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] Total number of ignored files: 3
-Mon 04 Jan 2021 08:09:08 PM EET [  INFO ] Total number of ignored folders: 0
+subfolder/a.txt
+subfolder/b.txt
+b.txt
+
+  Total number of ignored files: 3
+  Total number of ignored folders: 0
+
+```
+
+Revert all ignored files:
+
+```shell
+$  dropboxignore revert ~/demo
+
+  Total number of reverted files: 3
+
+
+  Total number of reverted folders: 0
+
 ```
 
 ## TODOs
 
- - `dropbox update` should support deletions
+ - `dropbox update` should support deletions.
+ - `dropbox ignore` should automatically update `.dropboxignore` file.

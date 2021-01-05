@@ -464,7 +464,7 @@ function revert_ignored_files() {
 #######################################
 display_help() {
   cat << EOUSAGE
-Usage: "$PROGRAM_NAME" <command> <file_or_folder> [-v 0-2]
+Usage: "$PROGRAM_NAME" <command> <path> [-v 0-2] [-p pattern]
 
   Commands:
 
