@@ -236,7 +236,7 @@ EOF
 #######################################
 # uUpdate a .dropboxignore file based on changes on .gitignore file.
 # Arguments:
-#   .dropboxingore file path to update.
+#   dropboxingore file path to update.
 # Outputs:
 #   Update status.
 #######################################
@@ -294,8 +294,7 @@ function generate_dropboxignore_files() {
     fi
   done
   echo -e "$YELLOW
-  Total number of generated files: $TOTAL_N_GENERATED_FILES $DEFAULT
-  "
+Total number of generated files: $TOTAL_N_GENERATED_FILES $DEFAULT"
 }
 
 #######################################
@@ -307,7 +306,9 @@ function generate_dropboxignore_files() {
 #######################################
 function ignore_file() {
   attr_value="$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$1")"
-  if [  -z "$attr_value" ] || [ "$attr_value" == 0 ]; then
+  if [ "$(dirname "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ]; then
+    log_debug "Bypass $(realpath --relative-to="$BASE_FOLDER" "$1")"
+  elif [  -z "$attr_value" ] || [ "$attr_value" == 0 ]; then
     case $machine in
       Linux)
         attr -s com.dropbox.ignored -V 1 "$1" > /dev/null
@@ -364,11 +365,10 @@ function ignore_files() {
           revert_ignored "$file_path"
         done < <(find "$(dirname "$dropboxignore_file")/$subdir" -name "$pattern")
       done
-      log_debug "Matched files because of '$dropboxignore_file': $file_total_results"
+      log_debug "Matched files because of '$(realpath --relative-to="$BASE_FOLDER" "$dropboxignore_file")': $file_total_results"
     done
     echo -e "$BLUE
-  Total number of ignored files: $TOTAL_N_IGNORED_FILES $DEFAULT
-  "
+Total number of ignored files: $TOTAL_N_IGNORED_FILES $DEFAULT"
   fi
 }
 #######################################
@@ -399,9 +399,8 @@ function list_ignored() {
     fi
   done < <(find "$1" -name "$filtering_pattern")
   echo -e "$YELLOW
-  Total number of ignored files: $total_ignored_files
-  Total number of ignored folders: $total_ignored_folders $DEFAULT
-"
+Total number of ignored files: $total_ignored_files
+Total number of ignored folders: $total_ignored_folders $DEFAULT"
 }
 
 
@@ -439,7 +438,7 @@ function revert_ignored_files() {
       fi
     done < <(find "$1" -type f)
     echo -e "$BLUE
-  Total number of reverted files: $TOTAL_N_REVERTED_FILES $DEFAULT"
+Total number of reverted files: $TOTAL_N_REVERTED_FILES $DEFAULT"
     TOTAL_N_REVERTED_FILES=0
     while read -r file_path; do
       if [ "$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$file_path")" ]; then
@@ -448,8 +447,7 @@ function revert_ignored_files() {
       fi
     done < <(find "$1" -type d)
     echo -e "$BLUE
-  Total number of reverted folders: $TOTAL_N_REVERTED_FILES $DEFAULT
-  "
+Total number of reverted folders: $TOTAL_N_REVERTED_FILES $DEFAULT"
   fi
 }
 
@@ -531,12 +529,12 @@ input_f="$1"
 
 shift
 
-while getopts ':vp:' opt; do
+while getopts ':pv:' opt; do
   case "$opt" in
-    v) VERBOSITY="$OPTARG"
+    v) VERBOSITY=$OPTARG
        ;;
     p)
-      FILTERING_PATTERN="$OPTARG"
+      FILTERING_PATTERN=$OPTARG
       ;;
     \?)
       echo "Unknown option: -$OPTARG"
