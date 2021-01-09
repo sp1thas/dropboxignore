@@ -38,6 +38,7 @@ TOTAL_N_IGNORED_FILES=0
 TOTAL_N_REVERTED_FILES=0
 TOTAL_N_GENERATED_FILES=0
 BASE_FOLDER="$PWD"
+FILE_ATTR_NAME="com.dropbox.ignored"
 
 DEFAULT="\e[0m"
 GREEN="\e[32m"
@@ -59,6 +60,7 @@ function log_info() {
     echo -e "$(date) $GREEN [  INFO ] $1 $DEFAULT"
   fi
 }
+
 #######################################
 # Log debug message.
 # Globals:
@@ -298,24 +300,44 @@ Total number of generated files: $TOTAL_N_GENERATED_FILES $DEFAULT"
 }
 
 #######################################
+# Get file status.
+# Globals:
+#   FILE_ATTR_VALUE
+#   FILE_ATTR_NAME
+# Arguments:
+#   Input file.
+#######################################
+function file_ignore_status() {
+  unset FILE_ATTR_VALUE
+  case $machine in
+  Linux)
+    FILE_ATTR_VALUE="$(getfattr --absolute-names --only-values -m "$FILE_ATTR_NAME" "$1")"
+    ;;
+  MacOS)
+    FILE_ATTR_VALUE="$(xattr -p "$FILE_ATTR_NAME" "$1" 2> /dev/null)"
+  esac
+}
+
+#######################################
 # Ignore file.
 # Globals:
-#   I
+#   DROPBOX_IGNORE_FILE_NAME
+#   BASE_FOLDER
 # Arguments:
 #   Input file.
 #######################################
 function ignore_file() {
-  attr_value="$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$1")"
+  file_ignore_status "$1"
   if [ "$(dirname "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ]; then
     log_debug "Bypass $(realpath --relative-to="$BASE_FOLDER" "$1")"
-  elif [  -z "$attr_value" ] || [ "$attr_value" == 0 ]; then
+  elif [  -z "$FILE_ATTR_VALUE" ]; then
     case $machine in
       Linux)
-        attr -s com.dropbox.ignored -V 1 "$1" > /dev/null
+        attr -s "$FILE_ATTR_NAME" -V 1 "$1" > /dev/null
         (( TOTAL_N_IGNORED_FILES++ ))
         ;;
       MacOS)
-        xattr -w com.dropbox.ignored 1 "$1" > /dev/null
+        xattr -w "$FILE_ATTR_NAME" 1 "$1" > /dev/null
         (( TOTAL_N_IGNORED_FILES++ ))
         ;;
     esac
@@ -371,6 +393,7 @@ function ignore_files() {
 Total number of ignored files: $TOTAL_N_IGNORED_FILES $DEFAULT"
   fi
 }
+
 #######################################
 # List ignored files and folders.
 # Arguments:
@@ -388,8 +411,8 @@ function list_ignored() {
     filtering_pattern="$2"
   fi
   while read -r f_path; do
-    attr_value="$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$f_path")"
-    if [ -n "$attr_value" ]; then
+    file_ignore_status "$f_path"
+    if [ -n "$FILE_FILE_ATTR_VALUE" ]; then
       realpath --relative-to="$BASE_FOLDER" "$f_path"
       if [ -f "$f_path" ]; then
         (( total_ignored_files++ ))
@@ -403,7 +426,6 @@ Total number of ignored files: $total_ignored_files
 Total number of ignored folders: $total_ignored_folders $DEFAULT"
 }
 
-
 #######################################
 # Revert ignored file.
 # Arguments:
@@ -412,8 +434,16 @@ Total number of ignored folders: $total_ignored_folders $DEFAULT"
 #   Message about the reverted file.
 #######################################
 function revert_ignored(){
-  if [ "$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$1")" ]; then
-    attr -r com.dropbox.ignored "$1" > /dev/null
+  file_ignore_status "$1"
+  if [ "$FILE_ATTR_VALUE" == 1 ]; then
+    case $machine in
+      Linux)
+        attr -r "$FILE_ATTR_NAME" "$1" > /dev/null
+        ;;
+      MacOS)
+        xattr -d "$FILE_ATTR_NAME" "$1" > /dev/null
+    esac
+
     log_debug "Reverted file: $(realpath --relative-to="$BASE_FOLDER" "$1")"
     (( TOTAL_N_REVERTED_FILES++ ))
   else
@@ -433,7 +463,8 @@ function revert_ignored_files() {
     revert_ignored "$1"
   else
     while read -r file_path; do
-      if [ "$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$file_path")" ]; then
+      file_ignore_status "$file_path"
+      if [ "$FILE_ATTR_VALUE" == 1 ]; then
         revert_ignored "$file_path"
       fi
     done < <(find "$1" -type f)
@@ -441,7 +472,8 @@ function revert_ignored_files() {
 Total number of reverted files: $TOTAL_N_REVERTED_FILES $DEFAULT"
     TOTAL_N_REVERTED_FILES=0
     while read -r file_path; do
-      if [ "$(getfattr --absolute-names -d -m "com\.dropbox\.ignored" "$file_path")" ]; then
+      file_ignore_status "$file_path"
+      if [ "$FILE_ATTR_VALUE" == 1 ]; then
         revert_ignored "$file_path"
         (( n_results++ ))
       fi
