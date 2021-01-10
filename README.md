@@ -4,7 +4,7 @@
 
 ---
 
-![CI](https://github.com/sp1thas/dropboxignore/workflows/CI/badge.svg) [![GitHub license](https://img.shields.io/github/license/sp1thas/dropboxignore)](https://github.com/sp1thas/dropboxignore/blob/master/LICENSE) [![Code Style](https://img.shields.io/badge/code%20style-google-%234285F4)](https://github.com/google/styleguide)
+![Testing](https://github.com/sp1thas/dropboxignore/workflows/Testing/badge.svg) [![GitHub license](https://img.shields.io/github/license/sp1thas/dropboxignore)](https://github.com/sp1thas/dropboxignore/blob/master/LICENSE) [![Code Style](https://img.shields.io/badge/code%20style-google-%234285F4)](https://github.com/google/styleguide)
 
 Exclude files from dropbox using glob patterns and take advantage of existing `.gitignore` files.
 
@@ -149,3 +149,4 @@ $  dropboxignore revert ~/demo
 
  - `dropbox update` should support deletions.
  - `dropbox ignore` should automatically update `.dropboxignore` file.
+ - Add more testcases
