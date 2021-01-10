@@ -16,13 +16,13 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Install os dependencies
-        run: apt update && apt install attr
+        run: sudo apt update && sudo apt install attr
 
       - name: Install bats-core
         run: |
           git clone https://github.com/bats-core/bats-core.git
           cd bats-core
-          ./install.sh /usr/local
+          sudo ./install.sh /usr/local
 
       - name: Install bats extras
         run: |
@@ -32,8 +32,8 @@ jobs:
 
       - name: Install dropboxignore
         run: |
-          cp dropboxignore.sh /usr/local/bin/dropboxignore
-          chmod +x /usr/local/bin/dropboxignore
+          sudo cp dropboxignore.sh /usr/local/bin/dropboxignore
+          sudo chmod +x /usr/local/bin/dropboxignore
 
       - name: Run tests
-        run: dropboxignore version
+        run: bats tests.sh
