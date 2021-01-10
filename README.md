@@ -1,5 +1,7 @@
 # dropboxignore
 
+![dropboxignore-logo](icons/128.png)*
+
 **It's all about the missing `.dropboxignore` file.**
 
 ---
@@ -145,8 +147,15 @@ $  dropboxignore revert ~/demo
 
 ```
 
+## How to contribute
+
+If you wish to contribute, read [CONTRIBUTING.md](CONTRIBUTING.md) guide for further details.
+
 ## TODOs
 
  - `dropbox update` should support deletions.
  - `dropbox ignore` should automatically update `.dropboxignore` file.
  - Add more testcases
+
+
+*Logo is based on [papirus-icon-theme](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)
