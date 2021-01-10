@@ -1,0 +1,15 @@
+name: dropboxignore
+base: core18
+version: 'v0.1.2-beta'
+summary: It's all about the missing .dropboxignore file
+description: |
+  Exclude files from dropbox using glob patterns and take advantage of existing .gitignore files.
+  This is a simple shell script that can be used to ignore files from dropbox using glob patterns, .dropboxignore files and the already existing .gitignorefiles. The shell script uses this approach to ignore the matched files.
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+
+parts:
+  my-part:
+    # See 'snapcraft plugins'
+    plugin: nil
