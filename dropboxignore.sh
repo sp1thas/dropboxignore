@@ -6,7 +6,7 @@
 IFS='
 '
 set -f
-VERSION="v0.1.2-beta"
+VERSION="v0.1.3-beta"
 DROPBOX_IGNORE_FILE_NAME=".dropboxignore"
 GIT_IGNORE_FILE_NAME=".gitignore"
 machine="$(uname -s)"
@@ -264,6 +264,10 @@ function update_dropboxignore_files() {
 function generate_dropboxignore_files() {
   find_gitignore_files "$1"
   for gitignore_file in $GITIGNORE_FILES; do
+    if [ "$(grep -P '^\s*!' "$gitignore_file")" ]; then
+      echo -e "$YELLOW$(realpath --relative-to="$BASE_FOLDER" "$gitignore_file") contains exception patterns, will be ignored"
+      continue
+    fi
     current_dir="$(dirname "$gitignore_file")"
     dropboxignore_file="$current_dir/$DROPBOX_IGNORE_FILE_NAME"
     if [ -f "$dropboxignore_file" ]; then
@@ -344,7 +348,11 @@ function ignore_files() {
     for dropboxignore_file in $DROPBOX_IGNORE_FILES; do
       file_total_results=0
       # shellcheck disable=SC2013
-      for file_pattern in $(grep -v '^\s*$\|^\s*\#|^!' "$dropboxignore_file"); do
+      if [ $(grep -P '^\s*!' "$dropboxignore_file") ]; then
+        echo -e "$YELLOW$(realpath --relative-to="$BASE_FOLDER" "$dropboxignore_file") contains exception patterns, will be ignored"
+        continue
+      fi
+      for file_pattern in $(grep -v -P '^\s*$|^\s*\#|^\s*!' "$dropboxignore_file"); do
         file_pattern=${file_pattern%/}
         subdir="$(dirname "$file_pattern")"
         pattern="$(basename "$file_pattern")"
@@ -354,16 +362,6 @@ function ignore_files() {
           (( n_results++ ))
         done < <(find "$(dirname "$dropboxignore_file")/$subdir" -name "$pattern")
         file_total_results=$((file_total_results+n_results))
-      done
-      # shellcheck disable=SC2013
-      for file_pattern in $(grep '^!' "$dropboxignore_file"); do
-        file_pattern=${file_pattern%/}
-        file_pattern="${file_pattern:1:${#file_pattern}}"
-        subdir="$(dirname "$file_pattern")"
-        pattern="$(basename "$file_pattern")"
-        while read -r file_path; do
-          revert_ignored "$file_path"
-        done < <(find "$(dirname "$dropboxignore_file")/$subdir" -name "$pattern")
       done
       log_debug "Matched files because of '$(realpath --relative-to="$BASE_FOLDER" "$dropboxignore_file")': $file_total_results"
     done
@@ -425,7 +423,7 @@ function revert_ignored(){
     log_debug "Reverted file: $(realpath --relative-to="$BASE_FOLDER" "$1")"
     (( TOTAL_N_REVERTED_FILES++ ))
   else
-    log_debug "Already reverted file: $(realpath --relative-to="$BASE_FOLDER" "$f_path")"
+    log_debug "Already reverted file: $(realpath --relative-to="$BASE_FOLDER" "$1")"
   fi
 }
 

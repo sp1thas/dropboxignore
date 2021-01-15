@@ -58,6 +58,11 @@ A common workflow could be the following
  2. Manually update or create `.dropboxignore` files (Optional)
  3. Ignore matched files based on `.dropboxignore` files (`dropboxignore ignore path`)
 
+### Notes
+
+ 1. In order to prevent unpleasant data losses, exception patterns are not supported. Both `.gitignore` and `.dropboxignore` files with at least one exceptional pattern will be bypassed (for further details: #2).
+ 2. Automatically generation of `.dropboxignore` files is an optional steps based on the use-case might not be a wise decision.
+
 ### More details
 
 ```shell
