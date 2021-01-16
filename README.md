@@ -98,7 +98,9 @@ Usage: "dropboxignore" <command> <path> [-v 0-2] [-p pattern]
 
 ```
 
-<script id="asciicast-384964" src="https://asciinema.org/a/384964.js" async></script>
+## Demo
+
+[![asciicast](https://asciinema.org/a/384964.svg)](https://asciinema.org/a/384964)
 
 ## How to contribute
 
