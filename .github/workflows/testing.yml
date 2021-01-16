@@ -26,14 +26,13 @@ jobs:
 
       - name: Install bats extras
         run: |
-          git clone https://github.com/bats-core/bats-assert.git test/libs/bats-assert
-          git clone https://github.com/bats-core/bats-support.git test/libs/bats-support
-          git clone https://github.com/bats-core/bats-file.git test/libs/bats-file
+          git clone https://github.com/bats-core/bats-assert.git libs/bats-assert
+          git clone https://github.com/bats-core/bats-support.git libs/bats-support
+          git clone https://github.com/bats-core/bats-file.git libs/bats-file
 
       - name: Install dropboxignore
         run: |
-          sudo cp dropboxignore.sh /usr/local/bin/dropboxignore
-          sudo chmod +x /usr/local/bin/dropboxignore
+          sudo make install
 
       - name: Run tests
-        run: bats tests.sh
+        run: make test
