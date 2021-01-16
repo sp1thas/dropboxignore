@@ -1,12 +1,12 @@
-# dropboxignore
-
-![dropboxignore-logo](icons/128.png)*
-
-**It's all about the missing `.dropboxignore` file.**
-
----
-
-![Testing](https://github.com/sp1thas/dropboxignore/workflows/Testing/badge.svg) [![GitHub license](https://img.shields.io/github/license/sp1thas/dropboxignore)](https://github.com/sp1thas/dropboxignore/blob/master/LICENSE) [![Code Style](https://img.shields.io/badge/code%20style-google-%234285F4)](https://github.com/google/styleguide)
+<div align="center">
+    <h1>dropboxignore</h1>
+    <img src="https://raw.githubusercontent.com/sp1thas/dropboxignore/master/icons/128.png" alt="Oh My Zsh">
+    <p>It's all about the missing <code>.dropboxignore</code> file.</p>
+    <img src="https://github.com/sp1thas/dropboxignore/workflows/Testing/badge.svg">
+    <img src="https://img.shields.io/github/license/sp1thas/dropboxignore">
+    <img src="https://img.shields.io/badge/code%20style-google-%234285F4">
+</div>
+<hr>
 
 Exclude files from dropbox using glob patterns and take advantage of existing `.gitignore` files.
 
@@ -35,17 +35,29 @@ For Ubuntu/Debian based:
 $ apt install attr
 ```
 
-### Installation
-#### Automatic
-```shell
-$ wget -qO- https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh | bash
-```
+### Basic Installation
+Basic Installation
 
-#### Manual
+dropboxignore is installed by running one of the following commands in your terminal. You can install this via the command-line with either curl, wget or another similar tool.
+
+| Mathod | Command                                                                                           |
+|--------|---------------------------------------------------------------------------------------------------|
+| curl   | `sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"` |
+| wget   | `sh -c "$(wget -O- https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"`   |
+| fetch  | `sh -c "$(fetch -o - https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"` |
+
+
+### Manual Installation
 ```shell
 $ git clone https://github.com/sp1thas/dropboxignore.git
-$ cp dropboxignore/dropboxignore.sh /usr/local/bin/dropboxignore
-$ chmod +x /usr/local/bin/dropboxignore
+$ cd dropboxignore
+$ make test  # optional step, bats should be in your PATH
+$ make install
+```
+
+### Uninstall
+```shell
+$ make uninstall
 ```
 
 ## Usage
@@ -60,7 +72,7 @@ A common workflow could be the following
 
 ### Notes
 
- 1. In order to prevent unpleasant data losses, exception patterns are not supported. Both `.gitignore` and `.dropboxignore` files with at least one exceptional pattern will be bypassed (for further details: #2).
+ 1. In order to prevent unpleasant data losses, exception patterns are not supported. Both `.gitignore` and `.dropboxignore` files with at least one exceptional pattern will be bypassed (for further details: [#3](https://github.com/sp1thas/dropboxignore/issues/3)).
  2. Automatically generation of `.dropboxignore` files is an optional steps based on the use-case might not be a wise decision.
 
 ### More details
