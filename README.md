@@ -14,13 +14,13 @@ This is a simple shell script that can be used to ignore files from dropbox usin
 
 ## Features
 
- - 🤚🏿 Ignore folders or files based on glob patterns inside the `.dropboxignore` file.
- - 📝 Automatically generate `.dropboxignore` files based on existing `.gitignore` files.
- - 🔬 Ignore specific folders or files via CLI.
- - ↩ Revert ignored folders or files
- - ❌ Delete `.dropboxignore` files
- - ♻️ Update `.dropboxignore` files when changes are detected in corresponding `.gitignore` files.
- - 🗒 List ignored files and folders
+ - Ignore folders or files based on glob patterns inside the `.dropboxignore` file.
+ - Automatically generate `.dropboxignore` files based on existing `.gitignore` files.
+ - Ignore specific folders or files via CLI.
+ - Revert ignored folders or files
+ - Delete `.dropboxignore` files
+ - Update `.dropboxignore` files when changes are detected in corresponding `.gitignore` files.
+ - List ignored files and folders
 
 ## Getting Started
 
@@ -98,70 +98,7 @@ Usage: "dropboxignore" <command> <path> [-v 0-2] [-p pattern]
 
 ```
 
-### Examples
-
-Let's setup our demo folder:
-```shell
-$ mkdir ~/demo && git init ~/demo && \
-  echo 'b.txt' > ~/demo/.gitignore && \
-  mkdir ~/demo/subfolder && echo 'a.txt' > ~/demo/subfolder/.gitignore &&
-  touch ~/demo/b.txt ~/demo/subfolder/b.txt ~/demo/subfolder/a.txt
-Initialized empty Git repository in ~/demo/.git/
-$ tree ~/demo -a -I .git
-~/demo
-├── b.txt
-├── .gitignore
-└── subfolder
-    ├── a.txt
-    ├── b.txt
-    └── .gitignore
-
-1 directory, 5 files
-```
-
-Generate multiple `.dropboxignore` files based on existing `.gitignore` files inside your folder:
-
-```shell
-$  dropboxignore generate ~/demo
- Created file: subfolder/.dropboxignore
- Created file: .dropboxignore
-
-  Total number of generated files: 2
-
-```
-
-Ignored all files based on `.dropboxignore` files:
-
-```shell
-$ dropboxignore ignore ~/demo
-
-  Total number of ignored files: 3
-
-```
-
-List ignored files and folders:
-```shell
-$ dropboxignore list ~/demo
-subfolder/a.txt
-subfolder/b.txt
-b.txt
-
-  Total number of ignored files: 3
-  Total number of ignored folders: 0
-
-```
-
-Revert all ignored files:
-
-```shell
-$  dropboxignore revert ~/demo
-
-  Total number of reverted files: 3
-
-
-  Total number of reverted folders: 0
-
-```
+<script id="asciicast-384964" src="https://asciinema.org/a/384964.js" async></script>
 
 ## How to contribute
 
