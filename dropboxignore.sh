@@ -6,7 +6,7 @@
 IFS='
 '
 set -f
-VERSION="$(cat VERSION.txt)"
+VERSION="v0.1.3-beta"
 DROPBOX_IGNORE_FILE_NAME=".dropboxignore"
 GIT_IGNORE_FILE_NAME=".gitignore"
 machine="$(uname -s)"
@@ -33,7 +33,7 @@ YELLOW="\e[33m"
 # Outputs:
 #   Info Message
 #######################################
-function log_info() {
+log_info () {
   if [ "$VERBOSITY" -ge 1 ]; then
     echo -e "$(date) $GREEN [  INFO ] $1 $DEFAULT"
   fi
@@ -48,7 +48,7 @@ function log_info() {
 # Outputs:
 #   Debug Message
 #######################################
-function log_debug() {
+log_debug () {
   if [ "$VERBOSITY" -ge 2 ]; then
     echo -e "$(date) $BLUE [ DEBUG ] $1 $DEFAULT"
   fi
@@ -64,7 +64,7 @@ function log_debug() {
 # Outputs:
 #   Error message.
 #######################################
-function log_error() {
+log_error () {
   if [ "$VERBOSITY" -ge 0 ]; then
     echo -e "$(date) $RED [ ERROR ] $1 $DEFAULT"
   fi
@@ -84,7 +84,7 @@ function log_error() {
 # Outputs:
 #   Warning message.
 #######################################
-function log_warning() {
+log_warning () {
   if [ "$VERBOSITY" -ge 1 ]; then
     echo -e "$(date) $YELLOW [WARNING] $1 $DEFAULT"
   fi
@@ -115,7 +115,7 @@ esac
 # Returns:
 #   0 if file or folder exists, otherwise, returns 2.
 #######################################
-function check_input() {
+check_input () {
   if [ -z "$1" ]; then
     log_error "You have to provide a file or folder" 2
   elif [ -d "$1" ]; then
@@ -136,7 +136,7 @@ function check_input() {
 # Arguments:
 #   Input file or folder.
 #######################################
-function find_gitignore_files() {
+find_gitignore_files () {
   if [ -d "$1" ]; then
     GITIGNORE_FILES=$(find "$1" -type f -name "$GIT_IGNORE_FILE_NAME")
   else
@@ -155,7 +155,7 @@ function find_gitignore_files() {
 # Returns:
 #   3 if file not found, otherwise, 0.
 #######################################
-function delete_dropboxignore_files() {
+delete_dropboxignore_files () {
   if [ -d "$1" ]; then
     n_results=0
     while read -r file_path; do
@@ -184,7 +184,7 @@ function delete_dropboxignore_files() {
 # Arguments:
 #   Input folder or file.
 #######################################
-function find_dropboxignore_files() {
+find_dropboxignore_files () {
   DROPBOX_IGNORE_FILES=$(find "$1" -type f -name "$DROPBOX_IGNORE_FILE_NAME")
 }
 
@@ -197,7 +197,7 @@ function find_dropboxignore_files() {
 # Outputs:
 #   Status about the generated file.
 #######################################
-function generate_dropboxignore_file() {
+generate_dropboxignore_file () {
   dropboxignore_file_path="$(dirname "$1")/$DROPBOX_IGNORE_FILE_NAME"
   if [ -f "$dropboxignore_file_path" ]; then
     log_debug "Already existing file: $(realpath --relative-to="$BASE_FOLDER" "$dropboxignore_file_path")"
@@ -220,7 +220,7 @@ EOF
 # Outputs:
 #   Update status.
 #######################################
-function update_dropboxignore_file() {
+update_dropboxignore_file () {
   diff_content=$(diff --new-line-format="" --unchanged-line-format="" --ignore-blank-lines --ignore-tab-expansion --ignore-space-change --ignore-trailing-space -I "# [Automatically|-]" "${1}" "${2}")
   if [ -n "$diff_content" ]; then
     tee "$1" > /dev/null << EOF
@@ -243,7 +243,7 @@ EOF
 # Arguments:
 #   Input folder.
 #######################################
-function update_dropboxignore_files() {
+update_dropboxignore_files () {
   find_gitignore_files "$1"
   for gitignore_file in $GITIGNORE_FILES; do
     dropboxignore_file="$(dirname "$gitignore_file")/$DROPBOX_IGNORE_FILE_NAME"
@@ -261,7 +261,7 @@ function update_dropboxignore_files() {
 # Arguments:
 #   Input folder.
 #######################################
-function generate_dropboxignore_files() {
+generate_dropboxignore_files () {
   find_gitignore_files "$1"
   for gitignore_file in $GITIGNORE_FILES; do
     if [ "$(grep -P '^\s*!' "$gitignore_file")" ]; then
@@ -289,7 +289,7 @@ Total number of generated files: $TOTAL_N_GENERATED_FILES $DEFAULT"
 # Arguments:
 #   Input file.
 #######################################
-function file_ignore_status() {
+file_ignore_status () {
   unset FILE_ATTR_VALUE
   case $machine in
   Linux)
@@ -297,6 +297,7 @@ function file_ignore_status() {
     ;;
   MacOS)
     FILE_ATTR_VALUE="$(xattr -p "$FILE_ATTR_NAME" "$1" 2> /dev/null)"
+    ;;
   esac
 }
 
@@ -308,7 +309,7 @@ function file_ignore_status() {
 # Arguments:
 #   Input file.
 #######################################
-function ignore_file() {
+ignore_file () {
   file_ignore_status "$1"
   if [ "$(dirname "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ]; then
     log_debug "Bypass $(realpath --relative-to="$BASE_FOLDER" "$1")"
@@ -338,7 +339,7 @@ function ignore_file() {
 # Outputs:
 #   Number of ignored files.
 #######################################
-function ignore_files() {
+ignore_files () {
   if [ "$(basename "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ]; then
     log_error "Cannot ignore an $DROPBOX_IGNORE_FILE_NAME. Choose another file or folder." 4
   elif [ -f "$1" ]; then
@@ -378,7 +379,7 @@ Total number of ignored files: $TOTAL_N_IGNORED_FILES $DEFAULT"
 # Outputs:
 #   Ignored files and folders
 #######################################
-function list_ignored() {
+list_ignored () {
   total_ignored_files=0
   total_ignored_folders=0
   if [ -z "$2" ]; then
@@ -388,7 +389,7 @@ function list_ignored() {
   fi
   while read -r f_path; do
     file_ignore_status "$f_path"
-    if [ -n "$FILE_FILE_ATTR_VALUE" ]; then
+    if [ -n "$FILE_ATTR_VALUE" ]; then
       realpath --relative-to="$BASE_FOLDER" "$f_path"
       if [ -f "$f_path" ]; then
         (( total_ignored_files++ ))
@@ -409,7 +410,7 @@ Total number of ignored folders: $total_ignored_folders $DEFAULT"
 # Outputs:
 #   Message about the reverted file.
 #######################################
-function revert_ignored(){
+revert_ignored (){
   file_ignore_status "$1"
   if [ "$FILE_ATTR_VALUE" == 1 ]; then
     case $machine in
@@ -434,7 +435,7 @@ function revert_ignored(){
 # Outputs:
 #   Message about reverted files.
 #######################################
-function revert_ignored_files() {
+revert_ignored_files () {
   if [ -f "$1" ]; then
     revert_ignored "$1"
   else
@@ -464,7 +465,7 @@ Total number of reverted folders: $TOTAL_N_REVERTED_FILES $DEFAULT"
 # Outputs:
 #   help message
 #######################################
-display_help() {
+display_help () {
   cat << EOUSAGE
 Usage: "$PROGRAM_NAME" <command> <path> [-v 0-2] [-p pattern]
 
