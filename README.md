@@ -36,15 +36,14 @@ $ apt install attr
 ```
 
 ### Basic Installation
-Basic Installation
 
 dropboxignore is installed by running one of the following commands in your terminal. You can install this via the command-line with either curl, wget or another similar tool.
 
-| Mathod | Command                                                                                           |
-|--------|---------------------------------------------------------------------------------------------------|
-| curl   | `sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"` |
-| wget   | `sh -c "$(wget -O- https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"`   |
-| fetch  | `sh -c "$(fetch -o - https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"` |
+| Mathod | Command                                                                                                 |
+|--------|---------------------------------------------------------------------------------------------------------|
+| curl   | `sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"`  |
+| wget   | `sudo sh -c "$(wget -qO- https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"`   |
+| fetch  | `sudo sh -c "$(fetch -o - https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"`  |
 
 
 ### Manual Installation
@@ -52,7 +51,7 @@ dropboxignore is installed by running one of the following commands in your term
 $ git clone https://github.com/sp1thas/dropboxignore.git
 $ cd dropboxignore
 $ make test  # optional step, bats should be in your PATH
-$ make install
+$ sudo make install
 ```
 
 ### Uninstall
