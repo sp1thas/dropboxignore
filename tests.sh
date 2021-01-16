@@ -1,8 +1,8 @@
 #!/usr/bin/env
 
-load 'test/libs/bats-support/load'
-load 'test/libs/bats-file/load'
-load 'test/libs/bats-assert/load'
+load 'libs/bats-support/load'
+load 'libs/bats-file/load'
+load 'libs/bats-assert/load'
 
 TEST_FOLDER="testing_folder"
 
