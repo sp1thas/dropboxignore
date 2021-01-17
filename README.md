@@ -5,6 +5,9 @@
     <img src="https://github.com/sp1thas/dropboxignore/workflows/Testing/badge.svg">
     <img src="https://img.shields.io/github/license/sp1thas/dropboxignore">
     <img src="https://img.shields.io/badge/code%20style-google-%234285F4">
+    <a href="https://snapcraft.io/dropboxignore">
+        <img alt="dropboxignore" src="https://snapcraft.io/dropboxignore/badge.svg" />
+    </a>
 </div>
 <hr>
 
