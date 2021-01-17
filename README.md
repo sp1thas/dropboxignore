@@ -8,6 +8,9 @@
     <a href="https://snapcraft.io/dropboxignore">
         <img alt="dropboxignore" src="https://snapcraft.io/dropboxignore/badge.svg" />
     </a>
+    <a href='https://dropboxignore.readthedocs.io/en/latest/?badge=latest'>
+        <img src='https://readthedocs.org/projects/dropboxignore/badge/?version=latest' alt='Documentation Status' />
+    </a>
 </div>
 <hr>
 
