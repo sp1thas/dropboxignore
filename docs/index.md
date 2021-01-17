@@ -1,4 +1,4 @@
-# Welcome to dropboxignore Documentation
+# Welcome to dropboxignore documentation
 
 Exclude files from dropbox using glob patterns and take advantage of existing `.gitignore` files.
 

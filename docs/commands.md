@@ -10,7 +10,7 @@ $ dropboxignore <command> <path> [parameters]
 
 ## `generate`
 
-Based on input folder, look for `.gitignore` files in any subdirectory and generate the correspondand `.dropboxignore` file. If a `.dropboxignore` already exists, will not be modified. If a `.gitignore` file containes at least one exception pattern, the corresponding`.dropboxignore` file will not be created.
+Generated `dropboxignore` files based on the given path. If a `.dropboxignore` already exists, will not be modified. If a `.gitignore` file contains at least one exception pattern, the corresponding`.dropboxignore` file will not be created.
 
 **Example:**
 
@@ -32,7 +32,7 @@ $ tree . -a
 
 ## `ignore`
 
-Ignore all matched folder or files under the given path using existing `.dropboxignore` files.
+Ignores all matched folder or files under the given path using existing `.dropboxignore` files.
 
 **Example:**
 
@@ -52,7 +52,7 @@ Total number of ignored files: 1
 
 ## `list`
 
-List every ignored folder and file under the given path
+Lists every ignored folder and file under the given path
 
 **Example:**
 
@@ -66,7 +66,7 @@ Total number of ignored folders: 0
 
 ## `revert`
 
-Revert every ignored file or folder under the given path. After running this command, all local files will be sync with dropbox.
+Reverts every ignored file or folder under the given path. After running this command, all local files will be sync with dropbox.
 
 **Example:**
 
@@ -80,7 +80,7 @@ Total number of reverted folders: 0
 
 ## `delete`
 
-Delete all `.dropboxignore` files under the given path.
+Deletes all `.dropboxignore` files under the given path.
 
 **Example:**
 
