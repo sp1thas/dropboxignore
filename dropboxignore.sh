@@ -6,7 +6,11 @@
 IFS='
 '
 set -f
-VERSION="v0.1.4-beta"
+if [ -f "$(dirname $0)/VERSION.txt" ]; then
+  VERSION="$(cat "$(dirname $0)/VERSION.txt")"
+else
+  VERSION="$(cat "/usr/local/share/dropboxignore/VERSION.txt")"
+fi
 DROPBOX_IGNORE_FILE_NAME=".dropboxignore"
 GIT_IGNORE_FILE_NAME=".gitignore"
 machine="$(uname -s)"

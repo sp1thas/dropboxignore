@@ -1,4 +1,5 @@
-DESTDIR=/usr/local/bin
+DESTDIR=/usr/local
+VERSION=`cat VERSION.txt`
 
 # run tests
 test:
@@ -6,11 +7,14 @@ test:
 
 # install dropboxignore
 install:
-	cp dropboxignore.sh ${DESTDIR}/dropboxignore
-	chmod +x ${DESTDIR}/dropboxignore
-	echo "dropboxignore has been installed."
+	cp dropboxignore.sh ${DESTDIR}/bin/dropboxignore
+	chmod +x ${DESTDIR}/bin/dropboxignore
+	mkdir -p "${DESTDIR}/share/dropboxignore"
+	cp VERSION.txt "${DESTDIR}/share/dropboxignore"
+	echo "dropboxignore $(VERSION) has been installed."
 
 # uninstall dropbox ignore
 uninstall:
-	rm -rf ${DESTDIR}/dropboxignore
-	echo "dropboxignore has been uninstalled."
+	rm -rf "${DESTDIR}/bin/dropboxignore"
+	rm -rf "${DESTDIR}/share/dropboxignore/"
+	echo "dropboxignore $(VERSION) has been uninstalled."

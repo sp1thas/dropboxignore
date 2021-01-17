@@ -29,18 +29,9 @@ This is a simple shell script that can be used to ignore files from dropbox usin
 
 ⚠️ This script is currently available only for Linux and MacOS.
 
-### Prerequisites
-
-[attr](https://man7.org/linux/man-pages/man1/attr.1.html) should be installed in your system
-
-For Ubuntu/Debian based:
-```shell
-$ apt install attr
-```
-
 ### Basic Installation
 
-dropboxignore is installed by running one of the following commands in your terminal. You can install this via the command-line with either curl, wget or another similar tool.
+dropboxignore is installed by running one of the following commands in your terminal. You can install this via the command-line with either curl, wget or another similar tool. `attr` package should be installed on your system.
 
 | Mathod | Command                                                                                                 |
 |--------|---------------------------------------------------------------------------------------------------------|
@@ -48,6 +39,14 @@ dropboxignore is installed by running one of the following commands in your term
 | wget   | `sudo sh -c "$(wget -qO- https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"`   |
 | fetch  | `sudo sh -c "$(fetch -o - https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"`  |
 
+
+### Snap Installation
+
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/dropboxignore)
+
+```shell
+$ snap install dropboxignore --beta
+```
 
 ### Manual Installation
 ```shell
@@ -107,7 +106,7 @@ Usage: "dropboxignore" <command> <path> [-v 0-2] [-p pattern]
 
 ## How to contribute
 
-If you wish to contribute, read [CONTRIBUTING.md](CONTRIBUTING.md) guide for further details.
+If you wish to contribute, read [docs/contributing.md](docs/contributing.md) guide for further details.
 
 ## TODOs
 

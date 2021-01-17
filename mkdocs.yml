@@ -1,0 +1,11 @@
+site_name: dropboxignore
+theme:
+  name: readthedocs
+
+repo_url: https://github.com/sp1thas/dropboxignore/
+
+nav:
+  - Home: 'index.md'
+  - Installation: 'installation.md'
+  - Commands: 'commands.md'
+  - Contributing: 'contributing.md'
