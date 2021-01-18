@@ -1,11 +1,6 @@
-name: Testing
+name: Shellcheck
 
 on:
-  workflow_run:
-    workflows: [ "Shellcheck" ]
-    branches: [ master ]
-    types:
-      - completed
   push:
     branches: [ master ]
   pull_request:
@@ -14,20 +9,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  shellcheck:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Install os dependencies
-        run: sudo apt update && sudo apt install attr
+        run: sudo apt update && sudo apt install shellcheck
 
-      - name: Install bats-core
+      - name: Run shellcheck
         run: |
-          git clone https://github.com/bats-core/bats-core.git
-          cd bats-core
-          sudo ./install.sh /usr/local
+          shellcheck tests/*.bats
+          shellcheck *.sh
 
       - name: Install bats extras
         run: |

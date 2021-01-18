@@ -6,8 +6,8 @@
 IFS='
 '
 set -f
-if [ -f "$(dirname $0)/VERSION.txt" ]; then
-  VERSION="$(cat "$(dirname $0)/VERSION.txt")"
+if [ -f "$(dirname "$0")/VERSION.txt" ]; then
+  VERSION="$(cat "$(dirname "$0")/VERSION.txt")"
 else
   VERSION="$(cat "/usr/local/share/dropboxignore/VERSION.txt")"
 fi
@@ -96,7 +96,6 @@ log_warning () {
 
 case $MACHINE in
   Linux)
-    MACHINE="$MACHINE"
     ;;
   Darwin)
     MACHINE="MacOS"
@@ -268,7 +267,7 @@ update_dropboxignore_files () {
 generate_dropboxignore_files () {
   find_gitignore_files "$1"
   for gitignore_file in $GITIGNORE_FILES; do
-    if [ "$(grep -P '^\s*!' "$gitignore_file")" ]; then
+    if grep -q -P '^\s*!' "$gitignore_file" ; then
       echo -e "$YELLOW$(realpath --relative-to="$BASE_FOLDER" "$gitignore_file") contains exception patterns, will be ignored"
       continue
     fi
@@ -353,11 +352,12 @@ ignore_files () {
     for dropboxignore_file in $DROPBOX_IGNORE_FILES; do
       file_total_results=0
       # shellcheck disable=SC2013
-      if [ $(grep -P '^\s*!' "$dropboxignore_file") ]; then
+      if grep -q -P '^\s*!' "$dropboxignore_file" ; then
         echo -e "$YELLOW$(realpath --relative-to="$BASE_FOLDER" "$dropboxignore_file") contains exception patterns, will be ignored"
         continue
       fi
-      for file_pattern in $(grep -v -P '^\s*$|^\s*\#|^\s*!' "$dropboxignore_file"); do
+      while read -r file_pattern; do
+#      for file_pattern in $(grep -v -P '^\s*$|^\s*\#|^\s*!' "$dropboxignore_file"); do
         file_pattern=${file_pattern%/}
         subdir="$(dirname "$file_pattern")"
         pattern="$(basename "$file_pattern")"
@@ -367,7 +367,7 @@ ignore_files () {
           (( n_results++ ))
         done < <(find "$(dirname "$dropboxignore_file")/$subdir" -name "$pattern")
         file_total_results=$((file_total_results+n_results))
-      done
+      done < <(grep -v -P '^\s*$|^\s*\#|^\s*!' "$dropboxignore_file")
       log_debug "Matched files because of '$(realpath --relative-to="$BASE_FOLDER" "$dropboxignore_file")': $file_total_results"
     done
     echo -e "$BLUE

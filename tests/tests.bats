@@ -11,7 +11,8 @@ DROPBOXIGNORE_NAME=".dropboxignore"
 setup () {
   rm -rf $TEST_FOLDER
   mkdir $TEST_FOLDER
-  source ./dropboxignore.sh > /dev/null
+  # shellcheck disable=SC1091
+  source dropboxignore.sh > /dev/null
   touch "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
   touch "$TEST_FOLDER/$GITIGNORE_NAME"
 }
