@@ -22,16 +22,3 @@ jobs:
         run: |
           shellcheck tests/*.bats
           shellcheck *.sh
-
-      - name: Install bats extras
-        run: |
-          git clone https://github.com/bats-core/bats-assert.git libs/bats-assert
-          git clone https://github.com/bats-core/bats-support.git libs/bats-support
-          git clone https://github.com/bats-core/bats-file.git libs/bats-file
-
-      - name: Install dropboxignore
-        run: |
-          sudo make install
-
-      - name: Run tests
-        run: make test
