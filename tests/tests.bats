@@ -1,4 +1,5 @@
 #!/usr/bin/env bats
+# shellcheck shell=bash
 
 load '../libs/bats-support/load'
 load '../libs/bats-file/load'
@@ -9,17 +10,15 @@ GITIGNORE_NAME=".gitignore"
 DROPBOXIGNORE_NAME=".dropboxignore"
 
 setup () {
-  rm -rf $TEST_FOLDER
-  mkdir $TEST_FOLDER
+  rm -rf "$TEST_FOLDER"
+  mkdir "$TEST_FOLDER"
   # shellcheck disable=SC1091
   source dropboxignore.sh > /dev/null
   touch "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
   touch "$TEST_FOLDER/$GITIGNORE_NAME"
 }
 
-teardown () {
-  rm -rf $TEST_FOLDER
-}
+teardown () { rm -rf "$TEST_FOLDER"; }
 
 @test "Test help command" {
   run dropboxignore help > /dev/null
@@ -34,7 +33,7 @@ teardown () {
 }
 
 @test "Test dropboxignore file generation" {
-  run dropboxignore generate $TEST_FOLDER
+  run dropboxignore generate "$TEST_FOLDER"
   assert_success
   assert_file_exist "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
 }
@@ -43,7 +42,7 @@ teardown () {
   rm "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
   echo "a
   !something" > "$TEST_FOLDER/$GITIGNORE_NAME"
-  run dropboxignore generate $TEST_FOLDER
+  run dropboxignore generate "$TEST_FOLDER"
   assert_success
   assert_file_not_exist "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
 }

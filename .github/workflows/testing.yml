@@ -1,11 +1,6 @@
 name: Testing
 
 on:
-  workflow_run:
-    workflows: [ "Shellcheck" ]
-    branches: [ master ]
-    types:
-      - completed
   push:
     branches: [ master ]
   pull_request:
