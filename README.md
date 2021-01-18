@@ -3,14 +3,14 @@
     <img src="https://raw.githubusercontent.com/sp1thas/dropboxignore/master/icons/128.png" alt="Oh My Zsh">
     <p>It's all about the missing <code>.dropboxignore</code> file.</p>
     <img src="https://github.com/sp1thas/dropboxignore/workflows/Testing/badge.svg">
-    <img src="https://img.shields.io/github/license/sp1thas/dropboxignore">
-    <img src="https://img.shields.io/badge/code%20style-google-%234285F4">
-    <a href="https://snapcraft.io/dropboxignore">
-        <img alt="dropboxignore" src="https://snapcraft.io/dropboxignore/badge.svg" />
-    </a>
+    <img src="https://github.com/sp1thas/dropboxignore/workflows/Shellcheck/badge.svg">
     <a href='https://dropboxignore.readthedocs.io/en/latest/?badge=latest'>
         <img src='https://readthedocs.org/projects/dropboxignore/badge/?version=latest' alt='Documentation Status' />
     </a>
+    <a href="https://snapcraft.io/dropboxignore">
+        <img alt="dropboxignore" src="https://snapcraft.io/dropboxignore/badge.svg" />
+    </a>
+    <img src="https://img.shields.io/badge/code%20style-google-%234285F4">
 </div>
 <hr>
 
