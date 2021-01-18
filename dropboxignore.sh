@@ -13,7 +13,7 @@ else
 fi
 DROPBOX_IGNORE_FILE_NAME=".dropboxignore"
 GIT_IGNORE_FILE_NAME=".gitignore"
-machine="$(uname -s)"
+MACHINE="$(uname -s)"
 PROGRAM_NAME="$(basename "$0")"
 VERBOSITY=1
 TOTAL_N_IGNORED_FILES=0
@@ -94,15 +94,15 @@ log_warning () {
   fi
 }
 
-case $machine in
+case $MACHINE in
   Linux)
-    machine="$machine"
+    MACHINE="$MACHINE"
     ;;
   Darwin)
-    machine="MacOS"
+    MACHINE="MacOS"
     ;;
   *)
-    log_error "$machine is not supported" 3
+    log_error "$MACHINE is not supported" 3
     ;;
 
 esac
@@ -295,7 +295,7 @@ Total number of generated files: $TOTAL_N_GENERATED_FILES $DEFAULT"
 #######################################
 file_ignore_status () {
   unset FILE_ATTR_VALUE
-  case $machine in
+  case $MACHINE in
   Linux)
     FILE_ATTR_VALUE="$(getfattr --absolute-names --only-values -m "$FILE_ATTR_NAME" "$1")"
     ;;
@@ -318,7 +318,7 @@ ignore_file () {
   if [ "$(dirname "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ]; then
     log_debug "Bypass $(realpath --relative-to="$BASE_FOLDER" "$1")"
   elif [  -z "$FILE_ATTR_VALUE" ]; then
-    case $machine in
+    case $MACHINE in
       Linux)
         attr -s "$FILE_ATTR_NAME" -V 1 "$1" > /dev/null
         (( TOTAL_N_IGNORED_FILES++ ))
@@ -417,7 +417,7 @@ Total number of ignored folders: $total_ignored_folders $DEFAULT"
 revert_ignored (){
   file_ignore_status "$1"
   if [ "$FILE_ATTR_VALUE" == 1 ]; then
-    case $machine in
+    case $MACHINE in
       Linux)
         attr -r "$FILE_ATTR_NAME" "$1" > /dev/null
         ;;
@@ -492,88 +492,105 @@ Usage: "$PROGRAM_NAME" <command> <path> [-v 0-2] [-p pattern]
 EOUSAGE
 }
 
-case $1 in
-
-  "")
-    echo "You have to specify an action."
-    echo "See '$PROGRAM_NAME help'"
-    exit 3
-    ;;
-  generate)
-    generate_action=true
-    shift
-    ;;
-  update)
-    update_action=true
-    shift
-    ;;
-  ignore)
-    ignore_action=true
-    shift
-    ;;
-  revert)
-    revert_action=true
-    shift
-    ;;
-  delete)
-    delete_action=true
-    shift
-    ;;
-  help)
+#######################################
+# The main function.
+# Arguments:
+#   Command
+#   Path
+#   Extra parameters
+# Globals:
+#   PROGRAM_NAME
+#   VERBOSITY
+#   FILTERING_PATTERN
+#   MACHINE
+# Output:
+#   Almost everything.
+#######################################
+main () {
+  if [ $# -eq 0 ]; then
     display_help
-    exit 0
-    ;;
-  version)
-    echo "$PROGRAM_NAME: $VERSION"
-    exit 0
-    ;;
-  list)
-    list_action=true
-    shift
-    ;;
-  *)
-    echo "$PROGRAM_NAME: '$1' is not a $PROGRAM_NAME command."
-    echo "See '$PROGRAM_NAME help'"
-    exit 1
-    ;;
-esac
-
-input_f="$1"
-
-shift
-
-while getopts ':pv:' opt; do
-  case "$opt" in
-    v) VERBOSITY=$OPTARG
-       ;;
-    p)
-      FILTERING_PATTERN=$OPTARG
+    return
+  fi
+  case $1 in
+    generate)
+      generate_action=true
+      shift
       ;;
-    \?)
-      echo "Unknown option: -$OPTARG"
-      exit 3
+    update)
+      update_action=true
+      shift
+      ;;
+    ignore)
+      ignore_action=true
+      shift
+      ;;
+    revert)
+      revert_action=true
+      shift
+      ;;
+    delete)
+      delete_action=true
+      shift
+      ;;
+    help)
+      display_help
+      exit 0
+      ;;
+    version)
+      echo "$PROGRAM_NAME: $VERSION"
+      exit 0
+      ;;
+    list)
+      list_action=true
+      shift
+      ;;
+    *)
+      echo "$PROGRAM_NAME: '$1' is not a $PROGRAM_NAME command."
+      echo "See '$PROGRAM_NAME help'"
+      exit 1
       ;;
   esac
-done
 
-log_debug "Operating system: $machine"
+  input_f="$1"
 
-# check input file or folder
-check_input "$input_f"
+  shift
 
-input_f=$(realpath "$input_f")
+  while getopts ':pv:' opt; do
+    case "$opt" in
+      v) VERBOSITY=$OPTARG
+         ;;
+      p)
+        FILTERING_PATTERN=$OPTARG
+        ;;
+      \?)
+        echo "Unknown option: -$OPTARG"
+        exit 3
+        ;;
+    esac
+  done
 
-# run action
-if [ "$generate_action" == true ]; then
-  generate_dropboxignore_files "$input_f"
-elif [ "$update_action" == true ]; then
-  update_dropboxignore_files "$input_f"
-elif [ "$ignore_action" == true ]; then
-  ignore_files "$input_f"
-elif [ "$delete_action" == true ]; then
-  delete_dropboxignore_files "$input_f"
-elif [ "$revert_action" == true ]; then
-  revert_ignored_files "$input_f"
-elif [ "$list_action" == true ]; then
-  list_ignored "$input_f" "$FILTERING_PATTERN"
-fi
+  log_debug "Operating system: $MACHINE"
+
+  # check input file or folder
+  check_input "$input_f"
+
+  input_f=$(realpath "$input_f")
+
+  # run action
+  if [ "$generate_action" == true ]; then
+    generate_dropboxignore_files "$input_f"
+  elif [ "$update_action" == true ]; then
+    update_dropboxignore_files "$input_f"
+  elif [ "$ignore_action" == true ]; then
+    ignore_files "$input_f"
+  elif [ "$delete_action" == true ]; then
+    delete_dropboxignore_files "$input_f"
+  elif [ "$revert_action" == true ]; then
+    revert_ignored_files "$input_f"
+  elif [ "$list_action" == true ]; then
+    list_ignored "$input_f" "$FILTERING_PATTERN"
+  fi
+}
+
+main "$@"
+

@@ -3,7 +3,7 @@ VERSION=`cat VERSION.txt`
 
 # run tests
 test:
-	bats tests.sh
+	bats tests
 
 # install dropboxignore
 install:
