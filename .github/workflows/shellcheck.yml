@@ -18,6 +18,6 @@ jobs:
 
       - name: Run shellcheck
         run: |
-          shellchec -V
+          shellcheck -V
           shellcheck tests/*.bats
           shellcheck *.sh
