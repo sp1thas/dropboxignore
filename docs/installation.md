@@ -4,11 +4,11 @@ Below you will all the available installation options. dropboxignore is currentl
 
 ## Basic Installation
 
-| Mathod | Command                                                                                                 |
-|--------|---------------------------------------------------------------------------------------------------------|
-| curl   | `sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"`  |
-| wget   | `sudo sh -c "$(wget -qO- https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"`   |
-| fetch  | `sudo sh -c "$(fetch -o - https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"`  |
+| Mathod | Command                                                                                                       |
+|--------|---------------------------------------------------------------------------------------------------------------|
+| curl   | `sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"`  |
+| wget   | `sudo sh -c "$(wget -qO- https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"`   |
+| fetch  | `sudo sh -c "$(fetch -o - https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"`  |
 
 ## Snap Installation
 

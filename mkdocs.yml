@@ -5,8 +5,13 @@ site_description: dropboxignore documentation page
 site_author: Panagiotis Simakis
 
 theme:
-  name: readthedocs
-  navigation_depth: 2
+  name: material
+  logo: static/logo.png
+  favicon: static/favicon.png
+  palette:
+    primary: blue
+  features:
+    - navigation.instant
 
 markdown_extensions:
   - admonition
@@ -14,7 +19,6 @@ markdown_extensions:
 repo_url: https://github.com/sp1thas/dropboxignore/
 
 nav:
-  #  - Home: 'index.md'
   - 'User Guide':
       - Installation: 'installation.md'
       - Usage: 'usage.md'

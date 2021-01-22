@@ -1,6 +1,6 @@
 # Welcome to dropboxignore documentation
 
-![main-photo](static/main.jpeg)*Photo: Robert Capa. FRANCE. 1949. Nice. French painter, Henri MATISSE.*
+![main-photo](../static/main.jpeg)*Photo: Robert Capa. FRANCE. 1949. Nice. French painter, Henri MATISSE.*
 
 Exclude files from dropbox using glob patterns and take advantage of existing `.gitignore` files.
 

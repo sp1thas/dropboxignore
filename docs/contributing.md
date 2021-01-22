@@ -15,10 +15,4 @@ For something that is bigger than a one or two line fix:
 
 ## How to report a bug
 
-When filing an issue, make sure to answer these five questions:
-
- 1. What operating system are you using?
- 2. What shell are you using?
- 3. What did you do?
- 4. What did you expect to see?
- 5. What did you see instead?
+Go to issue tracker and create a new issue and follow the template.
