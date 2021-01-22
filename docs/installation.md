@@ -20,7 +20,9 @@ $ snap install dropboxignore --beta
 ```
 
 ## Manual Installation
-Make source that `git` and `attr` package are installed in your system.
+
+!!! note
+    Make source that the following packages are installed in your system: `git`, `attr`
 
 ```shell
 $ git clone https://github.com/sp1thas/dropboxignore.git

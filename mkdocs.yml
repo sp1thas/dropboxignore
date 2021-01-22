@@ -1,12 +1,17 @@
 site_name: dropboxignore
 theme:
   name: readthedocs
-
+markdown_extensions:
+  - admonition
 repo_url: https://github.com/sp1thas/dropboxignore/
 
 nav:
-  - Home: 'index.md'
-  - Installation: 'installation.md'
-  - Commands: 'commands.md'
-  - Contributing: 'contributing.md'
-  - License: 'license.md'
+#  - Home: 'index.md'
+  - 'User Guide':
+    - Installation: 'installation.md'
+    - Usage: 'usage.md'
+  - 'Developer Documentation':
+    - Contributing: 'contributing.md'
+    - Testing: 'testing.md'
+  - About:
+    - License: 'license.md'

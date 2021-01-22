@@ -1,6 +1,19 @@
-# Commands
+# Usage
 
-Below you will find the list of supported commands. For every command, a description and an example will be provided.
+dropboxignore is a CLI tool which support a collection of commands in order to make your life easier when it comes to ignore files or/and folders from dropbox. Below you will find the list of supported commands. For every command, a description and an example will be provided.
+
+A common workflow could be the following
+
+ 1. Automatically generate `.dropboxignore` files based on existing `.gitignore` files.
+ 2. Manually update or create `.dropboxignore` files (Optional).
+ 3. Ignore matched files based on .dropboxignore files.
+
+!!! warning "Important warning"
+    In order to prevent unpleasant data losses, exception patterns are not supported. Both `.gitignore` and `.dropboxignore` files with at least one exceptional pattern will be bypassed (for further details: [#3](https://github.com/sp1thas/dropboxignore/issues/3)).
+
+!!! note "Keep in mind"
+    Automatic generation of `.dropboxignore` files is an optional step, therefore, may not be a necessary action for your case.
+
 
 ## Synopsis
 

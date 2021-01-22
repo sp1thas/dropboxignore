@@ -75,7 +75,7 @@ A common workflow could be the following
 ### Notes
 
  1. In order to prevent unpleasant data losses, exception patterns are not supported. Both `.gitignore` and `.dropboxignore` files with at least one exceptional pattern will be bypassed (for further details: [#3](https://github.com/sp1thas/dropboxignore/issues/3)).
- 2. Automatically generation of `.dropboxignore` files is an optional steps based on the use-case might not be a wise decision.
+ 2. Automatic generation of `.dropboxignore` files is an optional step, therefore, may not be a necessary action for your case.
 
 ### Demo
 
