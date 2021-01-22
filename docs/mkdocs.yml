@@ -1,22 +1,25 @@
 version: 2
+
 site_name: dropboxignore
+site_description: dropboxignore documentation page
+site_author: Panagiotis Simakis
+
 theme:
   name: readthedocs
-
-docs_dir:
-  mkdocs
+  navigation_depth: 2
 
 markdown_extensions:
   - admonition
+
 repo_url: https://github.com/sp1thas/dropboxignore/
 
 nav:
-#  - Home: 'index.md'
+  #  - Home: 'index.md'
   - 'User Guide':
-    - Installation: 'installation.md'
-    - Usage: 'usage.md'
+      - Installation: 'installation.md'
+      - Usage: 'usage.md'
   - 'Developer Documentation':
-    - Contributing: 'contributing.md'
-    - Testing: 'testing.md'
+      - Contributing: 'contributing.md'
+      - Testing: 'testing.md'
   - About:
-    - License: 'license.md'
+      - License: 'license.md'
