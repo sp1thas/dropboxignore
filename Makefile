@@ -9,7 +9,7 @@ test :
 install :
 	cp bin/dropboxignore.sh ${DESTDIR}/bin/dropboxignore
 	chmod +x ${DESTDIR}/bin/dropboxignore
-	echo "\e[32m`dropboxignore version` has been installed."
+	dropboxignore version
 
 # uninstall dropboxignore
 uninstall :

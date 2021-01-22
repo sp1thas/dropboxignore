@@ -472,14 +472,13 @@ Usage: "$PROGRAM_NAME" <command> <path> [-v 0-2] [-p pattern]
   Commands:
 
     generate            Generate .dropboxignore files based on existing .gitignore files.
-                        If a .dropboxignore file already exists, will not be updated.
-    update              Update existing .dropboxignore files if at least one .gitignore file have been changed.
+    update              Update existing .dropboxignore files if at least one .gitignore file has been changed.
     ignore              Ignore file or folder from dropbox.
+    list                List ignored files and folders.
     revert              Revert ignored file or folder.
     delete              Delete specific .dropboxignore file or every .dropboxignore files under the given directory.
     help                Will print this message and then will exit.
     version             Will print the version and then will exit.
-    list                List ignored files and folders
 
   Options:
     -v                  Choose verbose level (0: Error, 1: Info, 2: Debug)
