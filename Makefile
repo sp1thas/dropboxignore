@@ -1,20 +1,17 @@
 DESTDIR=/usr/local
-VERSION=`cat VERSION.txt`
 
 # run tests
-test:
+# bats should be in PATH
+test :
 	bats tests
 
 # install dropboxignore
-install:
-	cp dropboxignore.sh ${DESTDIR}/bin/dropboxignore
+install :
+	cp bin/dropboxignore.sh ${DESTDIR}/bin/dropboxignore
 	chmod +x ${DESTDIR}/bin/dropboxignore
-	mkdir -p "${DESTDIR}/share/dropboxignore"
-	cp VERSION.txt "${DESTDIR}/share/dropboxignore"
-	echo "dropboxignore $(VERSION) has been installed."
+	echo "\e[32m`dropboxignore version` has been installed."
 
-# uninstall dropbox ignore
-uninstall:
+# uninstall dropboxignore
+uninstall :
 	rm -rf "${DESTDIR}/bin/dropboxignore"
-	rm -rf "${DESTDIR}/share/dropboxignore/"
-	echo "dropboxignore $(VERSION) has been uninstalled."
+	echo "\e[32mdropboxignore has been uninstalled."

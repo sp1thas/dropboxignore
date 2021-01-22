@@ -2,6 +2,9 @@ name: dropboxignore
 base: core18
 adopt-info: get-version
 summary: It's all about the missing .dropboxignore file.
+description: |
+  Exclude files from dropbox using glob patterns and take advantage of existing .gitignore files.
+  This is a simple shell script that can be used to ignore files from dropbox using glob patterns, .dropboxignore files and the already existing .gitignorefiles. The shell script uses this approach to ignore the matched files.
 icon: icons/256.png
 grade: stable
 confinement: strict
@@ -10,7 +13,7 @@ architectures: [ amd64, i386 ]
 
 apps:
   dropboxignore:
-    command: bash $SNAP/opt/dropboxignore/bin/dropboxignore.sh
+    command: /bin/bash $SNAP/opt/dropboxignore/bin/dropboxignore.sh
     plugs:
       - home
 
@@ -22,9 +25,9 @@ parts:
     plugin: nil
     override-pull: |
       snapcraftctl pull
-      snapcraftctl set-version "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/VERSION.txt)"
+      snapcraftctl set-version "$(curl -sSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/bin/dropboxignore.sh | grep -oP '^VERSION=(.*)$' | sed -r 's/^VERSION=//')"
 
-  dropboxignore:
+  main-part:
     stage-packages:
       - attr
     source-type: git

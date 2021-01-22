@@ -34,11 +34,11 @@ This is a simple shell script that can be used to ignore files from dropbox usin
 
 dropboxignore is installed by running one of the following commands in your terminal. You can install this via the command-line with either curl, wget or another similar tool. `attr` package should be installed on your system.
 
-| Mathod | Command                                                                                                 |
-|--------|---------------------------------------------------------------------------------------------------------|
-| curl   | `sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"`  |
-| wget   | `sudo sh -c "$(wget -qO- https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"`   |
-| fetch  | `sudo sh -c "$(fetch -o - https://raw.githubusercontent.com/sp1thas/dropboxignore/master/install.sh)"`  |
+| Mathod | Command                                                                                                       |
+|--------|---------------------------------------------------------------------------------------------------------------|
+| curl   | `sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"`  |
+| wget   | `sudo sh -c "$(wget -qO- https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"`   |
+| fetch  | `sudo sh -c "$(fetch -o - https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"`  |
 
 
 ### Snap Installation
@@ -59,7 +59,7 @@ $ sudo make install
 
 ### Uninstall
 ```shell
-$ make uninstall
+$ sudo make uninstall
 ```
 
 ## Usage
@@ -85,7 +85,7 @@ For futher details check out the [documentation](http://dropboxignore.rtfd.io/)
 
 ## How to contribute
 
-If you wish to contribute, read [docs/contributing.md](docs/mkdocs/contributing.md) guide for further details.
+If you wish to contribute, read [docs/contributing.md](docs/contributing.md) guide for further details.
 
 ---
 

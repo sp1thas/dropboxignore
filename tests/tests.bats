@@ -13,9 +13,10 @@ setup () {
   rm -rf "$TEST_FOLDER"
   mkdir "$TEST_FOLDER"
   # shellcheck disable=SC1091
-  source dropboxignore.sh > /dev/null
+  source bin/dropboxignore.sh > /dev/null
   touch "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
   touch "$TEST_FOLDER/$GITIGNORE_NAME"
+  alias dropboxignore='./bin/dropboxignore.sh'
 }
 
 teardown () { rm -rf "$TEST_FOLDER"; }
