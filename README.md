@@ -30,8 +30,6 @@ This is a simple shell script that can be used to ignore files from dropbox usin
 
 ## Getting Started
 
-⚠️ This script is currently available only for Linux and MacOS.
-
 ### Basic Installation
 
 dropboxignore is installed by running one of the following commands in your terminal. You can install this via the command-line with either curl, wget or another similar tool. `attr` package should be installed on your system.
@@ -79,43 +77,16 @@ A common workflow could be the following
  1. In order to prevent unpleasant data losses, exception patterns are not supported. Both `.gitignore` and `.dropboxignore` files with at least one exceptional pattern will be bypassed (for further details: [#3](https://github.com/sp1thas/dropboxignore/issues/3)).
  2. Automatically generation of `.dropboxignore` files is an optional steps based on the use-case might not be a wise decision.
 
-### More details
-
-```shell
-$ dropboxignore help
-Usage: "dropboxignore" <command> <path> [-v 0-2] [-p pattern]
-
-  Commands:
-
-    generate            Generate .dropboxignore files based on existing .gitignore files.
-                        If a .dropboxignore file already exists, will not be updated.
-    update              Update existing .dropboxignore files if at least one .gitignore file have been changed.
-    ignore              Ignore file or folder from dropbox.
-    revert              Revert ignored file or folder.
-    delete              Delete specific .dropboxignore file or every .dropboxignore files under the given directory.
-    help                Will print this message and then will exit.
-    version             Will print the version and then will exit.
-    list                List ignored files and folders
-
-  Options:
-    -v                  Choose verbose level (0: Error, 1: Info, 2: Debug)
-    -p                  Filtering pattern
-
-```
-
-## Demo
+### Demo
 
 [![asciicast](https://asciinema.org/a/384964.svg)](https://asciinema.org/a/384964)
+
+For futher details check out the [documentation](http://dropboxignore.rtfd.io/)
 
 ## How to contribute
 
 If you wish to contribute, read [docs/contributing.md](docs/contributing.md) guide for further details.
 
-## TODOs
-
- - `dropbox update` should support deletions.
- - `dropbox ignore` should automatically update `.dropboxignore` file.
- - Add more testcases
-
+---
 
 *Logo is based on [papirus-icon-theme](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)

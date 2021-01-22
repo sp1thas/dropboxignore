@@ -11,7 +11,7 @@ This is a simple shell script that can be used to ignore files from dropbox usin
  - Ignore folders or files based on glob patterns inside the `.dropboxignore` file.
  - Automatically generate `.dropboxignore` files based on existing `.gitignore` files.
  - Ignore specific folders or files via CLI.
- - Revert ignored folders or files
- - Delete `.dropboxignore` files
+ - Revert ignored folders or files.
+ - Delete `.dropboxignore` files.
  - Update `.dropboxignore` files when changes are detected in corresponding `.gitignore` files.
- - List ignored files and folders
+ - List ignored files and folders.
