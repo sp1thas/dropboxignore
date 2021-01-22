@@ -1,6 +1,11 @@
+version: 2
 site_name: dropboxignore
 theme:
   name: readthedocs
+
+docs_dir:
+  mkdocs
+
 markdown_extensions:
   - admonition
 repo_url: https://github.com/sp1thas/dropboxignore/

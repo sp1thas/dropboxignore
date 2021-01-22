@@ -1,4 +1,4 @@
 version: 2
 
 mkdocs:
-  configuration: mkdocs.yml
+  configuration: docs/mkdocs.yml
