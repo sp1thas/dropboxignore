@@ -1,5 +1,7 @@
 # Welcome to dropboxignore documentation
 
+![Testing status](https://github.com/sp1thas/dropboxignore/workflows/Testing/badge.svg) ![Shellcheck status](https://github.com/sp1thas/dropboxignore/workflows/Shellcheck/badge.svg) [![Documentation Status](https://readthedocs.org/projects/dropboxignore/badge/?version=latest)](https://dropboxignore.readthedocs.io/en/latest/?badge=latest) [![Snapcraft](https://snapcraft.io/dropboxignore/badge.svg)](https://snapcraft.io/dropboxignore) ![Code style](https://img.shields.io/badge/code%20style-google-%234285F4)
+
 ![main-photo](static/main.jpeg)*Photo: Robert Capa. FRANCE. 1949. Nice. French painter, Henri MATISSE.*
 
 Exclude files from dropbox using glob patterns and take advantage of existing `.gitignore` files.
