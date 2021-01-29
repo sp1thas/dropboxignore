@@ -32,7 +32,7 @@ This is a simple shell script that can be used to ignore files from dropbox usin
 
 ### Basic Installation
 
-dropboxignore is installed by running one of the following commands in your terminal. You can install this via the command-line with either curl, wget or another similar tool. `attr` package should be installed on your system.
+dropboxignore is installed by running one of the following commands in your terminal. You can install this via the command-line with either curl, wget or another similar tool. `attr` package should be installed on your system. **Git** is required to run the installation.  
 
 | Mathod | Command                                                                                                       |
 |--------|---------------------------------------------------------------------------------------------------------------|
