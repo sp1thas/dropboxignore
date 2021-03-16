@@ -90,17 +90,66 @@ log_warning () {
   fi
 }
 
-case $MACHINE in
+#######################################
+# Check OS.
+# Globals:
+#   MACHINE
+#######################################
+check_os(){
+  case $MACHINE in
+    Linux)
+      ;;
+    Darwin)
+      MACHINE="MacOS"
+      ;;
+    *)
+      log_error "$MACHINE is not supported" 3
+      ;;
+  esac
+}
+
+
+#######################################
+# Check system dependencies.
+# Globals:
+#   MACHINE
+#######################################
+check_dependencies() {
+  if command -v realpath &> /dev/null
+  then
+    log_debug "realpath command is installed"
+  elif command -v python &> /dev/null
+  then
+    log_debug "python is installed"
+  else
+    log_error "Neither realpath command not python could be found in you system"
+  fi
+  case $MACHINE in
   Linux)
+    if ! command -v getfattr &> /dev/null
+    then
+        log_error "attr package is not installed" 5
+    fi
+    if ! command -v attr &> /dev/null
+    then
+        log_error "attr package is not installed" 5
+    fi
+    log_debug "attr package is installed"
+
     ;;
   Darwin)
-    MACHINE="MacOS"
+    if ! command -v xattr &> /dev/null
+    then
+        log_error "xattr package not installed" 5
+    fi
     ;;
   *)
     log_error "$MACHINE is not supported" 3
     ;;
-
 esac
+}
+
+check_os
 
 #######################################
 # Check input file or folder.
@@ -150,7 +199,12 @@ find_gitignore_files () {
 #   Base Absolute path.
 #######################################
 get_relative_path () {
-  python -c 'import os.path, sys;print os.path.relpath(sys.argv[1],sys.argv[2])' "$1" "${2-$PWD}"
+  if command -v realpath &> /dev/null
+  then
+    realpath --relative-to="${2-$PWD}" "$1"
+  else
+    python -c 'import os.path, sys;print os.path.relpath(sys.argv[1],sys.argv[2])' "$1" "${2-$PWD}"
+  fi
 }
 
 #######################################
@@ -159,7 +213,12 @@ get_relative_path () {
 #   Relative path.
 #######################################
 get_absolute_path () {
-  python -c 'import os.path, sys;print os.path.abspath(sys.argv[1])' "$1"
+  if command -v realpath &> /dev/null
+  then
+    realpath "$1"
+  else
+    python -c 'import os.path, sys;print os.path.abspath(sys.argv[1])' "$1"
+  fi
 }
 
 #######################################
@@ -584,6 +643,7 @@ main () {
   done
 
   log_debug "Operating system: $MACHINE"
+  check_dependencies
 
   # check input file or folder
   check_input "$input_f"
