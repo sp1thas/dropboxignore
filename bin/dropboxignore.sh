@@ -100,7 +100,6 @@ check_os(){
     Linux)
       ;;
     Darwin)
-      MACHINE="MacOS"
       ;;
     *)
       log_error "$MACHINE is not supported" 3
@@ -136,6 +135,12 @@ check_dependencies() {
     fi
     log_debug "attr package is installed"
 
+    ;;
+  Darwin)
+    if ! command -v xattr &> /dev/null
+    then
+        log_error "xattr package not installed" 5
+    fi
     ;;
   Darwin)
     if ! command -v xattr &> /dev/null
@@ -372,7 +377,7 @@ file_ignore_status () {
   Linux)
     FILE_ATTR_VALUE="$(getfattr --absolute-names --only-values -m "$FILE_ATTR_NAME" "$1")"
     ;;
-  MacOS)
+  Darwin)
     FILE_ATTR_VALUE="$(xattr -p "$FILE_ATTR_NAME" "$1" 2> /dev/null)"
     ;;
   esac
@@ -396,7 +401,7 @@ ignore_file () {
         attr -s "$FILE_ATTR_NAME" -V 1 "$1" > /dev/null
         (( TOTAL_N_IGNORED_FILES++ ))
         ;;
-      MacOS)
+      Darwin)
         xattr -w "$FILE_ATTR_NAME" 1 "$1" > /dev/null
         (( TOTAL_N_IGNORED_FILES++ ))
         ;;
@@ -495,7 +500,7 @@ revert_ignored (){
       Linux)
         attr -r "$FILE_ATTR_NAME" "$1" > /dev/null
         ;;
-      MacOS)
+      Darwin)
         xattr -d "$FILE_ATTR_NAME" "$1" > /dev/null
     esac
 
