@@ -142,12 +142,6 @@ check_dependencies() {
         log_error "xattr package not installed" 5
     fi
     ;;
-  Darwin)
-    if ! command -v xattr &> /dev/null
-    then
-        log_error "xattr package not installed" 5
-    fi
-    ;;
   *)
     log_error "$MACHINE is not supported" 3
     ;;
