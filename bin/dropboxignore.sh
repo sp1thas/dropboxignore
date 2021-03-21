@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # dropboxignore
 # =============
 # Ignore files and folders from dropbox using the .dropbox ignore files
@@ -13,6 +13,7 @@ MACHINE="$(uname -s)"
 PROGRAM_NAME="$(basename "$0")"
 VERBOSITY=1
 TOTAL_N_IGNORED_FILES=0
+TOTAL_N_IGNORED_FOLDERS=0
 TOTAL_N_REVERTED_FILES=0
 TOTAL_N_GENERATED_FILES=0
 BASE_FOLDER="$PWD"
@@ -33,7 +34,7 @@ YELLOW="\e[33m"
 # Outputs:
 #   Info Message
 #######################################
-log_info () {
+log_info() {
   if [ "$VERBOSITY" -ge 1 ]; then
     echo -e "$(date) $GREEN [  INFO ] $1 $DEFAULT"
   fi
@@ -48,7 +49,7 @@ log_info () {
 # Outputs:
 #   Debug Message
 #######################################
-log_debug () {
+log_debug() {
   if [ "$VERBOSITY" -ge 2 ]; then
     echo -e "$(date) $BLUE [ DEBUG ] $1 $DEFAULT"
   fi
@@ -64,7 +65,7 @@ log_debug () {
 # Outputs:
 #   Error message.
 #######################################
-log_error () {
+log_error() {
   if [ "$VERBOSITY" -ge 0 ]; then
     echo -e "$(date) $RED [ ERROR ] $1 $DEFAULT"
   fi
@@ -84,7 +85,7 @@ log_error () {
 # Outputs:
 #   Warning message.
 #######################################
-log_warning () {
+log_warning() {
   if [ "$VERBOSITY" -ge 1 ]; then
     echo -e "$(date) $YELLOW [WARNING] $1 $DEFAULT"
   fi
@@ -95,18 +96,17 @@ log_warning () {
 # Globals:
 #   MACHINE
 #######################################
-check_os(){
+check_os() {
   case $MACHINE in
-    Linux)
-      ;;
-    Darwin)
-      ;;
-    *)
-      log_error "$MACHINE is not supported" 3
-      ;;
+  Linux) ;;
+
+  Darwin) ;;
+
+  *)
+    log_error "$MACHINE is not supported" 3
+    ;;
   esac
 }
-
 
 #######################################
 # Check system dependencies.
@@ -114,38 +114,33 @@ check_os(){
 #   MACHINE
 #######################################
 check_dependencies() {
-  if command -v realpath &> /dev/null
-  then
+  if command -v realpath &>/dev/null; then
     log_debug "realpath command is installed"
-  elif command -v python &> /dev/null
-  then
+  elif command -v python &>/dev/null; then
     log_debug "python is installed"
   else
     log_error "Neither realpath command not python could be found in you system"
   fi
   case $MACHINE in
   Linux)
-    if ! command -v getfattr &> /dev/null
-    then
-        log_error "attr package is not installed" 5
+    if ! command -v getfattr &>/dev/null; then
+      log_error "attr package is not installed" 5
     fi
-    if ! command -v attr &> /dev/null
-    then
-        log_error "attr package is not installed" 5
+    if ! command -v attr &>/dev/null; then
+      log_error "attr package is not installed" 5
     fi
     log_debug "attr package is installed"
 
     ;;
   Darwin)
-    if ! command -v xattr &> /dev/null
-    then
-        log_error "xattr package not installed" 5
+    if ! command -v xattr &>/dev/null; then
+      log_error "xattr package not installed" 5
     fi
     ;;
   *)
     log_error "$MACHINE is not supported" 3
     ;;
-esac
+  esac
 }
 
 check_os
@@ -162,13 +157,13 @@ check_os
 # Returns:
 #   0 if file or folder exists, otherwise, returns 2.
 #######################################
-check_input () {
+check_input() {
   if [ -z "$1" ]; then
     log_error "You have to provide a file or folder" 2
   elif [ -d "$1" ]; then
     log_debug "Input folder: \"$1\""
     BASE_FOLDER="$1"
-  elif [ -f "$1" ] || { [ "$(basename "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ] && [ -d "$(dirname "$1")" ] ; }; then
+  elif [ -f "$1" ] || { [ "$(basename "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ] && [ -d "$(dirname "$1")" ]; }; then
     log_debug "Input file: \"$1\""
     BASE_FOLDER="$(dirname "$1")"
   else
@@ -183,7 +178,7 @@ check_input () {
 # Arguments:
 #   Input file or folder.
 #######################################
-find_gitignore_files () {
+find_gitignore_files() {
   if [ -d "$1" ]; then
     GITIGNORE_FILES=$(find "$1" -type f -name "$GIT_IGNORE_FILE_NAME")
   else
@@ -197,9 +192,8 @@ find_gitignore_files () {
 #   Absolute path.
 #   Base Absolute path.
 #######################################
-get_relative_path () {
-  if command -v realpath &> /dev/null
-  then
+get_relative_path() {
+  if command -v realpath &>/dev/null; then
     realpath --relative-to="${2-$PWD}" "$1"
   else
     python -c 'import os.path, sys;print os.path.relpath(sys.argv[1],sys.argv[2])' "$1" "${2-$PWD}"
@@ -211,9 +205,8 @@ get_relative_path () {
 # Arguments:
 #   Relative path.
 #######################################
-get_absolute_path () {
-  if command -v realpath &> /dev/null
-  then
+get_absolute_path() {
+  if command -v realpath &>/dev/null; then
     realpath "$1"
   else
     python -c 'import os.path, sys;print os.path.abspath(sys.argv[1])' "$1"
@@ -231,11 +224,11 @@ get_absolute_path () {
 # Returns:
 #   3 if file not found, otherwise, 0.
 #######################################
-delete_dropboxignore_files () {
+delete_dropboxignore_files() {
   if [ -d "$1" ]; then
     n_results=0
     while read -r file_path; do
-      (( n_results++ ))
+      ((n_results++))
       rm "$file_path"
     done < <(find "$1" -type f -name "$DROPBOX_IGNORE_FILE_NAME")
     echo -e "$YELLOW Deleted files: $n_results $DEFAULT"
@@ -260,7 +253,7 @@ delete_dropboxignore_files () {
 # Arguments:
 #   Input folder or file.
 #######################################
-find_dropboxignore_files () {
+find_dropboxignore_files() {
   DROPBOX_IGNORE_FILES=$(find "$1" -type f -name "$DROPBOX_IGNORE_FILE_NAME")
 }
 
@@ -273,12 +266,12 @@ find_dropboxignore_files () {
 # Outputs:
 #   Status about the generated file.
 #######################################
-generate_dropboxignore_file () {
+generate_dropboxignore_file() {
   dropboxignore_file_path="$(dirname "$1")/$DROPBOX_IGNORE_FILE_NAME"
   if [ -f "$dropboxignore_file_path" ]; then
     log_debug "Already existing file: $(get_relative_path "$dropboxignore_file_path" "$BASE_FOLDER")"
   else
-    tee "$dropboxignore_file_path" > /dev/null << EOF
+    tee "$dropboxignore_file_path" >/dev/null <<EOF
 # ----
 # Automatically Generated .dropboxignore file at $(date)
 # ----
@@ -296,10 +289,10 @@ EOF
 # Outputs:
 #   Update status.
 #######################################
-update_dropboxignore_file () {
+update_dropboxignore_file() {
   diff_content=$(diff --new-line-format="" --unchanged-line-format="" --ignore-blank-lines --ignore-tab-expansion --ignore-space-change --ignore-trailing-space -I "# [Automatically|-]" "${1}" "${2}")
   if [ -n "$diff_content" ]; then
-    tee "$1" > /dev/null << EOF
+    tee "$1" >/dev/null <<EOF
 # Automatically updated .dropboxignore file at "$(date)"
 # ----
 $diff_content
@@ -319,7 +312,7 @@ EOF
 # Arguments:
 #   Input folder.
 #######################################
-update_dropboxignore_files () {
+update_dropboxignore_files() {
   find_gitignore_files "$1"
   for gitignore_file in $GITIGNORE_FILES; do
     dropboxignore_file="$(dirname "$gitignore_file")/$DROPBOX_IGNORE_FILE_NAME"
@@ -337,10 +330,10 @@ update_dropboxignore_files () {
 # Arguments:
 #   Input folder.
 #######################################
-generate_dropboxignore_files () {
+generate_dropboxignore_files() {
   find_gitignore_files "$1"
   for gitignore_file in $GITIGNORE_FILES; do
-    if grep -q -P '^\s*!' "$gitignore_file" ; then
+    if grep -q -P '^\s*!' "$gitignore_file"; then
       echo -e "$YELLOW$(get_relative_path "$gitignore_file" "$BASE_FOLDER") contains exception patterns, will be ignored"
       continue
     fi
@@ -350,7 +343,7 @@ generate_dropboxignore_files () {
       log_debug "Already existing file: $(get_relative_path "$dropboxignore_file" "$BASE_FOLDER")"
     else
       generate_dropboxignore_file "$gitignore_file"
-      (( TOTAL_N_GENERATED_FILES++ ))
+      ((TOTAL_N_GENERATED_FILES++))
     fi
   done
   echo -e "$YELLOW
@@ -365,14 +358,14 @@ Total number of generated files: $TOTAL_N_GENERATED_FILES $DEFAULT"
 # Arguments:
 #   Input file.
 #######################################
-file_ignore_status () {
+file_ignore_status() {
   unset FILE_ATTR_VALUE
   case $MACHINE in
   Linux)
     FILE_ATTR_VALUE="$(getfattr --absolute-names --only-values -m "$FILE_ATTR_NAME" "$1")"
     ;;
   Darwin)
-    FILE_ATTR_VALUE="$(xattr -p "$FILE_ATTR_NAME" "$1" 2> /dev/null)"
+    FILE_ATTR_VALUE="$(xattr -p "$FILE_ATTR_NAME" "$1" 2>/dev/null)"
     ;;
   esac
 }
@@ -385,20 +378,23 @@ file_ignore_status () {
 # Arguments:
 #   Input file.
 #######################################
-ignore_file () {
+ignore_file() {
   file_ignore_status "$1"
   if [ "$(dirname "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ]; then
     log_debug "Bypass $(get_relative_path "$1" "$BASE_FOLDER")"
-  elif [  -z "$FILE_ATTR_VALUE" ]; then
+  elif [ -z "$FILE_ATTR_VALUE" ]; then
+    if [ -f "$1" ]; then
+      ((TOTAL_N_IGNORED_FILES++))
+    else
+      ((TOTAL_N_IGNORED_FOLDERS++))
+    fi
     case $MACHINE in
-      Linux)
-        attr -s "$FILE_ATTR_NAME" -V 1 "$1" > /dev/null
-        (( TOTAL_N_IGNORED_FILES++ ))
-        ;;
-      Darwin)
-        xattr -w "$FILE_ATTR_NAME" 1 "$1" > /dev/null
-        (( TOTAL_N_IGNORED_FILES++ ))
-        ;;
+    Linux)
+      attr -s "$FILE_ATTR_NAME" -V 1 "$1" >/dev/null
+      ;;
+    Darwin)
+      xattr -w "$FILE_ATTR_NAME" 1 "$1" >/dev/null
+      ;;
     esac
     log_debug "Ignored file: $(get_relative_path "$1" "$BASE_FOLDER")"
   else
@@ -415,7 +411,7 @@ ignore_file () {
 # Outputs:
 #   Number of ignored files.
 #######################################
-ignore_files () {
+ignore_files() {
   if [ "$(basename "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ]; then
     log_error "Cannot ignore an $DROPBOX_IGNORE_FILE_NAME. Choose another file or folder." 4
   elif [ -f "$1" ]; then
@@ -425,26 +421,28 @@ ignore_files () {
     for dropboxignore_file in $DROPBOX_IGNORE_FILES; do
       file_total_results=0
       # shellcheck disable=SC2013
-      if grep -q -P '^\s*!' "$dropboxignore_file" ; then
+      if grep -q -P '^\s*!' "$dropboxignore_file"; then
         echo -e "$YELLOW$(get_relative_path "$dropboxignore_file" "$BASE_FOLDER") contains exception patterns, will be ignored"
         continue
       fi
       while read -r file_pattern; do
-#      for file_pattern in $(grep -v -P '^\s*$|^\s*\#|^\s*!' "$dropboxignore_file"); do
+        #      for file_pattern in $(grep -v -P '^\s*$|^\s*\#|^\s*!' "$dropboxignore_file"); do
         file_pattern=${file_pattern%/}
         subdir="$(dirname "$file_pattern")"
         pattern="$(basename "$file_pattern")"
         n_results=0
         while read -r file_path; do
           ignore_file "$file_path"
-          (( n_results++ ))
+          ((n_results++))
         done < <(find "$(dirname "$dropboxignore_file")/$subdir" -name "$pattern")
-        file_total_results=$((file_total_results+n_results))
+        file_total_results=$((file_total_results + n_results))
       done < <(grep -v -P '^\s*$|^\s*\#|^\s*!' "$dropboxignore_file")
       log_debug "Matched files because of '$(get_relative_path "$dropboxignore_file" "$BASE_FOLDER")': $file_total_results"
     done
     echo -e "$BLUE
 Total number of ignored files: $TOTAL_N_IGNORED_FILES $DEFAULT"
+    echo -e "$BLUE
+Total number of ignored folders: $TOTAL_N_IGNORED_FOLDERS $DEFAULT"
   fi
 }
 
@@ -456,7 +454,7 @@ Total number of ignored files: $TOTAL_N_IGNORED_FILES $DEFAULT"
 # Outputs:
 #   Ignored files and folders
 #######################################
-list_ignored () {
+list_ignored() {
   total_ignored_files=0
   total_ignored_folders=0
   if [ -z "$2" ]; then
@@ -469,9 +467,9 @@ list_ignored () {
     if [ -n "$FILE_ATTR_VALUE" ]; then
       get_relative_path "$f_path" "$BASE_FOLDER"
       if [ -f "$f_path" ]; then
-        (( total_ignored_files++ ))
+        ((total_ignored_files++))
       elif [ -d "$f_path" ]; then
-        (( total_ignored_folders++ ))
+        ((total_ignored_folders++))
       fi
     fi
   done < <(find "$1" -name "$filtering_pattern")
@@ -487,19 +485,20 @@ Total number of ignored folders: $total_ignored_folders $DEFAULT"
 # Outputs:
 #   Message about the reverted file.
 #######################################
-revert_ignored (){
+revert_ignored() {
   file_ignore_status "$1"
   if [ "$FILE_ATTR_VALUE" == 1 ]; then
     case $MACHINE in
-      Linux)
-        attr -r "$FILE_ATTR_NAME" "$1" > /dev/null
-        ;;
-      Darwin)
-        xattr -d "$FILE_ATTR_NAME" "$1" > /dev/null
+    Linux)
+      attr -r "$FILE_ATTR_NAME" "$1" >/dev/null
+      ;;
+    Darwin)
+      xattr -d "$FILE_ATTR_NAME" "$1" >/dev/null
+      ;;
     esac
 
     log_debug "Reverted file: $(get_relative_path "$1" "$BASE_FOLDER")"
-    (( TOTAL_N_REVERTED_FILES++ ))
+    ((TOTAL_N_REVERTED_FILES++))
   else
     log_debug "Already reverted file: $(get_relative_path "$1" "$BASE_FOLDER")"
   fi
@@ -512,7 +511,7 @@ revert_ignored (){
 # Outputs:
 #   Message about reverted files.
 #######################################
-revert_ignored_files () {
+revert_ignored_files() {
   if [ -f "$1" ]; then
     revert_ignored "$1"
   else
@@ -529,7 +528,7 @@ Total number of reverted files: $TOTAL_N_REVERTED_FILES $DEFAULT"
       file_ignore_status "$file_path"
       if [ "$FILE_ATTR_VALUE" == 1 ]; then
         revert_ignored "$file_path"
-        (( n_results++ ))
+        ((n_results++))
       fi
     done < <(find "$1" -type d)
     echo -e "$BLUE
@@ -542,8 +541,8 @@ Total number of reverted folders: $TOTAL_N_REVERTED_FILES $DEFAULT"
 # Outputs:
 #   help message
 #######################################
-display_help () {
-  cat << EOUSAGE
+display_help() {
+  cat <<EOUSAGE
 Usage: "$PROGRAM_NAME" <command> <path> [-v 0-2] [-p pattern]
 
   Commands:
@@ -578,49 +577,49 @@ EOUSAGE
 # Output:
 #   Almost everything.
 #######################################
-main () {
+main() {
   if [ $# -eq 0 ]; then
     display_help
     return
   fi
   case $1 in
-    generate)
-      generate_action=true
-      shift
-      ;;
-    update)
-      update_action=true
-      shift
-      ;;
-    ignore)
-      ignore_action=true
-      shift
-      ;;
-    revert)
-      revert_action=true
-      shift
-      ;;
-    delete)
-      delete_action=true
-      shift
-      ;;
-    help)
-      display_help
-      exit 0
-      ;;
-    version)
-      echo "$PROGRAM_NAME: $VERSION"
-      exit 0
-      ;;
-    list)
-      list_action=true
-      shift
-      ;;
-    *)
-      echo "$PROGRAM_NAME: '$1' is not a $PROGRAM_NAME command."
-      echo "See '$PROGRAM_NAME help'"
-      exit 1
-      ;;
+  generate)
+    generate_action=true
+    shift
+    ;;
+  update)
+    update_action=true
+    shift
+    ;;
+  ignore)
+    ignore_action=true
+    shift
+    ;;
+  revert)
+    revert_action=true
+    shift
+    ;;
+  delete)
+    delete_action=true
+    shift
+    ;;
+  help)
+    display_help
+    exit 0
+    ;;
+  version)
+    echo "$PROGRAM_NAME: $VERSION"
+    exit 0
+    ;;
+  list)
+    list_action=true
+    shift
+    ;;
+  *)
+    echo "$PROGRAM_NAME: '$1' is not a $PROGRAM_NAME command."
+    echo "See '$PROGRAM_NAME help'"
+    exit 1
+    ;;
   esac
 
   input_f="$1"
@@ -629,15 +628,16 @@ main () {
 
   while getopts ':pv:' opt; do
     case "$opt" in
-      v) VERBOSITY=$OPTARG
-         ;;
-      p)
-        FILTERING_PATTERN=$OPTARG
-        ;;
-      \?)
-        echo "Unknown option: -$OPTARG"
-        exit 3
-        ;;
+    v)
+      VERBOSITY=$OPTARG
+      ;;
+    p)
+      FILTERING_PATTERN=$OPTARG
+      ;;
+    \?)
+      echo "Unknown option: -$OPTARG"
+      exit 3
+      ;;
     esac
   done
 
@@ -666,4 +666,3 @@ main () {
 }
 
 main "$@"
-
