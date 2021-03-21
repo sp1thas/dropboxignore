@@ -99,8 +99,10 @@ teardown () { rm -rf "$TEST_FOLDER"; }
   mkdir "$TEST_FOLDER/f"
   touch "$TEST_FOLDER/f/$GITIGNORE_NAME"
   find_gitignore_files "$TEST_FOLDER"
-  assert_equal "$TEST_FOLDER/f/$GITIGNORE_NAME
-$TEST_FOLDER/$GITIGNORE_NAME" "$GITIGNORE_FILES"
+  run echo "$GITIGNORE_FILES"
+  assert_output --partial "$TEST_FOLDER/f/$GITIGNORE_NAME"
+  run echo "$GITIGNORE_FILES"
+  assert_output --partial "$TEST_FOLDER/$GITIGNORE_NAME"
   # Test file with max depth
   find_gitignore_files "$TEST_FOLDER/$GITIGNORE_NAME"
   assert_equal "$TEST_FOLDER/$GITIGNORE_NAME" "$GITIGNORE_FILES"

@@ -6,7 +6,7 @@
 IFS='
 '
 set -f
-VERSION=v0.1.4-beta
+VERSION=v0.1.5-beta
 DROPBOX_IGNORE_FILE_NAME=".dropboxignore"
 GIT_IGNORE_FILE_NAME=".gitignore"
 MACHINE="$(uname -s)"
@@ -90,17 +90,65 @@ log_warning () {
   fi
 }
 
-case $MACHINE in
+#######################################
+# Check OS.
+# Globals:
+#   MACHINE
+#######################################
+check_os(){
+  case $MACHINE in
+    Linux)
+      ;;
+    Darwin)
+      ;;
+    *)
+      log_error "$MACHINE is not supported" 3
+      ;;
+  esac
+}
+
+
+#######################################
+# Check system dependencies.
+# Globals:
+#   MACHINE
+#######################################
+check_dependencies() {
+  if command -v realpath &> /dev/null
+  then
+    log_debug "realpath command is installed"
+  elif command -v python &> /dev/null
+  then
+    log_debug "python is installed"
+  else
+    log_error "Neither realpath command not python could be found in you system"
+  fi
+  case $MACHINE in
   Linux)
+    if ! command -v getfattr &> /dev/null
+    then
+        log_error "attr package is not installed" 5
+    fi
+    if ! command -v attr &> /dev/null
+    then
+        log_error "attr package is not installed" 5
+    fi
+    log_debug "attr package is installed"
+
     ;;
   Darwin)
-    MACHINE="MacOS"
+    if ! command -v xattr &> /dev/null
+    then
+        log_error "xattr package not installed" 5
+    fi
     ;;
   *)
     log_error "$MACHINE is not supported" 3
     ;;
-
 esac
+}
+
+check_os
 
 #######################################
 # Check input file or folder.
@@ -144,6 +192,35 @@ find_gitignore_files () {
 }
 
 #######################################
+# Get relative path from absolute path.
+# Arguments:
+#   Absolute path.
+#   Base Absolute path.
+#######################################
+get_relative_path () {
+  if command -v realpath &> /dev/null
+  then
+    realpath --relative-to="${2-$PWD}" "$1"
+  else
+    python -c 'import os.path, sys;print os.path.relpath(sys.argv[1],sys.argv[2])' "$1" "${2-$PWD}"
+  fi
+}
+
+#######################################
+# Get absolute path from relative path.
+# Arguments:
+#   Relative path.
+#######################################
+get_absolute_path () {
+  if command -v realpath &> /dev/null
+  then
+    realpath "$1"
+  else
+    python -c 'import os.path, sys;print os.path.abspath(sys.argv[1])' "$1"
+  fi
+}
+
+#######################################
 # Delete all .dropboxignore files
 # Globals:
 #   DROPBOX_IGNORE_FILE_NAME
@@ -165,7 +242,7 @@ delete_dropboxignore_files () {
   elif [ -f "$1" ]; then
     if [ "$(basename "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ]; then
       rm "$1"
-      echo -e "$YELLOW Removed file: $(realpath --relative-to="$BASE_FOLDER" "$1") $DEFAULT"
+      echo -e "$YELLOW Removed file: $(get_relative_path "$1" "$BASE_FOLDER") $DEFAULT"
     else
       log_error "Given file is not a $DROPBOX_IGNORE_FILE_NAME file."
     fi
@@ -199,7 +276,7 @@ find_dropboxignore_files () {
 generate_dropboxignore_file () {
   dropboxignore_file_path="$(dirname "$1")/$DROPBOX_IGNORE_FILE_NAME"
   if [ -f "$dropboxignore_file_path" ]; then
-    log_debug "Already existing file: $(realpath --relative-to="$BASE_FOLDER" "$dropboxignore_file_path")"
+    log_debug "Already existing file: $(get_relative_path "$dropboxignore_file_path" "$BASE_FOLDER")"
   else
     tee "$dropboxignore_file_path" > /dev/null << EOF
 # ----
@@ -208,7 +285,7 @@ generate_dropboxignore_file () {
 $(cat "${1}")
 # ----
 EOF
-    echo -e "$GREEN Created file: $(realpath --relative-to="$BASE_FOLDER" "$dropboxignore_file_path") $DEFAULT"
+    echo -e "$GREEN Created file: $(get_relative_path "$dropboxignore_file_path" "$BASE_FOLDER") $DEFAULT"
   fi
 }
 
@@ -228,9 +305,9 @@ update_dropboxignore_file () {
 $diff_content
 # ----
 EOF
-    echo -e "$GREEN Updated $(realpath --relative-to="$BASE_FOLDER" "$2") $DEFAULT"
+    echo -e "$GREEN Updated $(get_relative_path "$2" "$BASE_FOLDER") $DEFAULT"
   else
-    log_debug "No changes found: $(realpath --relative-to="$BASE_FOLDER" "$2")"
+    log_debug "No changes found: $(get_relative_path "$2" "$BASE_FOLDER")"
   fi
 }
 
@@ -264,13 +341,13 @@ generate_dropboxignore_files () {
   find_gitignore_files "$1"
   for gitignore_file in $GITIGNORE_FILES; do
     if grep -q -P '^\s*!' "$gitignore_file" ; then
-      echo -e "$YELLOW$(realpath --relative-to="$BASE_FOLDER" "$gitignore_file") contains exception patterns, will be ignored"
+      echo -e "$YELLOW$(get_relative_path "$gitignore_file" "$BASE_FOLDER") contains exception patterns, will be ignored"
       continue
     fi
     current_dir="$(dirname "$gitignore_file")"
     dropboxignore_file="$current_dir/$DROPBOX_IGNORE_FILE_NAME"
     if [ -f "$dropboxignore_file" ]; then
-      log_debug "Already existing file: $(realpath --relative-to="$BASE_FOLDER" "$dropboxignore_file")"
+      log_debug "Already existing file: $(get_relative_path "$dropboxignore_file" "$BASE_FOLDER")"
     else
       generate_dropboxignore_file "$gitignore_file"
       (( TOTAL_N_GENERATED_FILES++ ))
@@ -294,7 +371,7 @@ file_ignore_status () {
   Linux)
     FILE_ATTR_VALUE="$(getfattr --absolute-names --only-values -m "$FILE_ATTR_NAME" "$1")"
     ;;
-  MacOS)
+  Darwin)
     FILE_ATTR_VALUE="$(xattr -p "$FILE_ATTR_NAME" "$1" 2> /dev/null)"
     ;;
   esac
@@ -311,21 +388,21 @@ file_ignore_status () {
 ignore_file () {
   file_ignore_status "$1"
   if [ "$(dirname "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ]; then
-    log_debug "Bypass $(realpath --relative-to="$BASE_FOLDER" "$1")"
+    log_debug "Bypass $(get_relative_path "$1" "$BASE_FOLDER")"
   elif [  -z "$FILE_ATTR_VALUE" ]; then
     case $MACHINE in
       Linux)
         attr -s "$FILE_ATTR_NAME" -V 1 "$1" > /dev/null
         (( TOTAL_N_IGNORED_FILES++ ))
         ;;
-      MacOS)
+      Darwin)
         xattr -w "$FILE_ATTR_NAME" 1 "$1" > /dev/null
         (( TOTAL_N_IGNORED_FILES++ ))
         ;;
     esac
-    log_debug "Ignored file: $(realpath --relative-to="$BASE_FOLDER" "$1")"
+    log_debug "Ignored file: $(get_relative_path "$1" "$BASE_FOLDER")"
   else
-    log_debug "Already ignored file: $(realpath --relative-to="$BASE_FOLDER" "$1")"
+    log_debug "Already ignored file: $(get_relative_path "$1" "$BASE_FOLDER")"
   fi
 }
 
@@ -349,7 +426,7 @@ ignore_files () {
       file_total_results=0
       # shellcheck disable=SC2013
       if grep -q -P '^\s*!' "$dropboxignore_file" ; then
-        echo -e "$YELLOW$(realpath --relative-to="$BASE_FOLDER" "$dropboxignore_file") contains exception patterns, will be ignored"
+        echo -e "$YELLOW$(get_relative_path "$dropboxignore_file" "$BASE_FOLDER") contains exception patterns, will be ignored"
         continue
       fi
       while read -r file_pattern; do
@@ -364,7 +441,7 @@ ignore_files () {
         done < <(find "$(dirname "$dropboxignore_file")/$subdir" -name "$pattern")
         file_total_results=$((file_total_results+n_results))
       done < <(grep -v -P '^\s*$|^\s*\#|^\s*!' "$dropboxignore_file")
-      log_debug "Matched files because of '$(realpath --relative-to="$BASE_FOLDER" "$dropboxignore_file")': $file_total_results"
+      log_debug "Matched files because of '$(get_relative_path "$dropboxignore_file" "$BASE_FOLDER")': $file_total_results"
     done
     echo -e "$BLUE
 Total number of ignored files: $TOTAL_N_IGNORED_FILES $DEFAULT"
@@ -390,7 +467,7 @@ list_ignored () {
   while read -r f_path; do
     file_ignore_status "$f_path"
     if [ -n "$FILE_ATTR_VALUE" ]; then
-      realpath --relative-to="$BASE_FOLDER" "$f_path"
+      get_relative_path "$f_path" "$BASE_FOLDER"
       if [ -f "$f_path" ]; then
         (( total_ignored_files++ ))
       elif [ -d "$f_path" ]; then
@@ -417,14 +494,14 @@ revert_ignored (){
       Linux)
         attr -r "$FILE_ATTR_NAME" "$1" > /dev/null
         ;;
-      MacOS)
+      Darwin)
         xattr -d "$FILE_ATTR_NAME" "$1" > /dev/null
     esac
 
-    log_debug "Reverted file: $(realpath --relative-to="$BASE_FOLDER" "$1")"
+    log_debug "Reverted file: $(get_relative_path "$1" "$BASE_FOLDER")"
     (( TOTAL_N_REVERTED_FILES++ ))
   else
-    log_debug "Already reverted file: $(realpath --relative-to="$BASE_FOLDER" "$1")"
+    log_debug "Already reverted file: $(get_relative_path "$1" "$BASE_FOLDER")"
   fi
 }
 
@@ -565,11 +642,12 @@ main () {
   done
 
   log_debug "Operating system: $MACHINE"
+  check_dependencies
 
   # check input file or folder
   check_input "$input_f"
 
-  input_f=$(realpath "$input_f")
+  input_f=$(get_absolute_path "$input_f")
 
   # run action
   if [ "$generate_action" == true ]; then
