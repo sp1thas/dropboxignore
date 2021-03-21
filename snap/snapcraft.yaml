@@ -13,7 +13,7 @@ architectures: [ amd64, i386 ]
 
 apps:
   dropboxignore:
-    command: /bin/bash $SNAP/opt/dropboxignore/bin/dropboxignore.sh
+    command: /bin/bash $SNAP/bin/dropboxignore.sh
     plugs:
       - home
 
@@ -34,5 +34,5 @@ parts:
     source: https://github.com/sp1thas/dropboxignore.git
     plugin: dump
     organize:
-      dropboxignore.sh: opt/dropboxignore/bin/dropboxignore.sh
+      dropboxignore.sh: dropboxignore
 
