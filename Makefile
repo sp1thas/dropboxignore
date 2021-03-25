@@ -15,3 +15,11 @@ install :
 uninstall :
 	rm -rf "${DESTDIR}/bin/dropboxignore"
 	echo "\e[32mdropboxignore has been uninstalled."
+
+# create snap
+snap :
+	snapcraft --debug
+
+# upload snap
+publish-snap :
+	snapcraft upload $(SNAP_FILE)
