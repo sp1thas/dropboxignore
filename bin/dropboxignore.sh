@@ -439,8 +439,7 @@ ignore_files() {
       log_debug "Matched files because of '$(get_relative_path "$dropboxignore_file" "$BASE_FOLDER")': $file_total_results"
     done
     echo -e "$BLUE
-Total number of ignored files: $TOTAL_N_IGNORED_FILES $DEFAULT"
-    echo -e "$BLUE
+Total number of ignored files: $TOTAL_N_IGNORED_FILES $DEFAULT
 Total number of ignored folders: $TOTAL_N_IGNORED_FOLDERS $DEFAULT"
   fi
 }
