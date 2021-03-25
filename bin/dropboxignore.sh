@@ -426,7 +426,6 @@ ignore_files() {
         continue
       fi
       while read -r file_pattern; do
-        #      for file_pattern in $(grep -v -P '^\s*$|^\s*\#|^\s*!' "$dropboxignore_file"); do
         file_pattern=${file_pattern%/}
         subdir="$(dirname "$file_pattern")"
         pattern="$(basename "$file_pattern")"
