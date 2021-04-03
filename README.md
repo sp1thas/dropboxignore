@@ -1,6 +1,6 @@
 <div align="center">
     <h1>dropboxignore</h1>
-    <img src="https://raw.githubusercontent.com/sp1thas/dropboxignore/master/icons/128.png" alt="Oh My Zsh">
+    <img src="https://raw.githubusercontent.com/sp1thas/dropboxignore/master/icons/128.png" alt="dropboxignore-logo">
     <p>It's all about the missing <code>.dropboxignore</code> file.</p>
     <img src="https://github.com/sp1thas/dropboxignore/workflows/Testing/badge.svg">
     <img src="https://github.com/sp1thas/dropboxignore/workflows/Shellcheck/badge.svg">
@@ -14,7 +14,7 @@
 </div>
 <hr>
 
-Exclude files from dropbox using glob patterns and take advantage of existing `.gitignore` files.
+Exclude files from your [dropbox](https://www.dropbox.com) using glob patterns and take advantage of existing `.gitignore` files.
 
 This is a simple shell script that can be used to ignore files from dropbox using glob patterns, `.dropboxignore` files and the already existing `.gitignorefiles`. The shell script uses [this](https://help.dropbox.com/files-folders/restore-delete/ignored-files) approach to ignore the matched files.
 
