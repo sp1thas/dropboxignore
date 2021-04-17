@@ -292,7 +292,7 @@ EOF
 update_dropboxignore_file() {
   diff_content=$(diff --new-line-format="" --unchanged-line-format="" --ignore-blank-lines --ignore-tab-expansion --ignore-space-change --ignore-trailing-space -I "# [Automatically|-]" "${1}" "${2}")
   if [ -n "$diff_content" ]; then
-    tee "$1" >/dev/null <<EOF
+    tee -a "$2" >/dev/null <<EOF
 # Automatically updated .dropboxignore file at "$(date)"
 # ----
 $diff_content
