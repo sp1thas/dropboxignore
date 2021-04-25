@@ -545,6 +545,7 @@ Usage: "$PROGRAM_NAME" <command> <path> [-v 0-2] [-p pattern]
 
   Commands:
 
+    genupi		generate - update - ignore in 1 shortcut command
     generate            Generate .dropboxignore files based on existing .gitignore files.
     update              Update existing .dropboxignore files if at least one .gitignore file has been changed.
     ignore              Ignore file or folder from dropbox under the given path.
@@ -581,6 +582,10 @@ main() {
     return
   fi
   case $1 in
+  genupi)
+    genupi_action=true
+    shift
+    ;;
   generate)
     generate_action=true
     shift
@@ -644,11 +649,14 @@ main() {
 
   # check input file or folder
   check_input "$input_f"
-
   input_f=$(get_absolute_path "$input_f")
 
   # run action
-  if [ "$generate_action" == true ]; then
+  if [ "$genupi_action" == true ]; then
+    generate_dropboxignore_files "$input_f" 
+    update_dropboxignore_files "$input_f"
+    ignore_files "$input_f"
+  elif [ "$generate_action" == true ]; then
     generate_dropboxignore_files "$input_f"
   elif [ "$update_action" == true ]; then
     update_dropboxignore_files "$input_f"
