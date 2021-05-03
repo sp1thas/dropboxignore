@@ -15,7 +15,7 @@ architectures:
 
 apps:
   dropboxignore:
-    command: /bin/bash $SNAP/bin/dropboxignore.sh
+    command: ./bin/dropboxignore.sh
     plugs:
       - home
 

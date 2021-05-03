@@ -16,3 +16,10 @@ For something that is bigger than a one or two line fix:
 ## How to report a bug
 
 Go to issue tracker and create a new issue and follow the template.
+
+## Contributors
+
+**Made with ❤️ by**:
+<a href="https://github.com/sp1thas/dropboxignore/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=sp1thas/dropboxignore" style="height: 15px;"/>
+</a>
