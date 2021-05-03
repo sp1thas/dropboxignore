@@ -6,7 +6,7 @@
 IFS='
 '
 set -f
-VERSION=v0.1.5-beta
+VERSION=v1.0.0
 DROPBOX_IGNORE_FILE_NAME=".dropboxignore"
 GIT_IGNORE_FILE_NAME=".gitignore"
 MACHINE="$(uname -s)"
