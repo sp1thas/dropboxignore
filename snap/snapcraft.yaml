@@ -9,7 +9,9 @@ icon: icons/256.png
 grade: stable
 confinement: strict
 
-architectures: [ amd64, i386 ]
+architectures:
+  - build-on: amd64
+    run-on: all
 
 apps:
   dropboxignore:
