@@ -11,7 +11,7 @@ confinement: strict
 
 architectures:
   - build-on: amd64
-    run-on: all
+    run-on: arm64, armhf, amd64, i386
 
 apps:
   dropboxignore:

@@ -21,5 +21,5 @@ Go to issue tracker and create a new issue and follow the template.
 
 **Made with ❤️ by**:
 <a href="https://github.com/sp1thas/dropboxignore/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=sp1thas/dropboxignore" style="height: 15px;"/>
+  <img src="https://contrib.rocks/image?repo=sp1thas/dropboxignore" style="height: 30px;"/>
 </a>
