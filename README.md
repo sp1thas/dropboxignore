@@ -92,7 +92,7 @@ For futher details check out the [documentation](http://dropboxignore.rtfd.io/)
 
 ## How to contribute
 
-If you wish to contribute, read [docs/contributing.md](docs/contributing.md) guide for further details.
+If you want to contribute, read [docs/contributing.md](docs/contributing.md) guide for further details.
 
 ---
 
