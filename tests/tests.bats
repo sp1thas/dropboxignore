@@ -16,27 +16,27 @@ setup () {
   source bin/dropboxignore.sh > /dev/null
   touch "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
   touch "$TEST_FOLDER/$GITIGNORE_NAME"
-  alias dropboxignore='./bin/dropboxignore.sh'
+  dropboxignore='./bin/dropboxignore.sh'
 }
 
 teardown () { rm -rf "$TEST_FOLDER"; }
 
 @test "Test help command" {
-  run dropboxignore help > /dev/null
+  run $dropboxignore help > /dev/null
   assert_success
-  run dropboxignore
+  run $dropboxignore
   assert_success
 }
 
 @test "Test version command" {
-  run dropboxignore version
+  run $dropboxignore version
   assert_success
   assert_output --partial "$(grep -oP '^VERSION=(.*)$' bin/dropboxignore.sh | sed -r 's/^VERSION=//')"
 }
 
 @test "Test generate command when .dropboxignore file not exists" {
   rm "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
-  run dropboxignore generate "$TEST_FOLDER"
+  run $dropboxignore generate "$TEST_FOLDER"
   assert_success
   assert_file_exist "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
   assert_output --partial "Created file: .dropboxignore"
@@ -44,7 +44,7 @@ teardown () { rm -rf "$TEST_FOLDER"; }
 }
 
 @test "Test generate command when .dropboxignore file exists" {
-  run dropboxignore generate "$TEST_FOLDER"
+  run $dropboxignore generate "$TEST_FOLDER"
   assert_success
   assert_file_exist "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
   assert_output --partial "Total number of generated files: 0"
@@ -52,7 +52,7 @@ teardown () { rm -rf "$TEST_FOLDER"; }
 
 @test "Test generate command when .gitignore file not exists" {
   rm "$TEST_FOLDER/$GITIGNORE_NAME" "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
-  run dropboxignore generate "$TEST_FOLDER"
+  run $dropboxignore generate "$TEST_FOLDER"
   assert_success
   assert_file_not_exist "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
   assert_file_not_exist "$TEST_FOLDER/$GITIGNORE_NAME"
@@ -63,7 +63,7 @@ teardown () { rm -rf "$TEST_FOLDER"; }
   rm "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
   echo "a
   !something" > "$TEST_FOLDER/$GITIGNORE_NAME"
-  run dropboxignore generate "$TEST_FOLDER"
+  run $dropboxignore generate "$TEST_FOLDER"
   assert_success
   assert_file_not_exist "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
   assert_output --partial ".gitignore contains exception patterns, will be ignored"
@@ -72,7 +72,7 @@ teardown () { rm -rf "$TEST_FOLDER"; }
 @test "Test delete command" {
   mkdir "$TEST_FOLDER/other"
   touch "$TEST_FOLDER/other/$DROPBOXIGNORE_NAME"
-  run dropboxignore delete "$TEST_FOLDER"
+  run $dropboxignore delete "$TEST_FOLDER"
   assert_success
   assert_file_not_exist "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
   assert_file_not_exist "$TEST_FOLDER/other/$DROPBOXIGNORE_NAME"
@@ -80,16 +80,16 @@ teardown () { rm -rf "$TEST_FOLDER"; }
 }
 
 @test "Test list command without results" {
-  run dropboxignore ignore "$TEST_FOLDER"
+  run $dropboxignore ignore "$TEST_FOLDER"
   assert_success
-  run dropboxignore list "$TEST_FOLDER"
+  run $dropboxignore list "$TEST_FOLDER"
   assert_success
   assert_output --partial "Total number of ignored files: 0"
   assert_output --partial "Total number of ignored folders: 0"
 }
 
 @test "Test list command non existing folder" {
-  run dropboxignore list "$TEST_FOLDER/non-existing"
+  run $dropboxignore list "$TEST_FOLDER/non-existing"
   assert_failure 2
 }
 

@@ -17,7 +17,7 @@ uninstall :
 	echo "\e[32mdropboxignore has been uninstalled."
 
 # create snap
-snap :
+build-snap :
 	snapcraft --debug
 
 # upload snap
