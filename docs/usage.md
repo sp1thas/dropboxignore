@@ -15,6 +15,24 @@ A common workflow could be the following
     Automatic generation of `.dropboxignore` files is an optional step, therefore, may not be a necessary action for your case.
 
 
+## TL;DR
+
+Below you will find some of the most common cases that dropboxignore could be useful.
+
+=== "Node.js"
+
+    ![node_modules_meme](./static/node.jpg)
+    ```shell
+    $ dropboxignore ignore ./node_modules
+    ```
+
+=== "Python"
+
+    ![python_venv](./static/python.jpg)
+    ```shell
+    $ dropboxignore ignore ./venv
+    ```
+
 ## Synopsis
 
 ```shell

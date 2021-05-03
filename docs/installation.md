@@ -28,7 +28,7 @@ Below you will all the available installation options. dropboxignore is currentl
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/dropboxignore)
 
 ```shell
-$ snap install dropboxignore --beta
+$ snap install dropboxignore
 ```
 
 ## Manual Installation
@@ -49,5 +49,5 @@ Check that installation was successful:
 
 ```shell
 $ dropboxignore version
-dropboxignore.sh: v0.1.4-beta
+dropboxignore.sh: v1.0.0
 ```

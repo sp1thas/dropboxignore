@@ -43,10 +43,10 @@ dropboxignore is installed by running one of the following commands in your term
 
 ### Snap Installation
 
-[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/dropboxignore)
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/dropboxignore)
 
 ```shell
-$ snap install dropboxignore --beta
+$ snap install dropboxignore
 ```
 
 ### Manual Installation
@@ -71,6 +71,13 @@ A common workflow could be the following
  1. Automatically generate `.dropboxignore` files based on existing `.gitignore` files (`dropboxignore generate path`).
  2. Manually update or create `.dropboxignore` files (Optional)
  3. Ignore matched files based on `.dropboxignore` files (`dropboxignore ignore path`)
+
+## TL;DR
+
+| Case                                                 | Solution                               |
+|------------------------------------------------------|----------------------------------------|
+| ![node_modules_meme](./docs/static/node.jpg) | `$ dropboxignore ignore ./node_modules`|
+| ![python_venv](./docs/static/python.jpg)             | `$ dropboxignore ignore ./venv`        |
 
 ### Notes
 
