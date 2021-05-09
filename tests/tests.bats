@@ -173,3 +173,11 @@ teardown () { rm -rf "$TEST_FOLDER"; }
   echo "$TEST_FOLDER/$GITIGNORE_NAME"
   assert_file_contains "$TEST_FOLDER/$DROPBOXIGNORE_NAME" "[sample]"
 }
+
+@test "Test genupi command" {
+  run $dropboxignore genupi "$TEST_FOLDER"
+  assert_success
+  assert_file_exist "$TEST_FOLDER/$DROPBOXIGNORE_NAME"
+  assert_file_exist "$TEST_FOLDER/$GITIGNORE_NAME"
+  assert_output --partial "Total number of generated files: 0"
+}
