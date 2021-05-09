@@ -545,7 +545,7 @@ Usage: "$PROGRAM_NAME" <command> <path> [-v 0-2] [-p pattern]
 
   Commands:
 
-    genupi		generate - update - ignore in 1 shortcut command
+    genupi		  Generate, update & ignore using one shortcut command.
     generate            Generate .dropboxignore files based on existing .gitignore files.
     update              Update existing .dropboxignore files if at least one .gitignore file has been changed.
     ignore              Ignore file or folder from dropbox under the given path.
