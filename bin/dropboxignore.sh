@@ -19,7 +19,7 @@ TOTAL_N_GENERATED_FILES=0
 BASE_FOLDER="$PWD"
 FILE_ATTR_NAME="com.dropbox.ignored"
 [[ $MACHINE == Darwin ]] && GREP_CMD="ggrep" || GREP_CMD="grep"
-[[ $MACHINE == Darwin ]] && DIFF_CMD="$(brew --prefix)/diff" || DIFF_CMD="diff"
+[[ $MACHINE == Darwin ]] && DIFF_CMD="$(brew --prefix)/bin/diff" || DIFF_CMD="diff"
 
 DEFAULT="\e[0m"
 GREEN="\e[32m"
