@@ -32,17 +32,13 @@ This is a simple shell script that can be used to ignore files from dropbox usin
 
 ### Basic Installation
 
-dropboxignore is installed by running one of the following commands in your terminal. You can install this via the command-line with either curl, wget or another similar tool. `attr` and `git` package should be installed on your system, as well as the `diffutils` and `grep` packages for macOS.
+dropboxignore is installed by running one of the following commands in your terminal. You can install this via the command-line with either curl, wget or another similar tool. `attr` and `git` should be installed on your system, as well as Homebrew if you are on macOS.
 
 | Mathod | Command                                                                                                       |
 |--------|---------------------------------------------------------------------------------------------------------------|
 | curl   | `sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"`  |
 | wget   | `sudo sh -c "$(wget -qO- https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"`   |
 | fetch  | `sudo sh -c "$(fetch -o - https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"`  |
-
-### Installation notes for MacOS
-- MacOS 10.8 or later is required
-- To install required packages, you will need Homebrew. Run `brew install diffutils` and `brew install grep` in addition to the installation command above.
 
 ### Snap Installation
 
