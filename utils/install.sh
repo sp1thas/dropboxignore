@@ -3,8 +3,8 @@
 # First install additional dependencies if on macOS
 MACHINE="$(uname -s)"
 if [ "$MACHINE" == Darwin ]; then
-  HOMEBREW_NO_AUTO_UPDATE=1 brew install diffutils
-  HOMEBREW_NO_AUTO_UPDATE=1 brew install grep
+  sudo -u "$SUDO_USER" HOMEBREW_NO_AUTO_UPDATE=1 brew install diffutils
+  sudo -u "$SUDO_USER" HOMEBREW_NO_AUTO_UPDATE=1 brew install grep
 fi
 
 # Install dropboxignore command
