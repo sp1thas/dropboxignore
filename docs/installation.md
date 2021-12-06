@@ -1,6 +1,6 @@
 # Installation
 
-Below you will all the available installation options. dropboxignore is currently available only for Mac OS and Linux systems.
+Below you will all the available installation options. dropboxignore is currently available only for macOS and Linux systems.  For macOS, Homebrew is required.
 
 ## Basic Installation
 

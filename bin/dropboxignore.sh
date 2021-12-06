@@ -18,6 +18,8 @@ TOTAL_N_REVERTED_FILES=0
 TOTAL_N_GENERATED_FILES=0
 BASE_FOLDER="$PWD"
 FILE_ATTR_NAME="com.dropbox.ignored"
+[[ $MACHINE == Darwin ]] && GREP_CMD="ggrep" || GREP_CMD="grep"
+[[ $MACHINE == Darwin ]] && DIFF_CMD="$(brew --prefix)/bin/diff" || DIFF_CMD="diff"
 
 DEFAULT="\e[0m"
 GREEN="\e[32m"
@@ -290,7 +292,7 @@ EOF
 #   Update status.
 #######################################
 update_dropboxignore_file() {
-  diff_content=$(diff --new-line-format="" --unchanged-line-format="" --ignore-blank-lines --ignore-tab-expansion --ignore-space-change --ignore-trailing-space -I "# [Automatically|-]" "${1}" "${2}")
+  diff_content=$("$DIFF_CMD" --new-line-format="" --unchanged-line-format="" --ignore-blank-lines --ignore-tab-expansion --ignore-space-change --ignore-trailing-space -I "# [Automatically|-]" "${1}" "${2}")
   if [ -n "$diff_content" ]; then
     tee -a "$2" >/dev/null <<EOF
 # Automatically updated .dropboxignore file at "$(date)"
@@ -333,7 +335,7 @@ update_dropboxignore_files() {
 generate_dropboxignore_files() {
   find_gitignore_files "$1"
   for gitignore_file in $GITIGNORE_FILES; do
-    if grep -q -P '^\s*!' "$gitignore_file"; then
+    if "$GREP_CMD" -q -P '^\s*!' "$gitignore_file"; then
       echo -e "$YELLOW$(get_relative_path "$gitignore_file" "$BASE_FOLDER") contains exception patterns, will be ignored"
       continue
     fi
@@ -424,7 +426,7 @@ ignore_files() {
         for dropboxignore_file in $DROPBOX_IGNORE_FILES; do
           file_total_results=0
           # shellcheck disable=SC2013
-          if grep -q -P '^\s*!' "$dropboxignore_file"; then
+          if "$GREP_CMD" -q -P '^\s*!' "$dropboxignore_file"; then
             echo -e "$YELLOW$(get_relative_path "$dropboxignore_file" "$BASE_FOLDER") contains exception patterns, will be ignored"
             continue
           fi
@@ -438,7 +440,7 @@ ignore_files() {
               ((n_results++))
             done < <(find "$(dirname "$dropboxignore_file")/$subdir" -name "$pattern")
             file_total_results=$((file_total_results + n_results))
-          done < <(grep -v -P '^\s*$|^\s*\#|^\s*!' "$dropboxignore_file")
+          done < <("$GREP_CMD" -v -P '^\s*$|^\s*\#|^\s*!' "$dropboxignore_file")
           log_debug "Matched files because of '$(get_relative_path "$dropboxignore_file" "$BASE_FOLDER")': $file_total_results"
         done
     fi
