@@ -3,9 +3,11 @@ version: 2
 site_name: dropboxignore
 site_description: dropboxignore documentation page
 site_author: Panagiotis Simakis
+site_url: https://dropboxignore.simakis.me
 
 theme:
   name: material
+  custom_dir: 'docs/overrides'
   logo: static/logo.png
   favicon: static/favicon.png
   palette:
