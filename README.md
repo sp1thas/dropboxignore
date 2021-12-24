@@ -87,7 +87,7 @@ A common workflow could be the following
 
 [![asciicast](https://asciinema.org/a/384964.svg)](https://asciinema.org/a/384964)
 
-For futher details check out the [documentation](http://dropboxignore.rtfd.io/)
+For futher details check out the [documentation](https://dropboxignore.simakis.me/en/latest/)
 
 ## How to contribute
 
