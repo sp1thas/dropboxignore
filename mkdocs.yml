@@ -31,7 +31,7 @@ repo_url: https://github.com/sp1thas/dropboxignore/
 
 nav:
   - 'Installation': 'installation.md'
-  - 'Get started': 'get-started.md'
+  - 'Get started': 'getting-started.md'
   - 'CLI': 'cli.md'
   - 'Dev notes':
       - Contributing: 'contributing.md'

@@ -11,36 +11,40 @@
         <img alt="dropboxignore" src="https://snapcraft.io/dropboxignore/badge.svg" />
     </a>
     <img src="https://img.shields.io/badge/code%20style-google-%234285F4">
-</div>
+
 <hr>
 
-Exclude files from your [dropbox](https://www.dropbox.com) using glob patterns and take advantage of existing `.gitignore` files.
+[Installation](#installation) •
+[Getting started](#getting-started) •
+[CLI](#cli) • 
+[How to Contribute](#how-to-contribute)
 
-This is a simple shell script that can be used to ignore files from dropbox using glob patterns, `.dropboxignore` files and the already existing `.gitignorefiles`. The shell script uses [this](https://help.dropbox.com/files-folders/restore-delete/ignored-files) approach to ignore the matched files.
+</div>
 
-## Features
 
- - Ignore folders or files based on glob patterns inside the `.dropboxignore` file.
- - Automatically generate `.dropboxignore` files based on existing `.gitignore` files.
- - Ignore specific folders or files via CLI.
- - Revert ignored folders or files
- - Delete `.dropboxignore` files
- - Update `.dropboxignore` files when changes are detected in corresponding `.gitignore` files.
- - List ignored files and folders
+This CLI shell script aims to leverage glob patterns and existing `.gitignore` files in order to exclude specific 
+folders and files from dropbox sync. The shell script uses 
+[this recent](https://help.dropbox.com/files-folders/restore-delete/ignored-files) approach to ignore folders and files.
 
-## Getting Started
+<div align="center">
 
-### Basic Installation
+
+
+</div>
+
+## Installation
+
+### Using the kickstart script
 
 dropboxignore is installed by running one of the following commands in your terminal. You can install this via the command-line with either curl, wget or another similar tool. `attr` and `git` should be installed on your system, as well as Homebrew if you are on macOS.
 
-| Mathod | Command                                                                                                       |
+| Method | Command                                                                                                       |
 |--------|---------------------------------------------------------------------------------------------------------------|
 | curl   | `sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"`  |
 | wget   | `sudo sh -c "$(wget -qO- https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"`   |
 | fetch  | `sudo sh -c "$(fetch -o - https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"`  |
 
-### Snap Installation
+### Snap
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/dropboxignore)
 
@@ -48,7 +52,7 @@ dropboxignore is installed by running one of the following commands in your term
 $ snap install dropboxignore
 ```
 
-### Manual Installation
+### From source
 ```shell
 $ git clone https://github.com/sp1thas/dropboxignore.git
 $ cd dropboxignore
@@ -61,37 +65,46 @@ $ sudo make install
 $ sudo make uninstall
 ```
 
-## Usage
+## Getting started
 
-In order to use this script you have to select the action and the file or folder that the action will take place.
+`dropboxignore` is a CLI tool which supports a collection of commands in order to make your life easier when it comes 
+to exclude files or/and folders from :material-dropbox: dropbox sync. Below you will find some common usecases.
 
-A common workflow could be the following
+### A typical workflow
 
- 1. Automatically generate `.dropboxignore` files based on existing `.gitignore` files (`dropboxignore generate path`).
- 2. Manually update or create `.dropboxignore` files (Optional)
- 3. Ignore matched files based on `.dropboxignore` files (`dropboxignore ignore path`)
+A common workflow could be the following:
 
-## TL;DR
+ 1. Automatically generate `.dropboxignore` files based on existing `.gitignore` files.
+ 2. Manually update or create `.dropboxignore` files (Optional).
+ 3. Ignore matched files based on .dropboxignore files.
 
-| Case                                                 | Solution                               |
-|------------------------------------------------------|----------------------------------------|
-| ![node_modules_meme](./docs/static/node.jpg) | `$ dropboxignore ignore ./node_modules`|
-| ![python_venv](./docs/static/python.jpg)             | `$ dropboxignore ignore ./venv`        |
+and you can run this flow by running the following command:
 
-### Notes
+```shell
+$ dropboxignore genupi .
+```
 
- 1. In order to prevent unpleasant data losses, exception patterns are not supported. Both `.gitignore` and `.dropboxignore` files with at least one exceptional pattern will be bypassed (for further details: [#3](https://github.com/sp1thas/dropboxignore/issues/3)).
- 2. Automatic generation of `.dropboxignore` files is an optional step, therefore, may not be a necessary action for your case.
+**Warning:** In order to prevent unpleasant data losses, exception patterns are not supported. Both `.gitignore` and 
+`.dropboxignore` files with at least one exceptional pattern will be bypassed (for further details: 
+[#3](https://github.com/sp1thas/dropboxignore/issues/3)).
 
-### Demo
+**Note:** Automatic generation of `.dropboxignore` files is an optional step, therefore, may not be a necessary action 
+for your case.
 
-[![asciicast](https://asciinema.org/a/384964.svg)](https://asciinema.org/a/384964)
+### Long story short
 
-For futher details check out the [documentation](https://dropboxignore.simakis.me/en/latest/)
+[Here](https://dropboxignore.simakis.me/getting-started/#long-story-short) you can find some of the most common cases 
+that dropboxignore could be useful.
+
+## CLI
+
+[Here](https://dropboxignore.simakis.me/cli) you will find extensive documentation about the dropboxignore command line 
+interface.
 
 ## How to contribute
 
-If you want to contribute, read [docs/contributing.md](docs/contributing.md) guide for further details.
+If you want to contribute, read the [contribution guideline](https://dropboxignore.simakis.me/contributing/) for 
+further details.
 
 ---
 
