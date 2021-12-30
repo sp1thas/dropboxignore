@@ -26,12 +26,6 @@ This CLI shell script aims to leverage glob patterns and existing `.gitignore` f
 folders and files from dropbox sync. The shell script uses 
 [this recent](https://help.dropbox.com/files-folders/restore-delete/ignored-files) approach to ignore folders and files.
 
-<div align="center">
-
-
-
-</div>
-
 ## Installation
 
 ### Using the kickstart script
