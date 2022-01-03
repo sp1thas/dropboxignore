@@ -4,7 +4,7 @@
     <p>It's all about the missing <code>.dropboxignore</code> file.</p>
     <img src="https://github.com/sp1thas/dropboxignore/workflows/Testing/badge.svg">
     <img src="https://github.com/sp1thas/dropboxignore/workflows/Shellcheck/badge.svg">
-    <a href='https://dropboxignore.readthedocs.io/en/latest/?badge=latest'>
+    <a href='https://dropboxignore.simakis.me/en/latest/'>
         <img src='https://readthedocs.org/projects/dropboxignore/badge/?version=latest' alt='Documentation Status' />
     </a>
     <a href="https://snapcraft.io/dropboxignore">
