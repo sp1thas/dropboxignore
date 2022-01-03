@@ -36,5 +36,3 @@ nav:
   - 'Dev notes':
       - Contributing: 'contributing.md'
       - Testing: 'testing.md'
-  - About:
-      - License: 'license.md'
