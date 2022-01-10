@@ -22,7 +22,7 @@
 </div>
 
 
-This CLI shell script aims to leverage glob patterns and existing `.gitignore` files in order to exclude specific 
+This CLI shell script aims to take advantage of glob patterns and existing `.gitignore` files in order to exclude specific 
 folders and files from dropbox sync. The shell script uses 
 [this recent](https://help.dropbox.com/files-folders/restore-delete/ignored-files) approach to ignore folders and files.
 
