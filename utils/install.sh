@@ -18,7 +18,7 @@ INSTALL_COUNT_URL="https://api.countapi.xyz/hit/dropboxignore.simakis.me"
 
 echo "$1"
 
-if [ "$1" == "-c"]; then
+if [ "$1" == "-c" ]; then
   curl -s --request GET --url "${INSTALL_COUNT_URL}/wget" > /dev/null
   curl -s --request GET --url "${INSTALL_COUNT_URL}/total" > /dev/null
 elif [ "$1" == "-w" ]; then
