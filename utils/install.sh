@@ -2,7 +2,7 @@
 
 # First install additional dependencies if on macOS
 MACHINE="$(uname -s)"
-METHOD=
+
 if [ "$MACHINE" == Darwin ]; then
   sudo -u "$SUDO_USER" HOMEBREW_NO_AUTO_UPDATE=1 brew install diffutils
   sudo -u "$SUDO_USER" HOMEBREW_NO_AUTO_UPDATE=1 brew install grep
@@ -18,10 +18,10 @@ INSTALL_COUNT_URL="https://api.countapi.xyz/hit/dropboxignore.simakis.me"
 
 echo "$1"
 
-if [ "$1" == "-c" ]; then
+if [ "$1" == c ]; then
   curl -s --request GET --url "${INSTALL_COUNT_URL}/wget" > /dev/null
   curl -s --request GET --url "${INSTALL_COUNT_URL}/total" > /dev/null
-elif [ "$1" == "-w" ]; then
+elif [ "$1" == w ]; then
   wget -q "${INSTALL_COUNT_URL}/curl" -O /dev/null 2> /dev/null
   wget -q "${INSTALL_COUNT_URL}/total" -O /dev/null 2> /dev/null
 fi
