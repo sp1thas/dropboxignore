@@ -1,0 +1,29 @@
+name: Testing
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install os dependencies
+        run: sudo apt update && sudo apt install wget curl fetch
+
+      - name: Install using wget
+        run: |
+          sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"
+          dropboxignore version
+          sudo rm /usr/local/bin/dropboxignore
+
+      - name: Install using curl
+        run: |
+          sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"
+          dropboxignore version
+          sudo rm /usr/local/bin/dropboxignore
