@@ -14,14 +14,14 @@ git clone https://github.com/sp1thas/dropboxignore.git
 make -C dropboxignore install
 rm -rf dropboxignore/
 
+
+# a simple http request to count +1 request
 INSTALL_COUNT_URL="https://api.countapi.xyz/hit/dropboxignore.simakis.me"
 
-echo "$1"
-
-if [ "$1" == c ]; then
+if [ "$0" == c ]; then
   curl -s --request GET --url "${INSTALL_COUNT_URL}/wget" > /dev/null
   curl -s --request GET --url "${INSTALL_COUNT_URL}/total" > /dev/null
-elif [ "$1" == w ]; then
+elif [ "$0" == w ]; then
   wget -q "${INSTALL_COUNT_URL}/curl" -O /dev/null 2> /dev/null
   wget -q "${INSTALL_COUNT_URL}/total" -O /dev/null 2> /dev/null
 fi

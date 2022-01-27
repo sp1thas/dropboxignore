@@ -6,20 +6,16 @@ Linux systems.  For macOS, Homebrew is required.
 === "cURL"
 
     ```shell
-    sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"
+    sudo sh -c "$(curl -fsSL https://rb.gy/12plgs)" c
     ```
 
 === "Wget"
 
     ```shell
-    sudo sh -c "$(wget -qO- https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"
+    sudo sh -c "$(wget -qO- https://rb.gy/12plgs)" w
     ```
 
-=== "fetch"
-
-    ```
-    sudo sh -c "$(fetch -o - https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"
-    ```
+Worried about mysterious shorted urls like? Take a look of the installation script here: [`https://rb.gy/12plgs --> https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh`](https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh))
 
 ## Snap
 
