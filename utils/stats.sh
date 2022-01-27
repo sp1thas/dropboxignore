@@ -2,9 +2,8 @@
 
 set -eux
 
-stdin="$(cat -)"
 dir="$(mktemp -d)"
-cd $dir
+cd "$dir"
 
 git clone "https://x-access-token:${GITHUB_TOKEN}@github.com/sp1thas/dropboxignore.wiki.git" .
 
