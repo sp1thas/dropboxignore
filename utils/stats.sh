@@ -5,7 +5,7 @@ set -eux
 dir="$(mktemp -d)"
 cd "$dir"
 
-git clone "https://x-access-token:${GITHUB_TOKEN}@github.com/sp1thas/dropboxignore.wiki.git" .
+git clone "https://x-access-token:${0}@github.com/sp1thas/dropboxignore.wiki.git" .
 
 total_downloads=$(curl -s https://api.countapi.xyz/info/dropboxignore.simakis.me/total | jq -r .value)
 
