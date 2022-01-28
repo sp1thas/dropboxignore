@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  unit:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,3 +34,24 @@ jobs:
 
       - name: Run tests
         run: make test
+  
+  integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install os dependencies
+        run: sudo apt update && sudo apt install wget curl
+
+      - name: Install using wget
+        run: |
+          sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"
+          dropboxignore version
+          sudo rm /usr/local/bin/dropboxignore
+
+      - name: Install using curl
+        run: |
+          sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"
+          dropboxignore version
+          sudo rm /usr/local/bin/dropboxignore

@@ -5,11 +5,12 @@ on:
     - cron: "*/5 * * * *"
 
 jobs:
-  build:
+  stats:
     runs-on: ubuntu-latest
 
     steps:
       - name: Install os dependencies
-        run: apt install curl jq git
+        run: sudo apt update && sudo apt install curl jq git
+      
       - name: Create stats file
         run: sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/feat/count-installations/utils/stats.sh)"
