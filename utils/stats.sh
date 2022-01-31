@@ -9,12 +9,11 @@ git clone "https://x-access-token:${0}@github.com/sp1thas/dropboxignore.wiki.git
 
 total_downloads=$(curl -s https://api.countapi.xyz/info/dropboxignore.simakis.me/total | jq -r .value)
 
-JSON_STRING=$(jq -n \
-                  --arg schemaVersion 1 \
-                  --arg label "installations" \
-                  --arg message "$total_downloads" \
-                  --arg color "blue" \
-                   '$ARGS.named')
+JSON_STRING=$(cat <<-END
+{"schemaVersion": 1, "label": "installations", "message": "${title}", "body": $(curl -s https://api.countapi.xyz/info/dropboxignore.simakis.me/total | jq -r .value), "color": "blue"}
+END
+)
+
 
 echo "$JSON_STRING" > stats.json
 
