@@ -7,10 +7,8 @@ cd "$dir"
 
 git clone "https://x-access-token:${0}@github.com/sp1thas/dropboxignore.wiki.git" .
 
-total_downloads=$(curl -s https://api.countapi.xyz/info/dropboxignore.simakis.me/total | jq -r .value)
-
 JSON_STRING=$(cat <<-END
-{"schemaVersion": 1, "label": "installations", "message": "${title}", "body": $(curl -s https://api.countapi.xyz/info/dropboxignore.simakis.me/total | jq -r .value), "color": "blue"}
+{"schemaVersion": 1, "label": "installations", "message": "installations", "body": $(curl -s https://api.countapi.xyz/info/dropboxignore.simakis.me/total | jq -r .value), "color": "blue"}
 END
 )
 
