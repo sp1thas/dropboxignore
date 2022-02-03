@@ -11,7 +11,6 @@ JSON_STRING=$(cat <<-END
 {"schemaVersion": 1, "label": "installations", "message": "$(curl -s https://api.countapi.xyz/info/dropboxignore.simakis.me/total | jq -r .value)"}
 END
 )
-
 echo "$JSON_STRING" > stats.json
 
 git add stats.json
