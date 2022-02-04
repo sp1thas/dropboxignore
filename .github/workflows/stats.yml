@@ -1,10 +1,8 @@
-name: Get stats every 5 minutes
+name: Daily stats
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  schedule:
+    - cron: "1 1 * * *"
 
 jobs:
   stats:
