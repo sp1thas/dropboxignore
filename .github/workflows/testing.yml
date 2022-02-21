@@ -28,11 +28,10 @@ jobs:
       - name: Coverage report
         run: |
           kcov --include-path=bin/dropboxignore.sh /tmp/coverage bats tests/*.bats
-          echo "COVERAGE_FILE=$(find /tmp/coverage -type f -name 'cobertura.xml')" >> $GITHUB_ENV
+          cp $(find /tmp/coverage -type f -name 'cobertura.xml') coverage.xml
       - uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: $COVERAGE_FILE
           fail_ci_if_error: true
   integration:
     runs-on: ubuntu-latest
