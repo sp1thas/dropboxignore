@@ -243,7 +243,6 @@ delete_dropboxignore_files() {
     fi
   else
     log_error "file not found" 3
-    exit 3
   fi
 }
 
@@ -280,7 +279,7 @@ generate_dropboxignore_file() {
 $(cat "${1}")
 # ----
 EOF
-    echo -e "$GREEN Created file: $(get_relative_path "$dropboxignore_file_path" "$BASE_FOLDER") $DEFAULT"
+    log_info "Created file: $(get_relative_path "$dropboxignore_file_path" "$BASE_FOLDER") $DEFAULT"
   fi
 }
 
@@ -300,7 +299,7 @@ update_dropboxignore_file() {
 $diff_content
 # ----
 EOF
-    echo -e "$GREEN Updated $(get_relative_path "$2" "$BASE_FOLDER") $DEFAULT"
+    log_info "Updated $(get_relative_path "$2" "$BASE_FOLDER") $DEFAULT"
   else
     log_debug "No changes found: $(get_relative_path "$2" "$BASE_FOLDER")"
   fi
@@ -348,8 +347,7 @@ generate_dropboxignore_files() {
       ((TOTAL_N_GENERATED_FILES++))
     fi
   done
-  echo -e "$YELLOW
-Total number of generated files: $TOTAL_N_GENERATED_FILES $DEFAULT"
+  echo -e "${YELLOW}Total number of generated files: $TOTAL_N_GENERATED_FILES $DEFAULT"
 }
 
 #######################################
@@ -382,9 +380,7 @@ file_ignore_status() {
 #######################################
 ignore_file() {
   file_ignore_status "$1"
-  if [ "$(dirname "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ]; then
-    log_debug "Bypass $(get_relative_path "$1" "$BASE_FOLDER")"
-  elif [ -z "$FILE_ATTR_VALUE" ]; then
+  if [ -z "$FILE_ATTR_VALUE" ]; then
     if [ -f "$1" ]; then
       ((TOTAL_N_IGNORED_FILES++))
     else
@@ -445,9 +441,7 @@ ignore_files() {
         done
     fi
   fi
-  echo -e "$BLUE
-Total number of ignored files: $TOTAL_N_IGNORED_FILES $DEFAULT
-Total number of ignored folders: $TOTAL_N_IGNORED_FOLDERS $DEFAULT"
+  echo -e "${BLUE}Total number of ignored files: $TOTAL_N_IGNORED_FILES $DEFAULT\nTotal number of ignored folders: $TOTAL_N_IGNORED_FOLDERS $DEFAULT"
 }
 
 #######################################
@@ -477,9 +471,7 @@ list_ignored() {
       fi
     fi
   done < <(find "$1" -name "$filtering_pattern")
-  echo -e "$YELLOW
-Total number of ignored files: $total_ignored_files
-Total number of ignored folders: $total_ignored_folders $DEFAULT"
+  echo -e "${YELLOW}Total number of ignored files: $total_ignored_files\nTotal number of ignored folders: $total_ignored_folders $DEFAULT"
 }
 
 #######################################
@@ -525,8 +517,7 @@ revert_ignored_files() {
         revert_ignored "$file_path"
       fi
     done < <(find "$1" -type f)
-    echo -e "$BLUE
-Total number of reverted files: $TOTAL_N_REVERTED_FILES $DEFAULT"
+    echo -e "${BLUE}Total number of reverted files: $TOTAL_N_REVERTED_FILES $DEFAULT"
     TOTAL_N_REVERTED_FILES=0
     while read -r file_path; do
       file_ignore_status "$file_path"
@@ -535,8 +526,7 @@ Total number of reverted files: $TOTAL_N_REVERTED_FILES $DEFAULT"
         ((n_results++))
       fi
     done < <(find "$1" -type d)
-    echo -e "$BLUE
-Total number of reverted folders: $TOTAL_N_REVERTED_FILES $DEFAULT"
+    echo -e "${BLUE}Total number of reverted folders: $TOTAL_N_REVERTED_FILES $DEFAULT"
   fi
 }
 
@@ -625,9 +615,7 @@ main() {
     shift
     ;;
   *)
-    echo "$PROGRAM_NAME: '$1' is not a $PROGRAM_NAME command."
-    echo "See '$PROGRAM_NAME help'"
-    exit 1
+    log_error "$PROGRAM_NAME: '$1' is not a $PROGRAM_NAME command.\nSee '$PROGRAM_NAME help'" 1
     ;;
   esac
 
@@ -644,8 +632,7 @@ main() {
       FILTERING_PATTERN=$OPTARG
       ;;
     \?)
-      echo "Unknown option: -$OPTARG"
-      exit 3
+      log_error "Unknown option: -$OPTARG" 3
       ;;
     esac
   done
