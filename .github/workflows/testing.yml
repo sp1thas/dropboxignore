@@ -25,10 +25,6 @@ jobs:
           git clone https://github.com/bats-core/bats-file.git libs/bats-file
       - name: Run tests
         run: make test
-      - name: Get coverage report
-        uses: sudo-bot/action-kcov@latest
-        with:
-          cli-args: ""
       - name: Coverage report
         run: |
           kcov --include-path=bin/dropboxignore.sh /tmp/coverage bats tests/*.bats
