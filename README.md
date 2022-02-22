@@ -7,6 +7,9 @@
     <a href='https://dropboxignore.simakis.me/en/latest/'>
         <img src='https://readthedocs.org/projects/dropboxignore/badge/?version=latest' alt='Documentation Status' />
     </a>
+    <a href="https://codecov.io/gh/sp1thas/dropboxignore">
+    <img src="https://codecov.io/gh/sp1thas/dropboxignore/branch/master/graph/badge.svg?token=LBVA80F2DV"/>
+    </a>
     <a href="https://snapcraft.io/dropboxignore">
         <img alt="dropboxignore" src="https://snapcraft.io/dropboxignore/badge.svg" />
     </a>
