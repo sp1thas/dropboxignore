@@ -9,40 +9,33 @@ on:
 jobs:
   unit:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-
       - name: Install os dependencies
-        run: sudo apt update && sudo apt install attr
-
+        run: sudo apt update && sudo apt install attr kcov
       - name: Install bats-core
         run: |
           git clone https://github.com/bats-core/bats-core.git
           cd bats-core
           sudo ./install.sh /usr/local
-
       - name: Install bats extras
         run: |
           git clone https://github.com/bats-core/bats-assert.git libs/bats-assert
           git clone https://github.com/bats-core/bats-support.git libs/bats-support
           git clone https://github.com/bats-core/bats-file.git libs/bats-file
-
-      - name: Install dropboxignore
-        run: |
-          sudo make install
-
       - name: Run tests
         run: make test
       - name: Get coverage report
         uses: sudo-bot/action-kcov@latest
         with:
-          cli-args: "--include-path=bin/dropboxignore.sh /tmp/coverage bats tests/*.bats"
-      - name: Find coverage report file
-        run: echo "COVERAGE_FILE=$(find /tmp/coverage -type f -name 'cobertura.xml')" >> $GITHUB_ENV
+          cli-args: ""
+      - name: Coverage report
+        run: |
+          kcov --include-path=bin/dropboxignore.sh /tmp/coverage bats tests/*.bats
+          echo "COVERAGE_FILE=$(find /tmp/coverage -type f -name 'cobertura.xml')" >> $GITHUB_ENV
       - uses: codecov/codecov-action@v2
         with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          token: ${{ secrets.CODECOV_TOKEN }}
           files: $COVERAGE_FILE
           fail_ci_if_error: true
   integration:
@@ -50,18 +43,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
       - name: Install os dependencies
         run: sudo apt update && sudo apt install wget curl
-
       - name: Install using wget
         run: |
           sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"
           dropboxignore version
           sudo rm /usr/local/bin/dropboxignore
-
       - name: Install using curl
         run: |
           sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"
           dropboxignore version
           sudo rm /usr/local/bin/dropboxignore
+      - name: Install from source
+        run: |
+          sudo make install
+          dropboxignore version
+      - name: Uninstall
+        run: make uninstall
