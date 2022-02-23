@@ -3,12 +3,17 @@ name: Daily stats
 on:
   schedule:
     - cron: "1 1 * * *"
+  workflow_dispatch:
 
 jobs:
   stats:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Install Snapcraft
+        uses: samuelmeuli/action-snapcraft@v1
+        with:
+          snapcraft_token: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
       - name: Install os dependencies
         run: sudo apt update && sudo apt install curl jq git
       
