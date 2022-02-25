@@ -23,13 +23,13 @@ echo "$JSON_BADGE_STRING" > latest-stats.json
 echo "$JSON_FULL_STRING" > "$FILENAME"
 
 git add latest-stats.json
-git add latest-stats.json
+git add "$FILENAME"
 
 if ! git diff --staged --exit-code
 then
     git config --global user.email "coverage-comment-action"
     git config --global user.name "Coverage Comment Action"
-    git commit -m "stats"
+    git commit -m "$(date +"%Y-%m-%d" --date="yesterday") stats"
 
     git push -u origin
 else
