@@ -14,7 +14,7 @@
         <img alt="dropboxignore" src="https://snapcraft.io/dropboxignore/badge.svg" />
     </a>
     <img src="https://img.shields.io/badge/code%20style-google-%234285F4" alt="Google code style">
-    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fwiki%2Fsp1thas%2Fdropboxignore%2Fstats.json" alt="Installation counter">
+    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fwiki%2Fsp1thas%2Fdropboxignore%2Flatest-stats.json" alt="Installation counter">
 
 <hr>
 
