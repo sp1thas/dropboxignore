@@ -34,7 +34,17 @@ jobs:
 
       - name: Run tests
         run: make test
-  
+      - name: Get coverage report
+        uses: sudo-bot/action-kcov@latest
+        with:
+          cli-args: "--bash-dont-parse-binary-dir --include-path=bin/dropboxignore.sh /tmp/coverage bats tests/*.bats"
+      - name: Find coverage report file
+        run: echo "COVERAGE_FILE=$(find /tmp/coverage -type f -name 'cobertura.xml')" >> $GITHUB_ENV
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          files: $COVERAGE_FILE
+          fail_ci_if_error: true
   integration:
     runs-on: ubuntu-latest
 
