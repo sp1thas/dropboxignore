@@ -15,7 +15,7 @@ JSON_BADGE_STRING=$(cat <<-END
 END
 )
 JSON_FULL_STRING=$(cat <<-END
-{"manual-installations": "$MANUAL_INSTALLATIONS", "snap-installation": "$SNAP_INSTALLATIONS", "total-installations": "$TOTAL_INSTALLATIONS"}
+{"manual-installations": "$MANUAL_INSTALLATIONS", "snap-installations": "$SNAP_INSTALLATIONS", "total-installations": "$TOTAL_INSTALLATIONS"}
 END
 )
 FILENAME="$(date +"%Y-%m-%d" --date="yesterday")-stats.json"
