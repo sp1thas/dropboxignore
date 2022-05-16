@@ -8,7 +8,7 @@ cd "$dir"
 git clone "https://x-access-token:${0}@github.com/sp1thas/dropboxignore.wiki.git" .
 
 MANUAL_INSTALLATIONS=$(curl -s https://api.countapi.xyz/info/dropboxignore.simakis.me/total | jq -r .value)
-SNAP_INSTALLATIONS=$(snapcraft metrics dropboxignore --name installed_base_by_channel --start "$(date +"%Y-%m-%d" --date="yesterday")" --end "$(date +"%Y-%m-%d" --date="yesterday")" --format=json | jq '.series[].values[]' | awk '{s+=$1} END {printf "%.0f\n", s}')
+SNAP_INSTALLATIONS=$(snapcraft metrics dropboxignore --name weekly_installed_base_by_channel --start "$(date +"%Y-%m-%d" --date="2 days ago")" --end "$(date +"%Y-%m-%d" --date="yesterday")" --format=json | jq '.series[].values[]' | awk '{s+=$1} END {printf "%.0f\n", s}')
 TOTAL_INSTALLATIONS=$((MANUAL_INSTALLATIONS + SNAP_INSTALLATIONS))
 JSON_BADGE_STRING=$(cat <<-END
 {"schemaVersion": 1, "label": "installations", "message": "$TOTAL_INSTALLATIONS"}
