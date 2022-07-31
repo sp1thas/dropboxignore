@@ -37,7 +37,7 @@ Ignores all matched folder or files under the given path using existing `.dropbo
 
 ### `genupi`
 
-`generare`, `update` & `ignore` using one shortcut command.
+`generate`, `update` & `ignore` using one shortcut command.
 
 **Example:**
 
