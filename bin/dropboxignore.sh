@@ -198,7 +198,7 @@ get_relative_path() {
   if command -v realpath &>/dev/null; then
     realpath --relative-to="${2-$PWD}" "$1"
   else
-    python -c 'import os.path, sys;print os.path.relpath(sys.argv[1],sys.argv[2])' "$1" "${2-$PWD}"
+    python -c 'import os.path, sys;print(os.path.relpath(sys.argv[1],sys.argv[2]))' "$1" "${2-$PWD}"
   fi
 }
 
@@ -211,7 +211,7 @@ get_absolute_path() {
   if command -v realpath &>/dev/null; then
     realpath "$1"
   else
-    python -c 'import os.path, sys;print os.path.abspath(sys.argv[1])' "$1"
+    python -c 'import os.path, sys;print(os.path.abspath(sys.argv[1]))' "$1"
   fi
 }
 
