@@ -4,7 +4,7 @@
     <p>It's all about the missing <code>.dropboxignore</code> file.</p>
     <img src="https://github.com/sp1thas/dropboxignore/workflows/Testing/badge.svg">
     <img src="https://github.com/sp1thas/dropboxignore/workflows/Shellcheck/badge.svg">
-    <a href='https://dropboxignore.simakis.me/en/latest/'>
+    <a href='https://dropboxignore.simakis.me/en/latest/?utm=gh'>
         <img src='https://readthedocs.org/projects/dropboxignore/badge/?version=latest' alt='Documentation Status' />
     </a>
     <a href="https://codecov.io/gh/sp1thas/dropboxignore">
@@ -96,12 +96,12 @@ that dropboxignore could be useful.
 
 ## CLI
 
-[Here](https://dropboxignore.simakis.me/en/latest/cli) you will find extensive documentation about the dropboxignore command line 
+[Here](https://dropboxignore.simakis.me/en/latest/cli/?utm=gh) you will find extensive documentation about the dropboxignore command line 
 interface.
 
 ## How to contribute
 
-If you want to contribute, read the [contribution guideline](https://dropboxignore.simakis.me/en/latest/contributing/) for 
+If you want to contribute, read the [contribution guideline](https://dropboxignore.simakis.me/en/latest/contributing/?utm=gh) for 
 further details.
 
 ---
