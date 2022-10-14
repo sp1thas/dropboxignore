@@ -2,7 +2,7 @@ name: Testing
 
 on:
   push:
-    # branches: [ master ]
+    branches: [ master ]
     paths-ignore:
       - '**.md'
       - '**/mkdocs.yml'
@@ -43,10 +43,10 @@ jobs:
         run: |
           kcov --include-path=bin/dropboxignore.sh /tmp/coverage bats tests/*.bats
           cp $(find /tmp/coverage -type f -name 'cobertura.xml') coverage.xml
-      # - uses: codecov/codecov-action@v2
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     fail_ci_if_error: true
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
 
   integration:
     runs-on: ${{ matrix.os }}
