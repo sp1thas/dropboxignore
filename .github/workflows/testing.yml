@@ -3,19 +3,33 @@ name: Testing
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+      - '**.md'
+      - '**/mkdocs.yml'
+      - '**/shellcheck.yml'
+      - '**/stats.yml'
   pull_request:
     branches: [ master ]
+
+env:
+  HOMEBREW_NO_AUTO_UPDATE: 1
 
 jobs:
   unit:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        os: [ ubuntu-22.04, ubuntu-20.04, macos-12, macos-11 ]
+        os: [ ubuntu-20.04, ubuntu-22.04, macos-11, macos-12 ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install os dependencies
-        run: sudo apt update && sudo apt install attr kcov
+        run: |
+          if [ "${{ runner.os }}" = "Linux" ]; then
+            sudo apt update && sudo apt install attr kcov
+          else
+            brew install kcov diffutils grep
+          fi
       - name: Install bats-core
         run: |
           git clone https://github.com/bats-core/bats-core.git
@@ -39,13 +53,18 @@ jobs:
   integration:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        os: [ ubuntu-22.04, ubuntu-20.04, macos-12, macos-11 ]
-
+        os: [ ubuntu-20.04, ubuntu-22.04, macos-11, macos-12 ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install os dependencies
-        run: sudo apt update && sudo apt install wget curl
+        run: |
+          if [ "${{ runner.os }}" = "Linux" ]; then
+            sudo apt update && sudo apt install wget curl
+          else
+            brew install wget curl
+          fi
       - name: Install using wget
         run: |
           sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"
