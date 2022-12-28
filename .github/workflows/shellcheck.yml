@@ -14,4 +14,4 @@ jobs:
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@master
       with:
-        ignore: docs icons libs snap venv .github
+        ignore_paths: docs icons libs snap venv .github

@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# shellcheck disable=SC1090
 #######################################
 # Source sub-commands scripts.
 # Arguments:

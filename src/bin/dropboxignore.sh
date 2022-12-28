@@ -81,6 +81,7 @@ main() {
   while getopts ':pv:' opt; do
     case "$opt" in
     v)
+      # shellcheck disable=SC2034
       VERBOSITY=$OPTARG
       ;;
     p)
