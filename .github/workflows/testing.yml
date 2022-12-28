@@ -27,10 +27,10 @@ jobs:
           git clone https://github.com/bats-core/bats-support.git libs/bats-support
           git clone https://github.com/bats-core/bats-file.git libs/bats-file
       - name: Run tests
-        run: make test
+        run: make tests
       - name: Coverage report
         run: |
-          kcov --include-path=bin/dropboxignore.sh /tmp/coverage bats tests/*.bats
+          kcov --include-path=src /tmp/coverage bats tests/*.bats
           cp $(find /tmp/coverage -type f -name 'cobertura.xml') coverage.xml
       - uses: codecov/codecov-action@v2
         with:

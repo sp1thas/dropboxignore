@@ -2,18 +2,21 @@ DESTDIR=/usr/local
 
 # run tests
 # bats should be in PATH
-test :
+tests :
 	bats tests
 
 # install dropboxignore
 install :
-	cp bin/dropboxignore.sh ${DESTDIR}/bin/dropboxignore
+	cp src/bin/dropboxignore.sh ${DESTDIR}/bin/dropboxignore
 	chmod +x ${DESTDIR}/bin/dropboxignore
-	dropboxignore version
+	mkdir -p ${DESTDIR}/lib/dropboxignore
+	cp -r src/lib/commands ${DESTDIR}/lib/dropboxignore/.
+	cp -r src/lib/modules ${DESTDIR}/lib/dropboxignore/.
+	echo "\e[32mdropboxignore has been installed!"
 
 # uninstall dropboxignore
 uninstall :
-	rm -rf "${DESTDIR}/bin/dropboxignore"
+	rm -rf "${DESTDIR}/bin/dropboxignore" "${DESTDIR}/lib/dropboxignore"
 	echo "\e[32mdropboxignore has been uninstalled."
 
 # create snap
