@@ -80,4 +80,4 @@ jobs:
           sudo make install
           dropboxignore version
       - name: Uninstall
-        run: make uninstall
+        run: sudo make uninstall
