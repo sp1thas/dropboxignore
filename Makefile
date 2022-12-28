@@ -2,7 +2,7 @@ DESTDIR=/usr/local
 
 # run tests
 # bats should be in PATH
-tests :
+test :
 	bats tests
 
 # install dropboxignore
