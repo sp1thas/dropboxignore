@@ -13,5 +13,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@master
+      env:
+        SHELLCHECK_OPTS: -x
       with:
         ignore_paths: docs icons libs snap venv .github
