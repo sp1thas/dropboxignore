@@ -6,9 +6,9 @@ setup() {
 }
 
 @test "Test list command without results" {
-  run $dropboxignore ignore "$BATS_RUN_TMPDIR" -p '*'
+  run $dropboxignore ignore "$BATS_RUN_TMPDIR"
   assert_success
-  run $dropboxignore list "$BATS_RUN_TMPDIR"  -v 3
+  run $dropboxignore list "$BATS_RUN_TMPDIR"  -v 3 -p '*'
   assert_success
   assert_output --partial "Total number of ignored files: 2"
   assert_output --partial "Total number of ignored folders: 0"
