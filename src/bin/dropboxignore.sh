@@ -10,7 +10,7 @@ if [ "$SCRIPT_PATH" == "/usr/local/bin" ]; then
 else
   LIB_PATH="$SCRIPT_PATH/../lib"
 fi
-
+# shellcheck disable=SC1091
 source "$LIB_PATH/modules/loader.sh" "$LIB_PATH"
 
 #######################################

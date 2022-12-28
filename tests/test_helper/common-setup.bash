@@ -8,6 +8,7 @@ _common_setup() {
     load '../libs/bats-file/load'
     load '../libs/bats-assert/load'
     unset DROPBOXIGNORE_FILES
+    # shellcheck disable=SC1091
     source "src/lib/loader.sh" "$BATS_TEST_DIRNAME/../src" > /dev/null
     # shellcheck disable=SC1091
     touch "$BATS_TEST_TMPDIR/$DROPBOXIGNORE_NAME"
