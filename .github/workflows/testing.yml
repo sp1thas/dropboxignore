@@ -6,13 +6,11 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
-      - 'utils/install.sh'
   pull_request:
     branches: [ master ]
     paths:
       - 'src/**'
       - 'tests/**'
-      - 'utils/install.sh'
 
 env:
   HOMEBREW_NO_AUTO_UPDATE: 1
@@ -70,12 +68,12 @@ jobs:
           fi
       - name: Install using wget
         run: |
-          sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"
+          sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh)"
           dropboxignore version
           sudo rm /usr/local/bin/dropboxignore
       - name: Install using curl
         run: |
-          sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"
+          sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh)"
           dropboxignore version
           sudo rm /usr/local/bin/dropboxignore
       - name: Install from source

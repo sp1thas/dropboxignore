@@ -14,7 +14,7 @@ _common_setup() {
     touch "$BATS_TEST_TMPDIR/$DROPBOXIGNORE_NAME"
     touch "$BATS_TEST_TMPDIR/$GITIGNORE_NAME"
     # shellcheck disable=SC2034
-    dropboxignore="$BATS_TEST_DIRNAME/../src/bin/dropboxignore.sh"
+    dropboxignore="$BATS_TEST_DIRNAME/../src/bin/cli.sh"
     chown -R "$USER:$GROUP" "$BATS_RUN_TMPDIR"
     cd "$BATS_TMPDIR" || return
 }

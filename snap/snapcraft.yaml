@@ -15,7 +15,7 @@ architectures:
 
 apps:
   dropboxignore:
-    command: ./bin/dropboxignore.sh
+    command: ./src/bin/cli.sh
     plugs:
       - home
 
@@ -27,7 +27,7 @@ parts:
     plugin: nil
     override-pull: |
       snapcraftctl pull
-      snapcraftctl set-version "$(curl -sSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/bin/dropboxignore.sh | grep -oP '^VERSION=(.*)$' | sed -r 's/^VERSION=//')"
+      snapcraftctl set-version "$(curl -sSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/bin/cli.sh | grep -oP '^VERSION=(.*)$' | sed -r 's/^VERSION=//')"
 
   main-part:
     stage-packages:
@@ -35,6 +35,4 @@ parts:
     source-type: git
     source: https://github.com/sp1thas/dropboxignore.git
     plugin: dump
-    organize:
-      dropboxignore.sh: dropboxignore
 

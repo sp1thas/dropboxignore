@@ -7,7 +7,7 @@ test :
 
 # install dropboxignore
 install :
-	cp src/bin/dropboxignore.sh ${DESTDIR}/bin/dropboxignore
+	cp src/bin/cli.sh ${DESTDIR}/bin/dropboxignore
 	chmod +x ${DESTDIR}/bin/dropboxignore
 	mkdir -p ${DESTDIR}/lib/dropboxignore
 	cp -r src/lib/commands ${DESTDIR}/lib/dropboxignore/.
