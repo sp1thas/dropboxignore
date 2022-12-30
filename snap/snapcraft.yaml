@@ -27,7 +27,7 @@ parts:
     plugin: nil
     override-pull: |
       snapcraftctl pull
-      snapcraftctl set-version "$(curl -sSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/bin/cli.sh | grep -oP '^VERSION=(.*)$' | sed -r 's/^VERSION=//')"
+      snapcraftctl set-version "$(curl -sSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/lib/modules/base.sh | grep -oP '^VERSION=(.*)$' | sed -r 's/^VERSION=//')"
 
   main-part:
     stage-packages:
