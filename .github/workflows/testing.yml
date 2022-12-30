@@ -3,13 +3,14 @@ name: Testing
 on:
   push:
     branches: [ master ]
-    paths-ignore:
-      - '**.md'
-      - '**/mkdocs.yml'
-      - '**/shellcheck.yml'
-      - '**/stats.yml'
+    paths:
+      - 'src/**'
+      - 'tests/**'
   pull_request:
     branches: [ master ]
+    paths:
+      - 'src/**'
+      - 'tests/**'
 
 env:
   HOMEBREW_NO_AUTO_UPDATE: 1
@@ -20,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-20.04, ubuntu-22.04, macos-11, macos-12 ]
+        os: [ ubuntu-22.04 ]
     steps:
       - uses: actions/checkout@v3
       - name: Install os dependencies
@@ -44,19 +45,18 @@ jobs:
         run: make test
       - name: Coverage report
         run: |
-          kcov --include-path=bin/dropboxignore.sh /tmp/coverage bats tests/*.bats
+          kcov --include-path=src /tmp/coverage bats tests/*.bats
           cp $(find /tmp/coverage -type f -name 'cobertura.xml') coverage.xml
       - uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
-
   integration:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-20.04, ubuntu-22.04, macos-11, macos-12 ]
+        os: [ ubuntu-22.04, macos-12 ]
     steps:
       - uses: actions/checkout@v3
       - name: Install os dependencies
@@ -68,12 +68,12 @@ jobs:
           fi
       - name: Install using wget
         run: |
-          sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"
+          sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh)"
           dropboxignore version
           sudo rm /usr/local/bin/dropboxignore
       - name: Install using curl
         run: |
-          sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)"
+          sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh)"
           dropboxignore version
           sudo rm /usr/local/bin/dropboxignore
       - name: Install from source
@@ -81,4 +81,4 @@ jobs:
           sudo make install
           dropboxignore version
       - name: Uninstall
-        run: make uninstall
+        run: sudo make uninstall

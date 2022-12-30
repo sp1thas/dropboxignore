@@ -2,8 +2,14 @@ name: Shellcheck
 on:
   push:
     branches: [ master ]
+    paths:
+      - 'src/**'
+      - 'tests/**'
   pull_request:
     branches: [ master ]
+    paths:
+      - 'src/**'
+      - 'tests/**'
 
 jobs:
   shellcheck:
@@ -13,5 +19,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@master
+      env:
+        SHELLCHECK_OPTS: -x
       with:
-        ignore: docs icons libs snap venv .github
+        ignore_paths: docs icons libs snap venv .github

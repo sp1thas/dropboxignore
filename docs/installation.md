@@ -15,7 +15,7 @@ Linux systems.  For macOS, Homebrew is required.
     sudo sh -c "$(wget -qO- https://rb.gy/12plgs)" w
     ```
 
-Worried about mysterious shorted urls like? Take a look at the installation script here: [`https://rb.gy/12plgs --> https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh`](https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh))
+Worried about mysterious shorted urls like? Take a look at the installation script here: [`https://rb.gy/12plgs --> https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh`](https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh))
 
 ## Snap
 
