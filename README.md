@@ -36,10 +36,10 @@ folders and files from dropbox sync. The shell script uses
 
 dropboxignore is installed by running one of the following commands in your terminal. You can install this via the command-line with either curl, wget or another similar tool. `attr` and `git` should be installed on your system, as well as Homebrew if you are on macOS.
 
-| Method | Command                                                                                                                                                    |
-|--------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| curl   | <code>sudo sh -c "$(curl -fsSL https://rb.gy/g4plll)" c</code>  |
-| wget   | <code>sudo sh -c "$(wget -qO- https://rb.gy/g4plll)" w</code> |
+| Method | Command                                                        |
+|--------|----------------------------------------------------------------|
+| curl   | <code>sudo sh -c "$(curl -fsSL https://rb.gy/g4plll)" c</code> |
+| wget   | <code>sudo sh -c "$(wget -qO- https://rb.gy/g4plll)" w</code>  |
 
 Worried about mysterious shorted urls like? Take a look at the installation script here: [`https://rb.gy/g4plll --> https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh`](https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh))
 ### Snap
