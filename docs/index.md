@@ -3,7 +3,7 @@
 <div align="center">
 It's all about the missing <code>.dropboxignore</code> file.
 <br><br/>
-<img alt="doc-main-photo" src="static/main.jpeg" style="width: 75%;">
+<img alt="doc-main-photo" src="static/header.jpeg" style="width: 75%;">
   <br>
     <em>Photo: Robert Capa. FRANCE. 1949. Nice. French painter, Henri MATISSE.</em>
 </div>

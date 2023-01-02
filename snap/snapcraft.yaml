@@ -5,7 +5,7 @@ summary: It's all about the missing .dropboxignore file.
 description: |
   Exclude files from dropbox using glob patterns and take advantage of existing .gitignore files.
   This is a simple shell script that can be used to ignore files from dropbox using glob patterns, .dropboxignore files and the already existing .gitignorefiles. The shell script uses this approach to ignore the matched files.
-icon: icons/256.png
+icon: docs/static/icons/256.png
 grade: stable
 confinement: strict
 

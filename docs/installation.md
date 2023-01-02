@@ -1,39 +1,38 @@
 Below you will find all the available installation options. `dropboxignore` is currently available only for macOS and 
 Linux systems.  For macOS, Homebrew is required.
 
-## Using the kickstart script
 
-=== "cURL"
+=== "Kickstart script"
 
-    ```shell
-    sudo sh -c "$(curl -fsSL https://rb.gy/g4plll)" c
+
+    === "cURL"
+    
+        ```bash
+        sudo sh -c "$(curl -fsSL https://rb.gy/g4plll)" c
+        ```
+    
+    === "Wget"
+    
+        ```bash
+        sudo sh -c "$(wget -qO- https://rb.gy/g4plll)" w
+        ```
+
+    Worried about mysterious shorted urls like? Take a look at the installation script here: [`https://rb.gy/g4plll`](https://rb.gy/g4plll) --> [`https://raw.githubusercontent.com/sp1thas/.../install.sh`](https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)
+
+=== "Snap"
+
+    ```bash
+    snap install dropboxignore
     ```
 
-=== "Wget"
+=== "From source"
 
-    ```shell
-    sudo sh -c "$(wget -qO- https://rb.gy/g4plll)" w
+    !!! note
+        Make source that the following packages are installed in your system: `git`, `attr`
+
+    ```bash
+    git clone https://github.com/sp1thas/dropboxignore.git
+    cd dropboxignore
+    make test  # optional step, bats should be in your PATH
+    sudo make install
     ```
-
-Worried about mysterious shorted urls like? Take a look at the installation script here: [`https://rb.gy/g4plll --> https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh`](https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh))
-
-## Snap
-
-
-[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/dropboxignore)
-
-```shell
-$ snap install dropboxignore
-```
-
-## From Source
-
-!!! note
-    Make source that the following packages are installed in your system: `git`, `attr`
-
-```shell
-$ git clone https://github.com/sp1thas/dropboxignore.git
-$ cd dropboxignore
-$ make test  # optional step, bats should be in your PATH
-$ sudo make install
-```

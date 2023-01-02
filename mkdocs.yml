@@ -1,5 +1,3 @@
-version: 2
-
 site_name: dropboxignore
 site_description: dropboxignore documentation page
 site_author: Panagiotis Simakis
@@ -8,12 +6,13 @@ site_url: https://dropboxignore.simakis.me
 theme:
   name: material
   custom_dir: 'docs/overrides'
-  logo: static/logo.png
-  favicon: static/favicon.png
+  logo: static/icons/256.png
+  favicon: static/icons/64.png
   palette:
     primary: blue
   features:
     - navigation.instant
+    - content.code.copy
 
 markdown_extensions:
   - admonition
@@ -30,9 +29,10 @@ markdown_extensions:
 repo_url: https://github.com/sp1thas/dropboxignore/
 
 nav:
+  - 'Home': 'index.md'
   - 'Installation': 'installation.md'
   - 'Get started': 'getting-started.md'
   - 'CLI': 'cli.md'
-  - 'Dev notes':
+  - 'Development':
       - Contributing: 'contributing.md'
       - Testing: 'testing.md'

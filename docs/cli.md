@@ -17,7 +17,7 @@ created.
 
 **Example:**
 
-![generate example](./static/generate.png)
+![generate example](static/screenshots/generate.png)
 
 ### `update`
 
@@ -25,7 +25,7 @@ Updates `.dropboxignore` files in order to add missing patterns from `.gitignore
 
 **Example:**
 
-![update example](./static/update.png)
+![update example](static/screenshots/update.png)
 
 ### `ignore`
 
@@ -33,7 +33,7 @@ Ignores all matched folder or files under the given path using existing `.dropbo
 
 **Example:**
 
-![ignore example](./static/ignore.png)
+![ignore example](static/screenshots/ignore.png)
 
 ### `genupi`
 
@@ -41,7 +41,7 @@ Ignores all matched folder or files under the given path using existing `.dropbo
 
 **Example:**
 
-![genupi example](./static/genupi.png)
+![genupi example](static/screenshots/genupi.png)
 
 ### `list`
 
@@ -49,7 +49,7 @@ Lists every ignored folder and file under the given path
 
 **Example:**
 
-![list example](./static/list.png)
+![list example](static/screenshots/list.png)
 
 ### `revert`
 
@@ -58,7 +58,7 @@ with dropbox.
 
 **Example:**
 
-![revert example](./static/revert.png)
+![revert example](static/screenshots/revert.png)
 
 ### `delete`
 
@@ -66,7 +66,7 @@ Deletes all `.dropboxignore` files under the given path.
 
 **Example:**
 
-![delete example](./static/delete.png)
+![delete example](static/screenshots/delete.png)
 
 ### `help`
 
@@ -74,7 +74,7 @@ Prints a help message and exits.
 
 **Example:**
 
-![help example](./static/help.png)
+![help example](static/screenshots/help.png)
 
 ## Parameters
 

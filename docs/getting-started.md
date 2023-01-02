@@ -31,14 +31,14 @@ Below you will find some of the most common cases that dropboxignore could be us
 
 === "Node.js"
     
-    ![node_modules_meme](./static/node.jpg)
+    ![node_modules_meme](./static/rand/node.jpg)
     ```shell
     $ dropboxignore ignore ./node_modules
     ```
 
 === "Python"
     
-    ![python_venv](./static/python.jpg)
+    ![python_venv](./static/rand/python.jpg)
     ```shell
     $ dropboxignore ignore ./venv
     $ dropboxignore ignore *.pyc
