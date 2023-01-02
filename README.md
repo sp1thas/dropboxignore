@@ -5,7 +5,7 @@
     <img src="https://github.com/sp1thas/dropboxignore/workflows/Testing/badge.svg">
     <img src="https://github.com/sp1thas/dropboxignore/workflows/Shellcheck/badge.svg">
     <a href='https://dropboxignore.simakis.me/en/latest/?utm=gh'>
-        <img src='https://readthedocs.org/projects/dropboxignore/badge/?version=latest' alt='Documentation Status' />
+        <img src='https://github.com/sp1thas/dropboxignore/actions/workflows/docs-deployment.yml/badge.svg' alt='Documentation Status' />
     </a>
     <a href="https://codecov.io/gh/sp1thas/dropboxignore">
     <img src="https://codecov.io/gh/sp1thas/dropboxignore/branch/master/graph/badge.svg?token=LBVA80F2DV"/>
