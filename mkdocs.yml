@@ -1,7 +1,6 @@
 site_name: dropboxignore
 site_description: dropboxignore documentation page
 site_author: Panagiotis Simakis
-site_url: https://dropboxignore.simakis.me
 
 theme:
   name: material
