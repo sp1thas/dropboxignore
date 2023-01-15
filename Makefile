@@ -7,17 +7,18 @@ test :
 
 # install dropboxignore
 install :
+	$(info installing dropboxignore in $(DESTDIR))
 	cp src/bin/cli.sh ${DESTDIR}/bin/dropboxignore
 	chmod +x ${DESTDIR}/bin/dropboxignore
 	mkdir -p ${DESTDIR}/lib/dropboxignore
 	cp -r src/lib/commands ${DESTDIR}/lib/dropboxignore/.
 	cp -r src/lib/modules ${DESTDIR}/lib/dropboxignore/.
-	echo "\e[32mdropboxignore has been installed!"
+	$(info dropboxignore has been installed)
 
 # uninstall dropboxignore
 uninstall :
-	rm -rf "${DESTDIR}/bin/dropboxignore" "${DESTDIR}/lib/dropboxignore"
-	echo "\e[32mdropboxignore has been uninstalled."
+	rm -rf "${DESTBINDIR}/dropboxignore" "${DESTLIBDIR}/dropboxignore"
+	$(info dropboxignore has been uninstalled)
 
 # create snap
 build-snap :

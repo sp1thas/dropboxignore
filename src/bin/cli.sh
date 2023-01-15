@@ -4,12 +4,8 @@
 # Ignore files and folders from dropbox using the .dropbox ignore files
 
 SCRIPT_PATH="$(cd -- "$(dirname "$0")" >/dev/null 2>&1 && pwd -P )"
+LIB_PATH="$SCRIPT_PATH/../lib"
 
-if [ "$SCRIPT_PATH" == "/usr/local/bin" ]; then
-  LIB_PATH="/usr/local/lib/dropboxignore"
-else
-  LIB_PATH="$SCRIPT_PATH/../lib"
-fi
 # shellcheck disable=SC1091
 source "$LIB_PATH/modules/loader.sh" "$LIB_PATH"
 
