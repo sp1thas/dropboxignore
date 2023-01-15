@@ -1,4 +1,6 @@
-DESTDIR=/usr/local
+DESTSCRIPTNAME=dropboxignore
+DESTBINDIR=/usr/local/bin
+DESTLIBDIR=/usr/local/lib/dropboxignore
 
 # run tests
 # bats should be in PATH
@@ -8,16 +10,16 @@ test :
 # install dropboxignore
 install :
 	$(info installing dropboxignore in $(DESTDIR))
-	cp src/bin/cli.sh ${DESTDIR}/bin/dropboxignore
-	chmod +x ${DESTDIR}/bin/dropboxignore
-	mkdir -p ${DESTDIR}/lib/dropboxignore
-	cp -r src/lib/commands ${DESTDIR}/lib/dropboxignore/.
-	cp -r src/lib/modules ${DESTDIR}/lib/dropboxignore/.
+	mkdir -p "${DESTBINDIR}" "${DESTLIBDIR}"
+	cp src/bin/cli.sh "${DESTBINDIR}/${DESTSCRIPTNAME}"
+	chmod +x "${DESTBINDIR}/${DESTSCRIPTNAME}"
+	cp -r src/lib/commands "${DESTLIBDIR}"
+	cp -r src/lib/modules "${DESTLIBDIR}"
 	$(info dropboxignore has been installed)
 
 # uninstall dropboxignore
 uninstall :
-	rm -rf "${DESTBINDIR}/dropboxignore" "${DESTLIBDIR}/dropboxignore"
+	rm -rf "${DESTBINDIR}/${DESTSCRIPTNAME}" "${DESTLIBDIR}"
 	$(info dropboxignore has been uninstalled)
 
 # create snap
