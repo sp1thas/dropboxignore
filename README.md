@@ -41,7 +41,7 @@ dropboxignore is installed by running one of the following commands in your term
 | curl   | <code>sudo sh -c "$(curl -fsSL https://rb.gy/g4plll)" c</code> |
 | wget   | <code>sudo sh -c "$(wget -qO- https://rb.gy/g4plll)" w</code>  |
 
-Worried about mysterious shorted urls like? Take a look at the installation script here: [`https://rb.gy/g4plll --> https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh`](https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh))
+Worried about mysterious shorted urls like? Take a look at the installation script here: [`https://rb.gy/g4plll --> https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh`](https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh))
 ### Snap
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/dropboxignore)
