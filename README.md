@@ -1,6 +1,6 @@
 <div align="center">
     <h1>dropboxignore</h1>
-    <img src="https://raw.githubusercontent.com/sp1thas/dropboxignore/master/icons/128.png" alt="dropboxignore-logo">
+    <img src="https://raw.githubusercontent.com/sp1thas/dropboxignore/master/docs/static/icons/128.png" alt="dropboxignore-logo">
     <p>It's all about the missing <code>.dropboxignore</code> file.</p>
     <img src="https://github.com/sp1thas/dropboxignore/workflows/Testing/badge.svg">
     <img src="https://github.com/sp1thas/dropboxignore/workflows/Shellcheck/badge.svg">
