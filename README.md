@@ -101,7 +101,7 @@ interface.
 
 ## How to contribute
 
-If you want to contribute, read the [contribution guideline](https://dropboxignore.simakis.me/en/latest/contributing/?utm=gh) for 
+If you want to contribute, read the [contribution guideline](https://dropboxignore.simakis.me/contributing/?utm=gh) for 
 further details.
 
 ---
