@@ -5,6 +5,7 @@ DESTLIBDIR=/usr/local/lib/dropboxignore
 # run tests
 # bats should be in PATH
 test :
+	git submodule update --init
 	bats tests
 
 # install dropboxignore
