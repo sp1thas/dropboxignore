@@ -17,7 +17,7 @@ Linux systems.  For macOS, Homebrew is required.
         sudo sh -c "$(wget -qO- https://rb.gy/g4plll)" w
         ```
 
-    Worried about mysterious shorted urls like? Take a look at the installation script here: [`https://rb.gy/g4plll`](https://rb.gy/g4plll) --> [`https://raw.githubusercontent.com/sp1thas/.../install.sh`](https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh)
+    Worried about mysterious shorted urls like? Take a look at the installation script here: [`https://rb.gy/g4plll`](https://rb.gy/g4plll) --> [`https://raw.githubusercontent.com/sp1thas/.../install.sh`](https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh)
 
 === "Snap"
 

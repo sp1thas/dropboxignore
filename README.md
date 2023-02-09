@@ -1,6 +1,6 @@
 <div align="center">
     <h1>dropboxignore</h1>
-    <img src="https://raw.githubusercontent.com/sp1thas/dropboxignore/master/icons/128.png" alt="dropboxignore-logo">
+    <img src="https://raw.githubusercontent.com/sp1thas/dropboxignore/master/docs/static/icons/128.png" alt="dropboxignore-logo">
     <p>It's all about the missing <code>.dropboxignore</code> file.</p>
     <img src="https://github.com/sp1thas/dropboxignore/workflows/Testing/badge.svg">
     <img src="https://github.com/sp1thas/dropboxignore/workflows/Shellcheck/badge.svg">
@@ -41,7 +41,7 @@ dropboxignore is installed by running one of the following commands in your term
 | curl   | <code>sudo sh -c "$(curl -fsSL https://rb.gy/g4plll)" c</code> |
 | wget   | <code>sudo sh -c "$(wget -qO- https://rb.gy/g4plll)" w</code>  |
 
-Worried about mysterious shorted urls like? Take a look at the installation script here: [`https://rb.gy/g4plll --> https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh`](https://raw.githubusercontent.com/sp1thas/dropboxignore/master/utils/install.sh))
+Worried about mysterious shorted urls like? Take a look at the installation script here: [`https://rb.gy/g4plll --> https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh`](https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh))
 ### Snap
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/dropboxignore)
@@ -101,7 +101,7 @@ interface.
 
 ## How to contribute
 
-If you want to contribute, read the [contribution guideline](https://dropboxignore.simakis.me/en/latest/contributing/?utm=gh) for
+If you want to contribute, read the [contribution guideline](https://dropboxignore.simakis.me/contributing/?utm=gh) for
 further details.
 
 ---
