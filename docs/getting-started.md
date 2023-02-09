@@ -1,4 +1,4 @@
-`dropboxignore` is a CLI tool which supports a collection of commands in order to make your life easier when it comes 
+`dropboxignore` is a CLI tool which supports a collection of commands in order to make your life easier when it comes
 to exclude files or/and folders from :material-dropbox: dropbox sync. Below you will find some common usecases.
 
 ## A typical workflow
@@ -16,12 +16,12 @@ $ dropboxignore genupi .
 ```
 
 !!! warning "Important warning"
-    In order to prevent unpleasant data losses, exception patterns are not supported. Both `.gitignore` and 
-    `.dropboxignore` files with at least one exceptional pattern will be bypassed (for further details: 
+    In order to prevent unpleasant data losses, exception patterns are not supported. Both `.gitignore` and
+    `.dropboxignore` files with at least one exceptional pattern will be bypassed (for further details:
     [#3](https://github.com/sp1thas/dropboxignore/issues/3)).
 
 !!! note "Keep in mind"
-    Automatic generation of `.dropboxignore` files is an optional step, therefore, may not be a necessary action for 
+    Automatic generation of `.dropboxignore` files is an optional step, therefore, may not be a necessary action for
     your case.
 
 
@@ -30,14 +30,14 @@ $ dropboxignore genupi .
 Below you will find some of the most common cases that dropboxignore could be useful.
 
 === "Node.js"
-    
+
     ![node_modules_meme](./static/rand/node.jpg)
     ```shell
     $ dropboxignore ignore ./node_modules
     ```
 
 === "Python"
-    
+
     ![python_venv](./static/rand/python.jpg)
     ```shell
     $ dropboxignore ignore ./venv
@@ -55,10 +55,9 @@ Below you will find some of the most common cases that dropboxignore could be us
     ```shell
     $ dropboxignore ignore .idea/
     ```
-    
+
 === "VS Code"
 
     ```shell
     $ dropboxignore ignore .vscode/
     ```
-    

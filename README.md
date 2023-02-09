@@ -20,14 +20,14 @@
 
 [Installation](#installation) •
 [Getting started](#getting-started) •
-[CLI](#cli) • 
+[CLI](#cli) •
 [How to Contribute](#how-to-contribute)
 
 </div>
 
 
-This CLI shell script aims to take advantage of glob patterns and existing `.gitignore` files in order to exclude specific 
-folders and files from dropbox sync. The shell script uses 
+This CLI shell script aims to take advantage of glob patterns and existing `.gitignore` files in order to exclude specific
+folders and files from dropbox sync. The shell script uses
 [this recent](https://help.dropbox.com/files-folders/restore-delete/ignored-files) approach to ignore folders and files.
 
 ## Installation
@@ -65,7 +65,7 @@ $ sudo make uninstall
 
 ## Getting started
 
-`dropboxignore` is a CLI tool which supports a collection of commands in order to make your life easier when it comes 
+`dropboxignore` is a CLI tool which supports a collection of commands in order to make your life easier when it comes
 to exclude files or/and folders from :material-dropbox: dropbox sync. Below you will find some common usecases.
 
 ### A typical workflow
@@ -82,26 +82,26 @@ and you can run this flow by running the following command:
 $ dropboxignore genupi .
 ```
 
-**Warning:** In order to prevent unpleasant data losses, exception patterns are not supported. Both `.gitignore` and 
-`.dropboxignore` files with at least one exceptional pattern will be bypassed (for further details: 
+**Warning:** In order to prevent unpleasant data losses, exception patterns are not supported. Both `.gitignore` and
+`.dropboxignore` files with at least one exceptional pattern will be bypassed (for further details:
 [#3](https://github.com/sp1thas/dropboxignore/issues/3)).
 
-**Note:** Automatic generation of `.dropboxignore` files is an optional step, therefore, may not be a necessary action 
+**Note:** Automatic generation of `.dropboxignore` files is an optional step, therefore, may not be a necessary action
 for your case.
 
 ### Long story short
 
-[Here](https://dropboxignore.simakis.me/en/latest/getting-started/#long-story-short) you can find some of the most common cases 
+[Here](https://dropboxignore.simakis.me/en/latest/getting-started/#long-story-short) you can find some of the most common cases
 that dropboxignore could be useful.
 
 ## CLI
 
-[Here](https://dropboxignore.simakis.me/en/latest/cli/?utm=gh) you will find extensive documentation about the dropboxignore command line 
+[Here](https://dropboxignore.simakis.me/en/latest/cli/?utm=gh) you will find extensive documentation about the dropboxignore command line
 interface.
 
 ## How to contribute
 
-If you want to contribute, read the [contribution guideline](https://dropboxignore.simakis.me/en/latest/contributing/?utm=gh) for 
+If you want to contribute, read the [contribution guideline](https://dropboxignore.simakis.me/en/latest/contributing/?utm=gh) for
 further details.
 
 ---

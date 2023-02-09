@@ -11,8 +11,8 @@ $ dropboxignore <command> <path> [parameters]
 
 ### `generate`
 
-Generates `dropboxignore` files based on the given path. If a `.dropboxignore` already exists, will not be modified. 
-If a `.gitignore` file contains at least one exception pattern, the corresponding`.dropboxignore` file will not be 
+Generates `dropboxignore` files based on the given path. If a `.dropboxignore` already exists, will not be modified.
+If a `.gitignore` file contains at least one exception pattern, the corresponding`.dropboxignore` file will not be
 created.
 
 **Example:**
@@ -53,7 +53,7 @@ Lists every ignored folder and file under the given path
 
 ### `revert`
 
-Reverts every ignored file or folder under the given path. After running this command, all local files will be sync 
+Reverts every ignored file or folder under the given path. After running this command, all local files will be sync
 with dropbox.
 
 **Example:**
@@ -80,7 +80,7 @@ Prints a help message and exits.
 
 `-v` (_verbosity level_ [0-2]) **Default**: `1`
 
-Select a number between 0 and 2 to increase or decrease verbosity. `2` will display debug logs. `0` will display error 
+Select a number between 0 and 2 to increase or decrease verbosity. `2` will display debug logs. `0` will display error
 logs only.
 
 `-p` (_matching pattern_) **Default**: `'*'`

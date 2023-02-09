@@ -1,7 +1,7 @@
 # Contributing to dropboxignore
 
-You are here to help on dropboxignore? Awesome, feel welcome and read the following sections in order to know how to 
-ask questions and how to work on something. There are many ways to contribute, from writing tutorials or blog posts, 
+You are here to help on dropboxignore? Awesome, feel welcome and read the following sections in order to know how to
+ask questions and how to work on something. There are many ways to contribute, from writing tutorials or blog posts,
 improving the documentation, adding extra test-cases, submitting bug reports and feature requests or writing code.
 
 ## Getting started
@@ -17,7 +17,7 @@ For something that is bigger than a one or two line fix:
 
 ## How to report a bug
 
-Go to [the issue tracker](https://github.com/sp1thas/dropboxignore/issues) and create a new issue and follow the 
+Go to [the issue tracker](https://github.com/sp1thas/dropboxignore/issues) and create a new issue and follow the
 template.
 
 ## Contributors

@@ -1,4 +1,4 @@
-Below you will find all the available installation options. `dropboxignore` is currently available only for macOS and 
+Below you will find all the available installation options. `dropboxignore` is currently available only for macOS and
 Linux systems.  For macOS, Homebrew is required.
 
 
@@ -6,13 +6,13 @@ Linux systems.  For macOS, Homebrew is required.
 
 
     === "cURL"
-    
+
         ```bash
         sudo sh -c "$(curl -fsSL https://rb.gy/g4plll)" c
         ```
-    
+
     === "Wget"
-    
+
         ```bash
         sudo sh -c "$(wget -qO- https://rb.gy/g4plll)" w
         ```
