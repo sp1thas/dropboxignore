@@ -50,6 +50,12 @@ Worried about mysterious shorted urls like? Take a look at the installation scri
 $ snap install dropboxignore
 ```
 
+### Flatpak
+
+```shell
+$ flatpak install me.simakis.dropboxignore
+```
+
 ### From source
 ```shell
 $ git clone https://github.com/sp1thas/dropboxignore.git
