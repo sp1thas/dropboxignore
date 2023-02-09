@@ -25,6 +25,12 @@ Linux systems.  For macOS, Homebrew is required.
     snap install dropboxignore
     ```
 
+=== "Flatpak"
+
+    ```bash
+    flatpak install me.simakis.dropboxignore
+    ```
+
 === "From source"
 
     !!! note
