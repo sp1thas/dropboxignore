@@ -7,6 +7,9 @@
     <a href='https://dropboxignore.simakis.me/en/latest/?utm=gh'>
         <img src='https://github.com/sp1thas/dropboxignore/actions/workflows/docs-deployment.yml/badge.svg' alt='Documentation Status' />
     </a>
+    <a href='https://results.pre-commit.ci/latest/github/sp1thas/dropboxignore/master'>
+        <img src='https://results.pre-commit.ci/badge/github/sp1thas/dropboxignore/master.svg' alt='pre-commit.ci status' />
+    </a>
     <a href="https://codecov.io/gh/sp1thas/dropboxignore">
     <img src="https://codecov.io/gh/sp1thas/dropboxignore/branch/master/graph/badge.svg?token=LBVA80F2DV"/>
     </a>
