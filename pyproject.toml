@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "dropboxignore"
+version = "2.0.0"
+description = "It's all about the missing .dropboxignore file."
+authors = ["Panagiotis Simakis <sp1thas@autistici.org>"]
+license = "GPL-3.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+typer = "^0.7.0"
+
+[tool.poetry.dev-dependencies]
+pytest-cov = "^4.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

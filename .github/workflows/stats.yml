@@ -16,6 +16,6 @@ jobs:
           snapcraft_token: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
       - name: Install os dependencies
         run: sudo apt update && sudo apt install curl jq git
-      
+
       - name: Create stats file
         run: sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/stats.sh)" '${{ secrets.GITHUB_TOKEN }}'

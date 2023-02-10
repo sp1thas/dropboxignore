@@ -11,9 +11,9 @@ It's all about the missing <code>.dropboxignore</code> file.
 
 ## Overview
 
-This CLI shell script aims to take advantage of glob patterns and existing `.gitignore` files in order to exclude specific 
-folders and files from :material-dropbox: dropbox sync. The shell script uses 
-[this recent](https://help.dropbox.com/files-folders/restore-delete/ignored-files) approach to ignore the matched 
+This CLI shell script aims to take advantage of glob patterns and existing `.gitignore` files in order to exclude specific
+folders and files from :material-dropbox: dropbox sync. The shell script uses
+[this recent](https://help.dropbox.com/files-folders/restore-delete/ignored-files) approach to ignore the matched
 folders and files.
 
 ## Features

@@ -22,8 +22,8 @@ markdown_extensions:
   - attr_list
   - md_in_html
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: '!!python/name:materialx.emoji.twemoji'
+      emoji_generator: '!!python/name:materialx.emoji.to_svg'
 
 repo_url: https://github.com/sp1thas/dropboxignore/
 
