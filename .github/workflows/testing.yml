@@ -11,9 +11,16 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
+  workflow_run:
+    workflows:
+      - 'pre-commit.ci'
+      - 'Shellcheck'
+    types:
+      - completed
 
 env:
   HOMEBREW_NO_AUTO_UPDATE: 1
+  PYTHON_KEYRING_BACKEND: keyring.backends.null.Keyring
 
 jobs:
   unit:
