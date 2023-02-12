@@ -58,6 +58,12 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
+      - name: Use poetry
+        uses: abatilo/actions-poetry@v2
+      - name: Install poetry dependencies
+        run: poetry install --dev
+      - name: Run python tests
+        run: poetry run pytest --cov=srv
   integration:
     needs: [unit]
     runs-on: ${{ matrix.os }}
