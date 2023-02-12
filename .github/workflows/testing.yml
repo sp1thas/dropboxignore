@@ -58,6 +58,7 @@ jobs:
       - name: Run python tests
         run: poetry run pytest --cov=srv
   integration:
+    needs: [unit]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
