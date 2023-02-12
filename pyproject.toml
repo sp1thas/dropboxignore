@@ -5,6 +5,7 @@ description = "It's all about the missing .dropboxignore file."
 authors = ["Panagiotis Simakis <sp1thas@autistici.org>"]
 license = "GPL-3.0"
 readme = "README.md"
+packages = [{ include = "dropboxignore", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"

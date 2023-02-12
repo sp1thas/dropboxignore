@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from src.commands.base import BaseCommand
+from dropboxignore.commands.base import BaseCommand
 
 
 class UpdateCommand(BaseCommand):

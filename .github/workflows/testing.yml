@@ -41,7 +41,7 @@ jobs:
           git clone https://github.com/bats-core/bats-assert.git libs/bats-assert
           git clone https://github.com/bats-core/bats-support.git libs/bats-support
           git clone https://github.com/bats-core/bats-file.git libs/bats-file
-      - name: Run tests
+      - name: Run bats tests
         run: make test
       - name: Coverage report
         run: |
@@ -51,6 +51,12 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
+      - name: Use poetry
+        uses: abatilo/actions-poetry@v2
+      - name: Install poetry dependencies
+        run: poetry install --dev
+      - name: Run python tests
+        run: poetry run pytest --cov=srv
   integration:
     runs-on: ${{ matrix.os }}
     strategy:

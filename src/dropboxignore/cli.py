@@ -26,7 +26,7 @@ def list(path: str = "."):
 
 @app.command()
 def delete(path: str):
-    from commands.delete import DeleteCommand
+    from dropboxignore.commands.delete import DeleteCommand
 
     cmd = DeleteCommand(path)
     cmd.run()
