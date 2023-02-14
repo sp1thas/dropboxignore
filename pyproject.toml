@@ -9,7 +9,7 @@ packages = [{ include = "dropboxignore", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-typer = "^0.7.0"
+fire = "^0.5.0"
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^4.0.0"
