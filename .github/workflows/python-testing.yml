@@ -1,4 +1,4 @@
-name: Shell Testing
+name: Python Testing
 
 on:
   push:
@@ -43,6 +43,5 @@ jobs:
         uses: dorny/test-reporter@v1
         if: success() || failure()
         with:
-          name: JUnit Report
           path: test_results.xml
           reporter: java-junit
