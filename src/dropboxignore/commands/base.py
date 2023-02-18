@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Union, Type
 
-from dropboxignore.filterer import BaseFilterer
+from dropboxignore.filterers.base import BaseFilterer
 
 
 @dataclass
@@ -26,7 +26,7 @@ class BaseCommand(ABC):
     ) -> None:
         self.c = Counter()
         self.path = Path(path) if isinstance(path, str) else path
-        self.filterer = filterer(base_path=self.path)
+        self.filterer = filterer(path=self.path)
 
     @abstractmethod
     def run_report(self) -> str:
@@ -37,6 +37,6 @@ class BaseCommand(ABC):
         pass
 
     def run(self):
-        for item_path in self.filterer.filter():
+        for item_path in self.filterer:
             self.run_on_item_path(item_path)
         print(self.run_report())

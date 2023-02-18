@@ -1,12 +1,12 @@
 from enum import Enum
 
 
-class OperatingSystems(str, Enum):
+class OperatingSystem(str, Enum):
     LINUX = "Linux"
     WINDOWS = "Windows"
     MACOS = "Darwin"
 
 
-class IgnoreFiles(str, Enum):
+class IgnoreFile(str, Enum):
     GITIGNORE = ".gitignore"
     DROPBOXIGNORE = ".dropboxignore"

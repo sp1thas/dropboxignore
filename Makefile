@@ -2,11 +2,17 @@ DESTSCRIPTNAME=dropboxignore
 DESTBINDIR=/usr/local/bin
 DESTLIBDIR=/usr/local/lib/dropboxignore
 
-# run tests
+# run shell tests
 # bats should be in PATH
-test :
+shell-tests :
 	git submodule update --init
 	bats tests
+
+# run python tests
+python-tests :
+	poetry run pytest --cov=src tests/
+
+test : shell-tests python-tests
 
 # install dropboxignore
 install :

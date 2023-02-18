@@ -4,15 +4,15 @@ from pathlib import Path
 import pytest
 
 from dropboxignore.commands.generate import GenerateCommand
-from dropboxignore.enums import IgnoreFiles
+from dropboxignore.enums import IgnoreFile
 
 
 def test_generate_successful(tmp_path: Path):
-    gi = tmp_path / IgnoreFiles.GITIGNORE.value
+    gi = tmp_path / IgnoreFile.GITIGNORE.value
 
     gi.write_text("*.txt")
 
-    di = tmp_path / IgnoreFiles.DROPBOXIGNORE.value
+    di = tmp_path / IgnoreFile.DROPBOXIGNORE.value
 
     assert not di.exists()
 
@@ -40,7 +40,7 @@ def test_generate_not_gitignore_file_input(tmp_path: Path):
 
 
 def test_generate_gitignore_file_not_exists(tmp_path: Path):
-    gi = tmp_path / IgnoreFiles.GITIGNORE.value
+    gi = tmp_path / IgnoreFile.GITIGNORE.value
 
     assert not gi.exists()
 
@@ -52,7 +52,7 @@ def test_generate_gitignore_file_not_exists(tmp_path: Path):
 
 
 def test_generate_gitignore_file_not_file(tmp_path: Path):
-    gi = tmp_path / IgnoreFiles.GITIGNORE.value
+    gi = tmp_path / IgnoreFile.GITIGNORE.value
 
     gi.mkdir()
 
@@ -66,8 +66,8 @@ def test_generate_gitignore_file_not_file(tmp_path: Path):
 
 
 def test_generate_dropboxignore_file_already_exists(tmp_path: Path):
-    gi = tmp_path / IgnoreFiles.GITIGNORE.value
-    di = tmp_path / IgnoreFiles.DROPBOXIGNORE.value
+    gi = tmp_path / IgnoreFile.GITIGNORE.value
+    di = tmp_path / IgnoreFile.DROPBOXIGNORE.value
 
     gi.touch()
     di.touch()

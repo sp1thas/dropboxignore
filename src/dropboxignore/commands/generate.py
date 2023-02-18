@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from dropboxignore.commands.base import BaseCommand
-from dropboxignore.enums import IgnoreFiles
+from dropboxignore.enums import IgnoreFile
 import datetime
 
 HEADER = (
@@ -11,14 +11,14 @@ HEADER = (
 
 class GenerateCommand(BaseCommand):
     def run_on_item_path(self, item_path: Path) -> None:
-        if not item_path.name == IgnoreFiles.GITIGNORE.value:
+        if not item_path.name == IgnoreFile.GITIGNORE.value:
             raise ValueError(f"{item_path} is not a gitignore file")
         if not item_path.exists():
             raise ValueError(f"{item_path} does not exists")
         if not item_path.is_file():
             raise ValueError(f"{item_path} is not a file")
 
-        di = item_path.parent / IgnoreFiles.DROPBOXIGNORE.value
+        di = item_path.parent / IgnoreFile.DROPBOXIGNORE.value
 
         if di.exists():
             raise ValueError(f"{di} already exists")

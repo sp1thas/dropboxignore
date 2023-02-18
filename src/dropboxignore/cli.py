@@ -16,7 +16,11 @@ class Cli:
 
     def generate(self, path: str = ".", v: int = 1):
         """Generate .dropboxignore files based on existing .gitignore files."""
-        pass
+        from dropboxignore.commands.generate import GenerateCommand
+        from dropboxignore.filterers.gitignore import GitIgnoreFilterer
+
+        cmd = GenerateCommand(path=path, filterer=GitIgnoreFilterer)
+        cmd.run()
 
     def list(self, path: str = ".", v: int = 1):
         """List ignored files and folders under the given path."""
@@ -24,7 +28,11 @@ class Cli:
 
     def delete(self, path: str = ".", v: int = 1):
         """Delete specific .dropboxignore file or every .dropboxignore file under the given path."""
-        pass
+        from dropboxignore.commands.delete import DeleteCommand
+        from dropboxignore.filterers.dropboxignore import DropboxIgnoreFilterer
+
+        cmd = DeleteCommand(path=path, filterer=DropboxIgnoreFilterer)
+        cmd.run()
 
     def update(self, path: str = ".", v: int = 1):
         """Update existing .dropboxignore files if at least one .gitignore file has been changed."""

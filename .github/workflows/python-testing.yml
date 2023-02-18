@@ -23,7 +23,7 @@ env:
   PYTHON_KEYRING_BACKEND: keyring.backends.null.Keyring
 
 jobs:
-  unit:
+  testing:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
