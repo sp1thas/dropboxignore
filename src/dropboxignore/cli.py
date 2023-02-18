@@ -36,6 +36,11 @@ class Cli:
 
     def update(self, path: str = ".", v: int = 1):
         """Update existing .dropboxignore files if at least one .gitignore file has been changed."""
+        from dropboxignore.commands.update import UpdateCommand
+        from dropboxignore.filterers.bothignore import BothIgnoreFilterer
+
+        cmd = UpdateCommand(path=path, filterer=BothIgnoreFilterer)
+        cmd.run()
 
     def genupi(self, path: str = ".", v: int = 1):
         """Generate, update & ignore using one shortcut command."""
@@ -46,7 +51,7 @@ class Cli:
         pass
 
 
-_cli_partial = partial(fire.Fire, Cli, name=NAME)
+_cli_partial: partial = partial(fire.Fire, Cli, name=NAME)
 
 if __name__ == "__main__":
     _cli_partial()
