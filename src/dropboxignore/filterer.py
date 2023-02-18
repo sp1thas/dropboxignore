@@ -1,20 +1,19 @@
 import os
-
-from enums import IgnoreFiles
 import pathlib
-from abc import ABC, abstractmethod
-from itertools import chain
-from typing import Iterator, Tuple
+from abc import abstractmethod
+from typing import Iterator
+
+from dropboxignore.enums import IgnoreFiles
 
 
-class BaseFilterer(ABC):
+class BaseFilterer:
     def __init__(self, base_path: pathlib.Path):
         self.base_path = base_path
 
     @abstractmethod
     def filter(self) -> Iterator[pathlib.Path]:
         for _ in []:
-            yield pathlib.Path(".")
+            yield pathlib.Path("..")
 
 
 class IgnoreFileMatchingFilterer(BaseFilterer):

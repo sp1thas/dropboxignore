@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Union, Type
 
-from filterer import BaseFilterer
+from dropboxignore.filterer import BaseFilterer
 
 
 @dataclass
@@ -18,11 +19,14 @@ class Counter:
 class BaseCommand(ABC):
     path: Path
     c: Counter
+    filterer: BaseFilterer
 
-    def __init__(self, path: str) -> None:
+    def __init__(
+        self, path: Union[str, Path], filterer: Type[BaseFilterer] = BaseFilterer
+    ) -> None:
         self.c = Counter()
-        self.path = Path(path)
-        self.filterer = BaseFilterer(self.path)
+        self.path = Path(path) if isinstance(path, str) else path
+        self.filterer = filterer(base_path=self.path)
 
     @abstractmethod
     def run_report(self) -> str:
