@@ -6,13 +6,13 @@ on:
     paths:
       - 'src/**.py'
       - 'tests/**.py'
-      - '.github/**'
+      - '.github/python-testing.yml'
   pull_request:
     branches: [ master ]
     paths:
       - 'src/**.py'
       - 'tests/**.py'
-      - '.github/**'
+      - '.github/python-testing.yml'
   workflow_run:
     workflows:
       - 'pre-commit.ci'

@@ -6,12 +6,14 @@ on:
       - '**.sh'
       - '**.bats'
       - '**.bash'
+      - '.github/shell-testing.yml'
   pull_request:
     branches: [ master ]
     paths:
       - '**.sh'
       - '**.bats'
       - '**.bash'
+      - '.github/shell-testing.yml'
 
 jobs:
   shellcheck:

@@ -6,13 +6,13 @@ on:
     paths:
       - 'src/**.sh'
       - 'tests/*.bats'
-      - '.github/**'
+      - '.github/shell-testing.yml'
   pull_request:
     branches: [ master ]
     paths:
       - 'src/**'
       - 'tests/**'
-      - '.github/**'
+      - '.github/shell-testing.yml'
   workflow_run:
     workflows:
       - 'Shellcheck'
