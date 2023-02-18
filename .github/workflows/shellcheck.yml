@@ -3,13 +3,15 @@ on:
   push:
     branches: [ master ]
     paths:
-      - 'src/**'
-      - 'tests/**'
+      - '**.sh'
+      - '**.bats'
+      - '**.bash'
   pull_request:
     branches: [ master ]
     paths:
-      - 'src/**'
-      - 'tests/**'
+      - '**.sh'
+      - '**.bats'
+      - '**.bash'
 
 jobs:
   shellcheck:

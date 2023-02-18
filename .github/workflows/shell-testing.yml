@@ -1,26 +1,26 @@
-name: Testing
+name: Shell Testing
 
 on:
   push:
     branches: [ master ]
     paths:
-      - 'src/**'
-      - 'tests/**'
+      - 'src/**.sh'
+      - 'tests/*.bats'
+      - '.github/**'
   pull_request:
     branches: [ master ]
     paths:
       - 'src/**'
       - 'tests/**'
+      - '.github/**'
   workflow_run:
     workflows:
-      - 'pre-commit.ci'
       - 'Shellcheck'
     types:
       - completed
 
 env:
   HOMEBREW_NO_AUTO_UPDATE: 1
-  PYTHON_KEYRING_BACKEND: keyring.backends.null.Keyring
 
 jobs:
   unit:
@@ -58,12 +58,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
-      - name: Use poetry
-        uses: abatilo/actions-poetry@v2
-      - name: Install poetry dependencies
-        run: poetry install
-      - name: Run python tests
-        run: poetry run pytest --cov=srv
   integration:
     needs: [unit]
     runs-on: ${{ matrix.os }}
