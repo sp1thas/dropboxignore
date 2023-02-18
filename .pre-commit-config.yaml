@@ -1,3 +1,6 @@
+ci:
+    skip: [poetry-lock]
+
 repos:
 
 -   repo: https://github.com/python-poetry/poetry
