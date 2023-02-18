@@ -10,7 +10,7 @@ Tests of dropboxignore are written using [bats](https://github.com/bats-core/bat
 [source](https://github.com/bats-core/bats-core)).
 
 ```shell
-$ make test
+$ make shell-test
 ```
 
 If you are planning to implement a new feature, make sure that the necessary test cases have been added.

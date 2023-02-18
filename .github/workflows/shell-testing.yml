@@ -49,7 +49,7 @@ jobs:
           git clone https://github.com/bats-core/bats-support.git libs/bats-support
           git clone https://github.com/bats-core/bats-file.git libs/bats-file
       - name: Run bats tests
-        run: make test
+        run: make shell-test
       - name: Coverage report
         run: |
           kcov --include-path=src /tmp/coverage bats tests/*.bats
