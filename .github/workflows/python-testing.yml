@@ -43,7 +43,7 @@ jobs:
       - name: Check dependencies
         run: poetry check
       - name: Run python tests
-        run: poetry run pytest --cov=srv --junitxml=test_results.xml tests/
+        run: poetry run pytest -s --cov=srv --junitxml=test_results.xml tests/
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: failure()
