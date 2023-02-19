@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from dropboxignore.commands.base import BaseCommand
@@ -8,4 +9,8 @@ class GenUpICommand(BaseCommand):
         pass
 
     def run_report(self) -> str:
-        return f"Number of generate files: {self.c.deleted}\nNumber of updated files: {self.c.deleted}\nNumber of ignored files: {self.c.deleted}\n"
+        return (
+            f"Number of generate files: {self.c.deleted}{os.linesep}"
+            f"Number of updated files: {self.c.deleted}{os.linesep}"
+            f"Number of ignored files: {self.c.deleted}{os.linesep}"
+        )

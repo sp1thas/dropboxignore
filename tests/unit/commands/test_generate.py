@@ -1,6 +1,6 @@
 import datetime
 from pathlib import Path
-
+import os
 import pytest
 
 from dropboxignore.commands.generate import GenerateCommand
@@ -21,10 +21,10 @@ def test_generate_successful(tmp_path: Path):
 
     assert di.exists()
     assert di.read_text() == (
-        "# ----\n"
-        "# Automatically Generated .dropboxignore file at {date}\n"
-        "# ----\n"
-        "*.txt"
+        f"# ----{os.linesep}"
+        f"# Automatically Generated .dropboxignore file at {{date}}{os.linesep}"
+        f"# ----{os.linesep}"
+        f"*.txt"
     ).format(date=datetime.date.today().strftime("%Y-%m-%d"))
     assert cmd.c.generated == 1
 

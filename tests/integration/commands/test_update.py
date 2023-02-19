@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from pytest import CaptureFixture
@@ -16,5 +17,5 @@ def test_update_success(tmp_path: Path, capfd: CaptureFixture) -> None:
     cli(command=f"--path {tmp_path.absolute()} update")
 
     out, err = capfd.readouterr()
-    assert out == "Number of updated files: 1\n"
+    assert out == f"Number of updated files: 1{os.linesep}"
     assert err == ""

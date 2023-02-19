@@ -1,8 +1,11 @@
 import datetime
 from pathlib import Path
+import os
 
 DEFAULT_HEADER = (
-    "# ----\n" "# Automatically Generated .dropboxignore file at {date}\n" "# ----\n"
+    f"# ----{os.linesep}"
+    f"# Automatically Generated .dropboxignore file at {{date}}{os.linesep}"
+    f"# ----{os.linesep}"
 )
 
 

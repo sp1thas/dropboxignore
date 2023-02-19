@@ -65,7 +65,7 @@ def _get_ignorer() -> Type[IgnorerBase]:
         return LinuxIgnorer
     elif platform == "darwin":
         return MacIgnorer
-    elif platform == "windows":
+    elif platform in ("windows", "win32"):
         return WindowsIgnorer
     else:
         raise RuntimeError(f"Unknown platform: {platform}")

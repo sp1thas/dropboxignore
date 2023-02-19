@@ -4,6 +4,7 @@ from pytest import CaptureFixture
 
 from dropboxignore.cli import cli_partial as cli
 from dropboxignore.enums import IgnoreFile
+import os
 
 
 def test_generate_success(tmp_path: Path, capfd: CaptureFixture) -> None:
@@ -13,5 +14,5 @@ def test_generate_success(tmp_path: Path, capfd: CaptureFixture) -> None:
     cli(command=f"--path {tmp_path.absolute()} generate")
 
     out, err = capfd.readouterr()
-    assert out == "Number of generated files: 1\n"
+    assert out == f"Number of generated files: 1{os.linesep}"
     assert err == ""

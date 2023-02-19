@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 from dropboxignore.enums import IgnoreFile
 from dropboxignore.filterers.dropboxignore import (
@@ -26,7 +27,7 @@ def test_dropboxignore_filterer(tmp_path: Path) -> None:
 def test_dropboxignore_match_filterer(tmp_path: Path) -> None:
     di = tmp_path / IgnoreFile.DROPBOXIGNORE.value
     di.touch()
-    di.write_text("*.txt\nfoo/*.json\n")
+    di.write_text(f"*.txt{os.linesep}foo/*.json{os.linesep}")
 
     txt_file = tmp_path / "random.txt"
     txt_file.touch()
