@@ -28,7 +28,8 @@ class DropboxIgnoreMatchFilterer(BaseFilterer):
             for pattern in _parse_ignore_file(di):
                 print(pattern)
                 for item in folder.glob(pattern):
-                    if (abs_path_str := str(item.absolute())) in matches:
+                    abs_path_str = str(item.absolute())
+                    if abs_path_str in matches:
                         continue
                     matches.add(abs_path_str)
                     yield item
