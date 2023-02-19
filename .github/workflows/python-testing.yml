@@ -28,9 +28,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-22.04 windows-2022 macos-12 ]
+        os: [ ubuntu-22.04, windows-2022, macos-12 ]
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
       - name: Use poetry
         uses: abatilo/actions-poetry@v2
       - name: Install poetry dependencies
