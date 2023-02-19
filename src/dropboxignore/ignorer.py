@@ -15,10 +15,10 @@ class IgnorerBase(ABC):
         return []
 
     def ignore(self, path: Path):
-        subprocess.call(self._ignore_cmd(path=path))
+        subprocess.check_call(self._ignore_cmd(path=path))
 
     def revert(self, path: Path):
-        subprocess.call(self._revert_cmd(path=path))
+        subprocess.check_call(self._revert_cmd(path=path))
 
 
 class WindowsIgnorer(IgnorerBase):

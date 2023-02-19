@@ -28,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-22.04 ]
+        os: [ ubuntu-22.04 windows-2022 macos-12 ]
     steps:
       - uses: actions/checkout@v3
       - name: Use poetry
@@ -41,7 +41,7 @@ jobs:
         run: poetry run pytest --cov=srv --junitxml=test_results.xml tests/
       - name: Test Report
         uses: dorny/test-reporter@v1
-        if: success() || failure()
+        if: failure()
         with:
           name: JUnit Test Report
           path: test_results.xml
