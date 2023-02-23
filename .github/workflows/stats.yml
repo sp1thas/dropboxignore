@@ -1,8 +1,8 @@
-name: Daily stats
+name: Weekly stats
 
 on:
   schedule:
-    - cron: "1 9 * * *"
+    - cron: "1 9 * * 1"
   workflow_dispatch:
 
 jobs:
