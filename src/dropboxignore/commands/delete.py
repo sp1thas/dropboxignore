@@ -8,7 +8,6 @@ class DeleteCommand(BaseCommand):
     def run_on_item_path(self, item_path: Path) -> None:
         if not item_path.name == IgnoreFile.DROPBOXIGNORE.value:
             raise ValueError(f"{item_path} is not a dropboxignore file. {item_path}")
-        print(f">>>>>>>>>>>>>>>>>>>>>{item_path}<<<<<<<<<<<<<<<<<<<<<")
         try:
             item_path.unlink(missing_ok=False)
             self.c.deleted += 1
