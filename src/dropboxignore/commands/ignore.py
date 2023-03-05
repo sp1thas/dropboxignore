@@ -1,9 +1,9 @@
 from pathlib import Path
+from typing import Union, Type
 
 from dropboxignore.commands.base import BaseCommand
-from dropboxignore.ignorer import _get_ignorer
-from typing import Union, Type
 from dropboxignore.filterers.base import BaseFilterer
+from dropboxignore.ignorer import _get_ignorer
 
 
 class IgnoreCommand(BaseCommand):

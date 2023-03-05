@@ -1,18 +1,16 @@
 import datetime
 from pathlib import Path
-import os
+
 import pytest
-import re
 
 from dropboxignore.commands.generate import GenerateCommand
 from dropboxignore.enums import IgnoreFile
-from dropboxignore.utils.filesystem.common import write_text, read_text
 
 
 def test_generate_successful(tmp_path: Path):
     gi = tmp_path / IgnoreFile.GITIGNORE.value
 
-    write_text(gi, "*.txt")
+    gi.write_text("*.txt")
 
     di = tmp_path / IgnoreFile.DROPBOXIGNORE.value
 
@@ -22,10 +20,10 @@ def test_generate_successful(tmp_path: Path):
     cmd.run_on_item_path(gi)
 
     assert di.exists()
-    assert read_text(di) == (
-        f"# ----{os.linesep}"
-        f"# Automatically Generated .dropboxignore file at {{date}}{os.linesep}"
-        f"# ----{os.linesep}"
+    assert di.read_text() == (
+        f"# ----\n"
+        f"# Automatically Generated .dropboxignore file at {{date}}\n"
+        f"# ----\n"
         f"*.txt"
     ).format(date=datetime.date.today().strftime("%Y-%m-%d"))
     assert cmd.c.generated == 1
