@@ -13,5 +13,5 @@ def test_delete_success(tmp_path: Path, capfd: CaptureFixture) -> None:
     cli(command=f"--path {tmp_path.absolute()} delete")
 
     out, err = capfd.readouterr()
-    assert f"Number of deleted files: 1\n" in out
+    assert f"Number of deleted files: 1 | matched: 1\n" in out
     assert err == ""
