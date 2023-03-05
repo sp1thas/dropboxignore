@@ -7,7 +7,7 @@ from dropboxignore.filterers.base import BaseFilterer
 
 class DropboxIgnoreFilterer(BaseFilterer):
     def __iter__(self):
-        yield from self.path.glob(f"**/*{IgnoreFile.DROPBOXIGNORE.value}")
+        yield from self.path.rglob(IgnoreFile.DROPBOXIGNORE.value)
 
 
 def _parse_ignore_file(path: Path) -> Iterator[str]:
@@ -25,10 +25,10 @@ def _parse_ignore_file(path: Path) -> Iterator[str]:
 class DropboxIgnoreMatchFilterer(BaseFilterer):
     def __iter__(self):
         matches = set()
-        for di in self.path.glob(f"**/*{IgnoreFile.DROPBOXIGNORE.value}"):
+        for di in self.path.rglob(IgnoreFile.DROPBOXIGNORE.value):
             folder = di.parent
             for pattern in _parse_ignore_file(di):
-                for item in folder.glob(pattern):
+                for item in folder.rglob(pattern):
                     abs_path_str = str(item.absolute())
                     if abs_path_str in matches:
                         continue
