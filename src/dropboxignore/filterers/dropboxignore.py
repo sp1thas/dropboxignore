@@ -13,6 +13,8 @@ class DropboxIgnoreFilterer(BaseFilterer):
 def _parse_ignore_file(path: Path) -> Iterator[str]:
     for l in path.open().readlines():
         line = l.strip()
+        if not line:
+            continue
         if line.startswith("#"):
             continue
         if line.startswith("!"):
@@ -26,7 +28,6 @@ class DropboxIgnoreMatchFilterer(BaseFilterer):
         for di in self.path.glob(f"**/*{IgnoreFile.DROPBOXIGNORE.value}"):
             folder = di.parent
             for pattern in _parse_ignore_file(di):
-                print(pattern)
                 for item in folder.glob(pattern):
                     abs_path_str = str(item.absolute())
                     if abs_path_str in matches:
