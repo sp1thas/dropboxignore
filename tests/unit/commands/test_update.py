@@ -6,7 +6,7 @@ import pytest
 from dropboxignore.commands.update import UpdateCommand
 from dropboxignore.enums import IgnoreFile
 import os
-from dropboxignore.utils.filesystem.common import write_text
+from dropboxignore.utils.filesystem.common import write_text, read_text
 
 
 def test_update_successful(tmp_path: Path):
@@ -23,7 +23,7 @@ def test_update_successful(tmp_path: Path):
     cmd = UpdateCommand(path=tmp_path)
     cmd.run_on_item_path(tmp_path)
 
-    assert di.read_text() == (
+    assert read_text(di) == (
         f"# ----{os.linesep}"
         f"# Automatically Generated .dropboxignore file at {{date}}{os.linesep}"
         f"# ----{os.linesep}"
