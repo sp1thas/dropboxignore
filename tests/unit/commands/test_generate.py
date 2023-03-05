@@ -2,6 +2,7 @@ import datetime
 from pathlib import Path
 
 import pytest
+import re
 
 from dropboxignore.commands.generate import GenerateCommand
 from dropboxignore.enums import IgnoreFile
