@@ -10,7 +10,7 @@ def test_generate_success(tmp_path: Path, capfd: CaptureFixture) -> None:
     gi = tmp_path.joinpath(IgnoreFile.GITIGNORE.value)
     gi.touch()
 
-    cli(command=f"--path {tmp_path} generate")
+    cli(command=f"--path '{tmp_path}' generate")
 
     out, err = capfd.readouterr()
     assert out == f"Number of generated files: 1\n"

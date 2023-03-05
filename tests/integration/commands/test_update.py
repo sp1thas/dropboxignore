@@ -13,7 +13,7 @@ def test_update_success(tmp_path: Path, capfd: CaptureFixture) -> None:
     di = tmp_path.joinpath(IgnoreFile.DROPBOXIGNORE.value)
     di.touch()
 
-    cli(command=f"--path {tmp_path} update")
+    cli(command=f"--path '{tmp_path}' update")
 
     out, err = capfd.readouterr()
     assert out == f"Number of updated files: 1\n"
