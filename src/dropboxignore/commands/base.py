@@ -14,6 +14,7 @@ class Counter:
     reverted: int = 0
     listed: int = 0
     updated: int = 0
+    matched: int = 0
 
 
 class BaseCommand(ABC):
