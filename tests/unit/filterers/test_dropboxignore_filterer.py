@@ -6,6 +6,7 @@ from dropboxignore.filterers.dropboxignore import (
     DropboxIgnoreFilterer,
     DropboxIgnoreMatchFilterer,
 )
+from dropboxignore.utils.filesystem.common import write_text
 
 
 def test_dropboxignore_filterer(tmp_path: Path) -> None:
@@ -27,7 +28,7 @@ def test_dropboxignore_filterer(tmp_path: Path) -> None:
 def test_dropboxignore_match_filterer(tmp_path: Path) -> None:
     di = tmp_path / IgnoreFile.DROPBOXIGNORE.value
     di.touch()
-    di.write_text(f"*.txt{os.linesep}foo/*.json{os.linesep}")
+    write_text(di, f"*.txt{os.linesep}foo/*.json{os.linesep}")
 
     txt_file = tmp_path / "random.txt"
     txt_file.touch()

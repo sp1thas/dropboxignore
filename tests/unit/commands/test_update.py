@@ -6,12 +6,13 @@ import pytest
 from dropboxignore.commands.update import UpdateCommand
 from dropboxignore.enums import IgnoreFile
 import os
+from dropboxignore.utils.filesystem.common import write_text
 
 
 def test_update_successful(tmp_path: Path):
     gi = tmp_path / IgnoreFile.GITIGNORE.value
 
-    gi.write_text("*.txt")
+    write_text(gi, "*.txt")
 
     di = tmp_path / IgnoreFile.DROPBOXIGNORE.value
     di.touch()
