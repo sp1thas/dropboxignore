@@ -37,7 +37,7 @@ def test_update_not_gitignore_file_input(tmp_path: Path):
 
     cmd = UpdateCommand(path=tmp_path)
     with pytest.raises(
-        ValueError, match=f"^{tmp_path / IgnoreFile.GITIGNORE.value} does not exists$"
+        ValueError, match=f"{IgnoreFile.GITIGNORE.value} does not exists$"
     ):
         cmd.run_on_item_path(tmp_path)
 
@@ -50,7 +50,7 @@ def test_update_gitignore_file_not_exists(tmp_path: Path):
     assert not gi.exists()
 
     cmd = UpdateCommand(path=tmp_path)
-    with pytest.raises(ValueError, match=f"^{gi} does not exists$"):
+    with pytest.raises(ValueError, match=f"{gi.name} does not exists$"):
         cmd.run_on_item_path(tmp_path)
 
     assert cmd.c.updated == 0
@@ -66,7 +66,7 @@ def test_update_dropboxignore_file_not_exists(tmp_path: Path):
     assert not di.exists()
 
     cmd = UpdateCommand(path=tmp_path)
-    with pytest.raises(ValueError, match=f"^{di} does not exists$"):
+    with pytest.raises(ValueError, match=f"{di.name} does not exists$"):
         cmd.run_on_item_path(tmp_path)
 
     assert cmd.c.updated == 0
@@ -80,7 +80,7 @@ def test_update_gitignore_file_not_file(tmp_path: Path):
     assert gi.is_dir()
 
     cmd = UpdateCommand(path=tmp_path)
-    with pytest.raises(ValueError, match=f"^{gi} is not a file$"):
+    with pytest.raises(ValueError, match=f"{gi.name} is not a file$"):
         cmd.run_on_item_path(tmp_path)
 
     assert cmd.c.generated == 0
