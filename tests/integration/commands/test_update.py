@@ -7,10 +7,10 @@ from dropboxignore.enums import IgnoreFile
 
 
 def test_update_success(tmp_path: Path, capfd: CaptureFixture) -> None:
-    gi = tmp_path / IgnoreFile.GITIGNORE.value
+    gi = tmp_path.joinpath(IgnoreFile.GITIGNORE.value)
     gi.touch()
     gi.write_text("*.txt")
-    di = tmp_path / IgnoreFile.DROPBOXIGNORE.value
+    di = tmp_path.joinpath(IgnoreFile.DROPBOXIGNORE.value)
     di.touch()
 
     cli(command=f"--path {tmp_path} update")

@@ -5,7 +5,7 @@ from dropboxignore.enums import IgnoreFile
 
 
 def test_delete_successful(tmp_path: Path):
-    di = tmp_path / IgnoreFile.DROPBOXIGNORE.value
+    di = tmp_path.joinpath(IgnoreFile.DROPBOXIGNORE.value)
     di.touch()
 
     assert di.exists()
@@ -18,7 +18,7 @@ def test_delete_successful(tmp_path: Path):
 
 
 def test_delete_not_exists(tmp_path: Path):
-    di = tmp_path / IgnoreFile.DROPBOXIGNORE.value
+    di = tmp_path.joinpath(IgnoreFile.DROPBOXIGNORE.value)
 
     assert not di.exists()
 

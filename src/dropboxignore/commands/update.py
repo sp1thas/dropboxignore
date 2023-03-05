@@ -8,8 +8,8 @@ from dropboxignore.utils.filesystem.ignorefiles import check_ignore_file
 
 class UpdateCommand(BaseCommand):
     def run_on_item_path(self, item_path: Path) -> None:
-        gi = item_path / IgnoreFile.GITIGNORE.value
-        di = item_path / IgnoreFile.DROPBOXIGNORE.value
+        gi = item_path.joinpath(IgnoreFile.GITIGNORE.value)
+        di = item_path.joinpath(IgnoreFile.DROPBOXIGNORE.value)
 
         check_ignore_file(gi, IgnoreFile.GITIGNORE)
         check_ignore_file(di, IgnoreFile.DROPBOXIGNORE)

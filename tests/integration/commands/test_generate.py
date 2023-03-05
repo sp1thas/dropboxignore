@@ -7,7 +7,7 @@ from dropboxignore.enums import IgnoreFile
 
 
 def test_generate_success(tmp_path: Path, capfd: CaptureFixture) -> None:
-    gi = tmp_path / IgnoreFile.GITIGNORE.value
+    gi = tmp_path.joinpath(IgnoreFile.GITIGNORE.value)
     gi.touch()
 
     cli(command=f"--path {tmp_path} generate")

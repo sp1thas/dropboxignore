@@ -8,11 +8,11 @@ from dropboxignore.enums import IgnoreFile
 
 
 def test_update_successful(tmp_path: Path):
-    gi = tmp_path / IgnoreFile.GITIGNORE.value
+    gi = tmp_path.joinpath(IgnoreFile.GITIGNORE.value)
 
     gi.write_text("*.txt")
 
-    di = tmp_path / IgnoreFile.DROPBOXIGNORE.value
+    di = tmp_path.joinpath(IgnoreFile.DROPBOXIGNORE.value)
     di.touch()
 
     assert gi.exists()
@@ -31,7 +31,7 @@ def test_update_successful(tmp_path: Path):
 
 
 def test_update_not_gitignore_file_input(tmp_path: Path):
-    gi = tmp_path / "foo"
+    gi = tmp_path.joinpath("foo")
     gi.touch()
 
     cmd = UpdateCommand(path=tmp_path)
@@ -44,7 +44,7 @@ def test_update_not_gitignore_file_input(tmp_path: Path):
 
 
 def test_update_gitignore_file_not_exists(tmp_path: Path):
-    gi = tmp_path / IgnoreFile.GITIGNORE.value
+    gi = tmp_path.joinpath(IgnoreFile.GITIGNORE.value)
 
     assert not gi.exists()
 
@@ -56,8 +56,8 @@ def test_update_gitignore_file_not_exists(tmp_path: Path):
 
 
 def test_update_dropboxignore_file_not_exists(tmp_path: Path):
-    gi = tmp_path / IgnoreFile.GITIGNORE.value
-    di = tmp_path / IgnoreFile.DROPBOXIGNORE.value
+    gi = tmp_path.joinpath(IgnoreFile.GITIGNORE.value)
+    di = tmp_path.joinpath(IgnoreFile.DROPBOXIGNORE.value)
 
     gi.touch()
 
@@ -72,7 +72,7 @@ def test_update_dropboxignore_file_not_exists(tmp_path: Path):
 
 
 def test_update_gitignore_file_not_file(tmp_path: Path):
-    gi = tmp_path / IgnoreFile.GITIGNORE.value
+    gi = tmp_path.joinpath(IgnoreFile.GITIGNORE.value)
 
     gi.mkdir()
 

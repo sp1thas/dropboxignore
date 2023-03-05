@@ -5,13 +5,13 @@ from dropboxignore.filterers.bothignore import BothIgnoreFilterer
 
 
 def test_bothignore_filterer(tmp_path: Path) -> None:
-    gi_1 = tmp_path / IgnoreFile.GITIGNORE.value
-    di_1 = tmp_path / IgnoreFile.DROPBOXIGNORE.value
+    gi_1 = tmp_path.joinpath(IgnoreFile.GITIGNORE.value)
+    di_1 = tmp_path.joinpath(IgnoreFile.DROPBOXIGNORE.value)
     gi_1.touch()
     di_1.touch()
 
-    gi_2 = tmp_path / "foo" / IgnoreFile.GITIGNORE.value
-    di_2 = tmp_path / "foo" / IgnoreFile.DROPBOXIGNORE.value
+    gi_2 = tmp_path.joinpath("foo", IgnoreFile.GITIGNORE.value)
+    di_2 = tmp_path.joinpath("foo", IgnoreFile.DROPBOXIGNORE.value)
 
     gi_2.parent.mkdir()
     gi_2.touch()

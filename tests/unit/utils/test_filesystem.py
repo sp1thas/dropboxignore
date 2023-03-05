@@ -7,7 +7,7 @@ from dropboxignore.utils.filesystem.ignorefiles import check_ignore_file
 
 
 def test_check_ignore_file_success(tmp_path: Path) -> None:
-    gi = tmp_path / IgnoreFile.GITIGNORE.value
+    gi = tmp_path.joinpath(IgnoreFile.GITIGNORE.value)
 
     gi.touch()
 
@@ -15,7 +15,7 @@ def test_check_ignore_file_success(tmp_path: Path) -> None:
 
 
 def test_check_ignore_file_failure(tmp_path: Path) -> None:
-    gi = tmp_path / IgnoreFile.GITIGNORE.value
+    gi = tmp_path.joinpath(IgnoreFile.GITIGNORE.value)
 
     assert not gi.exists()
     with pytest.raises(ValueError, match=f"{gi.name} does not exists$"):
@@ -28,7 +28,7 @@ def test_check_ignore_file_failure(tmp_path: Path) -> None:
     with pytest.raises(ValueError, match=f"{gi.name} is not a file$"):
         check_ignore_file(gi, IgnoreFile.GITIGNORE)
 
-    foo = tmp_path / "foo"
+    foo = tmp_path.joinpath("foo")
     foo.touch()
 
     assert foo.exists()

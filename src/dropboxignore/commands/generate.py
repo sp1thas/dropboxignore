@@ -10,7 +10,7 @@ class GenerateCommand(BaseCommand):
     def run_on_item_path(self, item_path: Path) -> None:
         check_ignore_file(item_path, IgnoreFile.GITIGNORE)
 
-        di = item_path.parent / IgnoreFile.DROPBOXIGNORE.value
+        di = item_path.parent.joinpath(IgnoreFile.DROPBOXIGNORE.value)
 
         if di.exists():
             raise ValueError(f"{di} already exists")

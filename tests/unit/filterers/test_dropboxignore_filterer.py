@@ -8,10 +8,10 @@ from dropboxignore.filterers.dropboxignore import (
 
 
 def test_dropboxignore_filterer(tmp_path: Path) -> None:
-    di_1 = tmp_path / IgnoreFile.DROPBOXIGNORE.value
+    di_1 = tmp_path.joinpath(IgnoreFile.DROPBOXIGNORE.value)
     di_1.touch()
 
-    di_2 = tmp_path / "foo" / IgnoreFile.DROPBOXIGNORE.value
+    di_2 = tmp_path.joinpath("foo", IgnoreFile.DROPBOXIGNORE.value)
 
     di_2.parent.mkdir()
     di_2.touch()
@@ -24,14 +24,14 @@ def test_dropboxignore_filterer(tmp_path: Path) -> None:
 
 
 def test_dropboxignore_match_filterer(tmp_path: Path) -> None:
-    di = tmp_path / IgnoreFile.DROPBOXIGNORE.value
+    di = tmp_path.joinpath(IgnoreFile.DROPBOXIGNORE.value)
     di.touch()
     di.write_text(f"*.txt\nfoo/*.json\n")
 
-    txt_file = tmp_path / "random.txt"
+    txt_file = tmp_path.joinpath("random.txt")
     txt_file.touch()
 
-    json_file = tmp_path / "foo" / "random.json"
+    json_file = tmp_path.joinpath("foo", "random.json")
 
     json_file.parent.mkdir()
     json_file.touch()

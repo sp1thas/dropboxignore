@@ -6,5 +6,5 @@ class BothIgnoreFilterer(BaseFilterer):
     def __iter__(self):
         for gi_path in self.path.rglob(IgnoreFile.GITIGNORE.value):
             folder_path = gi_path.parent
-            if (folder_path / IgnoreFile.DROPBOXIGNORE.value).exists():
+            if (folder_path.joinpath(IgnoreFile.DROPBOXIGNORE.value)).exists():
                 yield folder_path

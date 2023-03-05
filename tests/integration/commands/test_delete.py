@@ -7,7 +7,7 @@ from dropboxignore.enums import IgnoreFile
 
 
 def test_delete_success(tmp_path: Path, capfd: CaptureFixture) -> None:
-    di = tmp_path / IgnoreFile.DROPBOXIGNORE.value
+    di = tmp_path.joinpath(IgnoreFile.DROPBOXIGNORE.value)
     di.touch()
 
     cli(command=f"--path {tmp_path} delete")
