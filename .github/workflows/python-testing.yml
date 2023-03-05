@@ -26,22 +26,27 @@ jobs:
   testing:
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
-        os: [ ubuntu-22.04 ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        python-version: [ "3.8" ]
     steps:
       - uses: actions/checkout@v3
-      - name: Use poetry
-        uses: abatilo/actions-poetry@v2
+      - name: Install poetry
+        run: pipx install poetry
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'poetry'
       - name: Install poetry dependencies
         run: poetry install
       - name: Check dependencies
         run: poetry check
       - name: Run python tests
-        run: poetry run pytest --cov=srv --junitxml=test_results.xml tests/
+        run: poetry run pytest -s --cov=srv --junitxml=test_results.xml tests/
       - name: Test Report
         uses: dorny/test-reporter@v1
-        if: success() || failure()
+        if: failure()
         with:
           name: JUnit Test Report
           path: test_results.xml

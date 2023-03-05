@@ -1,10 +1,11 @@
-import pathlib
-from typing import Union
+from abc import abstractmethod
+from pathlib import Path
 
 
 class BaseFilterer:
-    def __init__(self, path: Union[str, pathlib.Path]):
-        self.path = pathlib.Path(path) if isinstance(path, str) else path
+    def __init__(self, path: Path):
+        self.path = path
 
+    @abstractmethod
     def __iter__(self):
-        raise NotImplementedError
+        pass

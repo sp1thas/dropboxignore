@@ -8,4 +8,8 @@ class GenUpICommand(BaseCommand):
         pass
 
     def run_report(self) -> str:
-        return f"Number of generate files: {self.c.deleted}\nNumber of updated files: {self.c.deleted}\nNumber of ignored files: {self.c.deleted}\n"
+        return (
+            f"Number of generate files: {self.c.deleted}\n"
+            f"Number of updated files: {self.c.deleted}\n"
+            f"Number of ignored files: {self.c.deleted}\n"
+        )

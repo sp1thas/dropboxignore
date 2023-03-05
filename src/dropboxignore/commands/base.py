@@ -14,6 +14,7 @@ class Counter:
     reverted: int = 0
     listed: int = 0
     updated: int = 0
+    matched: int = 0
 
 
 class BaseCommand(ABC):
@@ -21,11 +22,9 @@ class BaseCommand(ABC):
     c: Counter
     filterer: BaseFilterer
 
-    def __init__(
-        self, path: Union[str, Path], filterer: Type[BaseFilterer] = BaseFilterer
-    ) -> None:
+    def __init__(self, path: str, filterer: Type[BaseFilterer] = BaseFilterer) -> None:
         self.c = Counter()
-        self.path = Path(path) if isinstance(path, str) else path
+        self.path = Path(path)
         self.filterer = filterer(path=self.path)
 
     @abstractmethod
