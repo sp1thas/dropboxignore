@@ -2,6 +2,7 @@ import datetime
 from pathlib import Path
 import os
 import pytest
+import re
 
 from dropboxignore.commands.generate import GenerateCommand
 from dropboxignore.enums import IgnoreFile
@@ -33,7 +34,7 @@ def test_generate_not_gitignore_file_input(tmp_path: Path):
     gi = tmp_path / "foo"
 
     cmd = GenerateCommand(path=tmp_path)
-    with pytest.raises(ValueError, match=f"^{gi} is not a gitignore file$"):
+    with pytest.raises(ValueError, match=f"{gi.name} is not a gitignore file$"):
         cmd.run_on_item_path(gi)
 
     assert cmd.c.generated == 0
@@ -45,7 +46,7 @@ def test_generate_gitignore_file_not_exists(tmp_path: Path):
     assert not gi.exists()
 
     cmd = GenerateCommand(path=tmp_path)
-    with pytest.raises(ValueError, match=f"^{gi} does not exists$"):
+    with pytest.raises(ValueError, match=f"{gi.name} does not exists$"):
         cmd.run_on_item_path(gi)
 
     assert cmd.c.generated == 0
@@ -59,7 +60,7 @@ def test_generate_gitignore_file_not_file(tmp_path: Path):
     assert gi.is_dir()
 
     cmd = GenerateCommand(path=tmp_path)
-    with pytest.raises(ValueError, match=f"^{gi} is not a file$"):
+    with pytest.raises(ValueError, match=f"{gi.name} is not a file$"):
         cmd.run_on_item_path(gi)
 
     assert cmd.c.generated == 0
@@ -76,7 +77,7 @@ def test_generate_dropboxignore_file_already_exists(tmp_path: Path):
     assert di.is_file()
 
     cmd = GenerateCommand(path=tmp_path)
-    with pytest.raises(ValueError, match=f"^{di} already exists$"):
+    with pytest.raises(ValueError, match=f"{di.name} already exists$"):
         cmd.run_on_item_path(gi)
 
     assert cmd.c.generated == 0
