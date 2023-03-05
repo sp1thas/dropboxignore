@@ -11,5 +11,6 @@ DEFAULT_HEADER = (
 def copy_content(gi: Path, di: Path) -> None:
     di.write_text(
         DEFAULT_HEADER.format(date=datetime.date.today().strftime("%Y-%m-%d"))
-        + gi.read_bytes().decode("utf-8")
+        + gi.read_text(),
+        newline=os.linesep,
     )
