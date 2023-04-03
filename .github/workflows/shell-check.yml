@@ -3,20 +3,24 @@ on:
   push:
     branches: [ master ]
     paths:
-      - 'src/**'
-      - 'tests/**'
+      - '**.sh'
+      - '**.bats'
+      - '**.bash'
+      - '.github/shell-testing.yml'
   pull_request:
     branches: [ master ]
     paths:
-      - 'src/**'
-      - 'tests/**'
+      - '**.sh'
+      - '**.bats'
+      - '**.bash'
+      - '.github/shell-testing.yml'
 
 jobs:
   shellcheck:
     name: Shellcheck
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@master
       env:

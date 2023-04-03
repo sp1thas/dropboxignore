@@ -3,3 +3,6 @@
 *.snap
 venv/
 site/
+.coverage
+.pytest_cache/
+.mypy_cache/

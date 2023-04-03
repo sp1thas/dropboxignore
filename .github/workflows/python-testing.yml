@@ -1,0 +1,53 @@
+name: Python Testing
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'src/**.py'
+      - 'tests/**.py'
+      - '.github/python-testing.yml'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - 'src/**.py'
+      - 'tests/**.py'
+      - '.github/python-testing.yml'
+  workflow_run:
+    workflows:
+      - 'pre-commit.ci'
+    types:
+      - completed
+
+env:
+  PYTHON_KEYRING_BACKEND: keyring.backends.null.Keyring
+
+jobs:
+  testing:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        python-version: [ "3.8" ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install poetry
+        run: pipx install poetry
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'poetry'
+      - name: Install poetry dependencies
+        run: poetry install
+      - name: Check dependencies
+        run: poetry check
+      - name: Run python tests
+        run: poetry run pytest -s --cov=srv --junitxml=test_results.xml tests/
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: failure()
+        with:
+          name: JUnit Test Report
+          path: test_results.xml
+          reporter: java-junit

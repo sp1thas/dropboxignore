@@ -1,16 +1,23 @@
-name: Testing
+name: Shell Testing
 
 on:
   push:
     branches: [ master ]
     paths:
-      - 'src/**'
-      - 'tests/**'
+      - 'src/**.sh'
+      - 'tests/*.bats'
+      - '.github/shell-testing.yml'
   pull_request:
     branches: [ master ]
     paths:
-      - 'src/**'
-      - 'tests/**'
+      - 'src/**.sh'
+      - 'tests/*.bats'
+      - '.github/shell-testing.yml'
+  workflow_run:
+    workflows:
+      - 'Shellcheck'
+    types:
+      - completed
 
 env:
   HOMEBREW_NO_AUTO_UPDATE: 1
@@ -41,8 +48,8 @@ jobs:
           git clone https://github.com/bats-core/bats-assert.git libs/bats-assert
           git clone https://github.com/bats-core/bats-support.git libs/bats-support
           git clone https://github.com/bats-core/bats-file.git libs/bats-file
-      - name: Run tests
-        run: make test
+      - name: Run bats tests
+        run: make shell-tests
       - name: Coverage report
         run: |
           kcov --include-path=src /tmp/coverage bats tests/*.bats
@@ -52,6 +59,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
   integration:
+    needs: [unit]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
