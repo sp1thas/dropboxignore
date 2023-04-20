@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from dropboxignore.commands.delete import DeleteCommand
+from dropboxignore.commands import DeleteCommand
 from dropboxignore.enums import IgnoreFile
 
 

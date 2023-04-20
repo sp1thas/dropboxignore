@@ -2,28 +2,30 @@ import subprocess
 import sys
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import List, Type
+from typing import Type
+
+import xattr
 
 
 class IgnorerBase(ABC):
     @abstractmethod
-    def _ignore_cmd(self, path: Path) -> List[str]:
-        return []
+    def _ignore_cmd(self, path: Path) -> None:
+        pass
 
     @abstractmethod
-    def _revert_cmd(self, path: Path) -> List[str]:
-        return []
+    def _revert_cmd(self, path: Path) -> None:
+        pass
 
     def ignore(self, path: Path):
-        subprocess.check_call(self._ignore_cmd(path=path))
+        pass
 
     def revert(self, path: Path):
-        subprocess.check_call(self._revert_cmd(path=path))
+        pass
 
 
 class WindowsIgnorer(IgnorerBase):
-    def _ignore_cmd(self, path: Path) -> List[str]:
-        return [
+    def _ignore_cmd(self, path: Path) -> None:
+        cmd = [
             "Set-Content",
             "-Path",
             f"'{path.absolute()}'",
@@ -32,39 +34,31 @@ class WindowsIgnorer(IgnorerBase):
             "-Value",
             "1",
         ]
+        subprocess.check_call(cmd)
 
-    def _revert_cmd(self, path: Path) -> List[str]:
-        return [
+    def _revert_cmd(self, path: Path) -> None:
+        cmd = [
             "Clear-Content",
             "-Path",
             f"'{path.absolute()}'",
             "-Stream",
             "com.dropbox.ignored",
         ]
+        subprocess.check_call(cmd)
 
 
-class LinuxIgnorer(IgnorerBase):
-    def _ignore_cmd(self, path: Path) -> List[str]:
-        return ["attr", "-s", "com.dropbox.ignored", "-V", "1", f"{path.absolute()}"]
+class UnixIgnorer(IgnorerBase):
+    def _ignore_cmd(self, path: Path) -> None:
+        xattr.setxattr(path, "com.dropbox.ignored", "1")
 
-    def _revert_cmd(self, path: Path) -> List[str]:
-        return ["attr", "-r", "com.dropbox.ignored", f"{path.absolute()}"]
-
-
-class MacIgnorer(IgnorerBase):
-    def _ignore_cmd(self, path: Path) -> List[str]:
-        return ["xattr", "-w", "com.dropbox.ignored", "1", f"{path.absolute()}"]
-
-    def _revert_cmd(self, path: Path) -> List[str]:
-        return ["xattr", "-d", "com.dropbox.ignored", f"{path.absolute()}"]
+    def _revert_cmd(self, path: Path) -> None:
+        xattr.removexattr(path, "com.dropbox.ignored")
 
 
 def _get_ignorer() -> Type[IgnorerBase]:
     platform = sys.platform
-    if platform == "linux":
-        return LinuxIgnorer
-    elif platform == "darwin":
-        return MacIgnorer
+    if platform in ("linux", "darwin"):
+        return UnixIgnorer
     elif platform in ("windows", "win32"):
         return WindowsIgnorer
     else:

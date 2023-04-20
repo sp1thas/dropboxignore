@@ -2,17 +2,15 @@ import datetime
 from pathlib import Path
 
 import pytest
-import re
 
-from dropboxignore.commands.generate import GenerateCommand
+from dropboxignore.commands import GenerateCommand
 from dropboxignore.enums import IgnoreFile
-from dropboxignore.utils.filesystem.common import write_text
 
 
 def test_generate_successful(tmp_path: Path):
     gi = tmp_path.joinpath(IgnoreFile.GITIGNORE.value)
 
-    write_text(gi, "*.txt")
+    gi.write_text("*.txt")
 
     di = tmp_path.joinpath(IgnoreFile.DROPBOXIGNORE.value)
 

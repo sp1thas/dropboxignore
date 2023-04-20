@@ -1,1 +1,1 @@
-NAME = "dropboxignore"
+PACKAGE_NAME = "dropboxignore"

@@ -17,13 +17,16 @@ setup() {
 }
 
 @test "Test revert_ignored_files folder" {
-    touch "$BATS_TEST_TMPDIR/foo.txt"
-    echo "*.txt" > "$BATS_TEST_TMPDIR/.dropboxignore"
+    mkdir "$BATS_TEST_TMPDIR/foo"
+    touch "$BATS_TEST_TMPDIR/foo/foo.txt"
+    echo "*.txt" > "$BATS_TEST_TMPDIR/foo/.dropboxignore"
+    cd "$BATS_TEST_TMPDIR/foo"
     run $dropboxignore ignore .
     assert_output --partial "Total number of ignored files: 1"
     assert_output --partial "Total number of ignored folders: 0"
     assert_success
     run $dropboxignore revert .
-    assert_output --partial "Total number of reverted files: 3"
+    assert_output --partial "Total number of reverted files: 1"
+    assert_output --partial "Total number of reverted folders: 0"
     assert_success
 }

@@ -1,5 +1,5 @@
 from dropboxignore.enums import IgnoreFile
-from dropboxignore.filterers.base import BaseFilterer
+from dropboxignore.filterers import BaseFilterer
 
 
 class GitIgnoreFilterer(BaseFilterer):

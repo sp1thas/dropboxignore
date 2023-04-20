@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from dropboxignore.enums import IgnoreFile
-from dropboxignore.filterers.gitignore import GitIgnoreFilterer
+from dropboxignore.filterers import GitIgnoreFilterer
 
 
 def test_gitignore_filterer(tmp_path: Path) -> None:

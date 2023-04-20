@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from dropboxignore.commands.base import BaseCommand
+from dropboxignore.commands import BaseCommand
 from dropboxignore.enums import IgnoreFile
 from dropboxignore.utils.filesystem.common import copy_content
 from dropboxignore.utils.filesystem.ignorefiles import check_ignore_file

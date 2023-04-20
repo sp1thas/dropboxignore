@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from dropboxignore.enums import IgnoreFile
-from dropboxignore.filterers.bothignore import BothIgnoreFilterer
+from dropboxignore.filterers import BothIgnoreFilterer
 
 
 def test_bothignore_filterer(tmp_path: Path) -> None:

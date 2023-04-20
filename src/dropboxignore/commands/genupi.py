@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from dropboxignore.commands.base import BaseCommand
+from dropboxignore.commands import BaseCommand
 
 
 class GenUpICommand(BaseCommand):

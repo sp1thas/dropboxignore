@@ -8,11 +8,15 @@ readme = "README.md"
 packages = [{ include = "dropboxignore", from = "src" }]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.7"
 fire = "^0.5.0"
+pyxattr = "^0.8.1"
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^4.0.0"
+
+[tool.poetry.group.docs.dependencies]
+mkdocs-material = "^9.1.1"
 
 [build-system]
 requires = ["poetry-core"]

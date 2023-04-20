@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from dropboxignore.enums import IgnoreFile
-from dropboxignore.filterers.dropboxignore import (
+from dropboxignore.filterers import (
     DropboxIgnoreFilterer,
     DropboxIgnoreMatchFilterer,
 )

@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from dropboxignore.commands.update import UpdateCommand
+from dropboxignore.commands import UpdateCommand
 from dropboxignore.enums import IgnoreFile
 
 
