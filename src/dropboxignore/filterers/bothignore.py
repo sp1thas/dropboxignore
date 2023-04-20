@@ -1,5 +1,5 @@
 from dropboxignore.enums import IgnoreFile
-from dropboxignore.filterers import BaseFilterer
+from dropboxignore.filterers.base import BaseFilterer
 
 
 class BothIgnoreFilterer(BaseFilterer):

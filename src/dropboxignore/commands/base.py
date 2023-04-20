@@ -22,7 +22,7 @@ class BaseCommand(ABC):
     c: Counter
     filterer: BaseFilterer
 
-    def __init__(self, path: Path, filterer: Type[BaseFilterer] = BaseFilterer) -> None:
+    def __init__(self, path: str, filterer: Type[BaseFilterer] = BaseFilterer) -> None:
         self.c = Counter()
         self.path = Path(path)
         self.filterer = filterer(path=self.path)

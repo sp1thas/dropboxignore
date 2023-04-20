@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Iterator
 
 from dropboxignore.enums import IgnoreFile
-from dropboxignore.filterers import BaseFilterer
+from dropboxignore.filterers.base import BaseFilterer
 
 
 class DropboxIgnoreFilterer(BaseFilterer):
