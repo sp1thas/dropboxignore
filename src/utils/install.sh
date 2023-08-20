@@ -16,12 +16,10 @@ rm -rf dropboxignore/
 
 
 # a simple http request to count +1 request
-INSTALL_COUNT_URL="https://api.countapi.xyz/hit/dropboxignore.simakis.me"
+INSTALL_COUNT_URL="https://kounter.tk/badge/dropboxignore"
 
 if [ "$0" == c ]; then
-  curl -s --request GET --url "${INSTALL_COUNT_URL}/wget" > /dev/null
-  curl -s --request GET --url "${INSTALL_COUNT_URL}/total" > /dev/null
+  curl -s --request GET --url "${INSTALL_COUNT_URL}" > /dev/null
 elif [ "$0" == w ]; then
-  wget -q "${INSTALL_COUNT_URL}/curl" -O /dev/null 2> /dev/null
-  wget -q "${INSTALL_COUNT_URL}/total" -O /dev/null 2> /dev/null
+  wget -q "${INSTALL_COUNT_URL}" -O /dev/null 2> /dev/null
 fi
