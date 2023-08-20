@@ -56,7 +56,7 @@ $ snap install dropboxignore
 ### Flatpak
 
 ```shell
-$ flatpak install me.simakis.dropboxignore
+$ flatpak install flathub me.simakis.dropboxignore
 ```
 
 ### From source
