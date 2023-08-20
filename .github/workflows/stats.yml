@@ -8,12 +8,13 @@ on:
 jobs:
   stats:
     runs-on: ubuntu-latest
+    env:
+      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
 
     steps:
       - name: Install Snapcraft
-        uses: samuelmeuli/action-snapcraft@v1
-        with:
-          snapcraft_token: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
+        uses: samuelmeuli/action-snapcraft@v2
+
       - name: Install os dependencies
         run: sudo apt update && sudo apt install curl jq git
 
