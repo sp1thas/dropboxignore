@@ -9,7 +9,8 @@ git clone "https://x-access-token:${0}@github.com/sp1thas/dropboxignore.wiki.git
 
 MANUAL_INSTALLATIONS=$(curl -s https://kounter.tk/count/dropboxignore | jq -r .count)
 SNAP_INSTALLATIONS=$(snapcraft metrics dropboxignore --name weekly_installed_base_by_channel --start "$(date +"%Y-%m-%d" --date="3 days ago")" --end "$(date +"%Y-%m-%d" --date="3 days ago")" --format=json | jq '.series[].values[]' | awk '{s+=$1} END {printf "%.0f\n", s}')
-TOTAL_INSTALLATIONS=$((MANUAL_INSTALLATIONS + SNAP_INSTALLATIONS))
+FLATHUB_INSTALLATIONS=976
+TOTAL_INSTALLATIONS=$((MANUAL_INSTALLATIONS + SNAP_INSTALLATIONS + FLATHUB_INSTALLATIONS))
 JSON_BADGE_STRING=$(cat <<-END
 {"schemaVersion": 1, "label": "installations", "message": "$TOTAL_INSTALLATIONS"}
 END
