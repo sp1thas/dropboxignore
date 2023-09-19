@@ -17,7 +17,7 @@ YELLOW="\e[33m"
 #######################################
 log_info() {
   if [ "$VERBOSITY" -ge 1 ]; then
-    echo -e "$(date) $GREEN [  INFO ] $1 $DEFAULT"
+    printf "%s %s [  INFO ] %s %s", "$(date)", "$GREEN", "$1", "$DEFAULT"
   fi
 }
 
@@ -32,7 +32,7 @@ log_info() {
 #######################################
 log_debug() {
   if [ "$VERBOSITY" -ge 2 ]; then
-    echo -e "$(date) $BLUE [ DEBUG ] $1 $DEFAULT"
+    printf "%s %s [ DEBUG ] %s %s", "$(date)", "$BLUE", "$1", "$DEFAULT"
   fi
 }
 
@@ -48,7 +48,7 @@ log_debug() {
 #######################################
 log_error() {
   if [ "$VERBOSITY" -ge 0 ]; then
-    echo -e "$(date) $RED [ ERROR ] $1 $DEFAULT"
+    printf "%s %s [ ERROR ] %s %s", "$(date)", "$RED", "$1", "$DEFAULT"
   fi
   if [ -z "$2" ]; then
     exit 1
@@ -68,6 +68,6 @@ log_error() {
 #######################################
 log_warning() {
   if [ "$VERBOSITY" -ge 1 ]; then
-    echo -e "$(date) $YELLOW [WARNING] $1 $DEFAULT"
+    printf "%s %s [WARNING] %s %s", "$(date)", "$YELLOW", "$1", "$DEFAULT"
   fi
 }
