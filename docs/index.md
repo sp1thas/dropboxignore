@@ -16,6 +16,9 @@ folders and files from :material-dropbox: dropbox sync. The shell script uses
 [this recent](https://help.dropbox.com/files-folders/restore-delete/ignored-files) approach to ignore the matched
 folders and files.
 
+**Note:** The `.dropboxignore` file is only used by dropboxignore as a configuration file for which files to instruct
+Dropbox to ignore. It is not used by Dropbox itself.
+
 ## Features
 
 This tool provides the following usage features:
