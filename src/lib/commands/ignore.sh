@@ -23,7 +23,7 @@ cmd_ignore() {
           file_total_results=0
           # shellcheck disable=SC2013
           if "$GREP_CMD" -q -P '^\s*!' "$dropboxignore_file"; then
-            echo -e "$YELLOW$(get_relative_path "$dropboxignore_file" "$BASE_FOLDER") contains exception patterns, will be ignored"
+            printf "%s%s contains exception patterns, will be ignored", "$YELLOW", "$(get_relative_path "$dropboxignore_file" "$BASE_FOLDER")"
             continue
           fi
           while read -r file_pattern; do
@@ -41,5 +41,5 @@ cmd_ignore() {
         done
     fi
   fi
-  echo -e "${BLUE}Total number of ignored files: $TOTAL_N_IGNORED_FILES $DEFAULT\nTotal number of ignored folders: $TOTAL_N_IGNORED_FOLDERS $DEFAULT"
+  printf "%sTotal number of ignored files: %s %s\nTotal number of ignored folders: $TOTAL_N_IGNORED_FOLDERS $DEFAULT", "$BLUE", "$TOTAL_N_IGNORED_FILES", "$DEFAULT"
 }

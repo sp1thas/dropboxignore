@@ -27,5 +27,5 @@ cmd_list() {
       fi
     fi
   done < <(find "$1" -name "$filtering_pattern")
-  echo -e "${YELLOW}Total number of ignored files: $total_ignored_files\nTotal number of ignored folders: $total_ignored_folders $DEFAULT"
+  printf "%sTotal number of ignored files: %s\nTotal number of ignored folders: %s %s", "$YELLOW", "$total_ignored_files", "$total_ignored_folders", "$DEFAULT"
 }

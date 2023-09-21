@@ -12,7 +12,7 @@ cmd_generate() {
   find_gitignore_files "$1"
   for gitignore_file in $GITIGNORE_FILES; do
     if "$GREP_CMD" -q -P '^\s*!' "$gitignore_file"; then
-      echo -e "$YELLOW$(get_relative_path "$gitignore_file" "$BASE_FOLDER") contains exception patterns, will be ignored"
+      printf "%s%s contains exception patterns, will be ignored", "$YELLOW", "$(get_relative_path "$gitignore_file" "$BASE_FOLDER")"
       continue
     fi
     current_dir="$(dirname "$gitignore_file")"
@@ -24,5 +24,5 @@ cmd_generate() {
       ((TOTAL_N_GENERATED_FILES++))
     fi
   done
-  echo -e "${YELLOW}Total number of generated files: $TOTAL_N_GENERATED_FILES $DEFAULT"
+  printf "%sTotal number of generated files: %s %s", "$YELLOW", "$TOTAL_N_GENERATED_FILES", "$DEFAULT"
 }
