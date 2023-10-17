@@ -36,10 +36,8 @@ jobs:
           if [ "${{ runner.os }}" = "Linux" ]; then
             sudo apt update && sudo apt install attr kcov
           else
-            brew install kcov diffutils grep
+            brew install kcov diffutils grep coreutils
           fi
-          realpath --version
-          realpath --help
       - name: Install bats-core
         run: |
           git clone https://github.com/bats-core/bats-core.git
