@@ -6,6 +6,7 @@ MACHINE="$(uname -s)"
 if [ "$MACHINE" == Darwin ]; then
   sudo -u "$SUDO_USER" HOMEBREW_NO_AUTO_UPDATE=1 brew install diffutils
   sudo -u "$SUDO_USER" HOMEBREW_NO_AUTO_UPDATE=1 brew install grep
+  sudo -u "$SUDO_USER" HOMEBREW_NO_AUTO_UPDATE=1 brew install coreutils
 fi
 
 # Install dropboxignore command
