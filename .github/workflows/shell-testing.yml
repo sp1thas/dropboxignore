@@ -38,6 +38,8 @@ jobs:
           else
             brew install kcov diffutils grep
           fi
+          realpath --version
+          realpath --help
       - name: Install bats-core
         run: |
           git clone https://github.com/bats-core/bats-core.git
@@ -74,8 +76,6 @@ jobs:
           else
             brew install wget curl
           fi
-          realpath --version
-          realpath --help
       - name: Install using wget
         run: |
           sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh)"
