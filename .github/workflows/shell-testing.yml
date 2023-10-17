@@ -74,6 +74,8 @@ jobs:
           else
             brew install wget curl
           fi
+          realpath --version
+          realpath --help
       - name: Install using wget
         run: |
           sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh)"
