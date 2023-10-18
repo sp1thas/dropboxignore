@@ -6,7 +6,6 @@ setup() {
 }
 
 @test "Test delete command" {
-  ls
   mkdir "$BATS_TEST_TMPDIR/other"
   touch "$BATS_TEST_TMPDIR/other/$DROPBOXIGNORE_NAME"
   run $dropboxignore delete "$BATS_TEST_TMPDIR"

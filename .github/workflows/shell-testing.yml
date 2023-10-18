@@ -79,11 +79,13 @@ jobs:
           sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh)"
           dropboxignore version
           sudo rm /usr/local/bin/dropboxignore
+          sudo rm -rf /usr/local/lib/dropboxignore
       - name: Install using curl
         run: |
           sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh)"
           dropboxignore version
           sudo rm /usr/local/bin/dropboxignore
+          sudo rm -rf /usr/local/lib/dropboxignore
       - name: Install from source
         run: |
           sudo make install
