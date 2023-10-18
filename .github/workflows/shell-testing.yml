@@ -36,7 +36,7 @@ jobs:
         run: sudo apt update && sudo apt install attr kcov
       - name: Install macOS dependencies
         if: runner.os == 'macOS'
-        eun: brew install kcov diffutils grep coreutils
+        run: brew install kcov diffutils grep coreutils
       - name: Install bats-core
         run: |
           git clone https://github.com/bats-core/bats-core.git
