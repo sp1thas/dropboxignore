@@ -34,8 +34,8 @@ jobs:
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
         run: sudo apt update && sudo apt install attr kcov
-      - name: Install MacOS dependencies
-        if: runner.os == 'Darwin'
+      - name: Install macOS dependencies
+        if: runner.os == 'macOS'
         eun: brew install kcov diffutils grep coreutils
       - name: Install bats-core
         run: |
@@ -71,8 +71,8 @@ jobs:
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
         run: sudo apt update && sudo apt install wget curl
-      - name: Install MacOS dependencies
-        if: runner.os == 'Darwin'
+      - name: Install macOS dependencies
+        if: runner.os == 'macOS'
         run: brew install wget curl
       - name: Install using wget
         run: |
