@@ -86,8 +86,8 @@ check_input() {
 #   Relative path.
 #######################################
 get_absolute_path() {
-  if command -v realpath &>/dev/null; then
-    realpath "$1"
+  if command -v "$REALPATH_CMD" &>/dev/null; then
+    "$REALPATH_CMD" "$1"
   else
     python -c 'import os.path, sys;print(os.path.abspath(sys.argv[1]))' "$1"
   fi
@@ -100,8 +100,8 @@ get_absolute_path() {
 #   Base Absolute path.
 #######################################
 get_relative_path() {
-  if command -v realpath &>/dev/null; then
-    realpath --relative-to="${2-$PWD}" "$1"
+  if command -v "$REALPATH_CMD" &>/dev/null; then
+    "$REALPATH_CMD" --relative-to="${2-$PWD}" "$1"
   else
     python -c 'import os.path, sys;print(os.path.relpath(sys.argv[1],sys.argv[2]))' "$1" "${2-$PWD}"
   fi

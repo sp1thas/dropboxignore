@@ -28,16 +28,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-22.04, macos-12 ]
+        os: [ ubuntu-22.04, macos-13 ]
     steps:
       - uses: actions/checkout@v3
-      - name: Install os dependencies
-        run: |
-          if [ "${{ runner.os }}" = "Linux" ]; then
-            sudo apt update && sudo apt install attr kcov
-          else
-            brew install kcov diffutils grep
-          fi
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt update && sudo apt install attr kcov
+      - name: Install macOS dependencies
+        if: runner.os == 'macOS'
+        run: brew install kcov diffutils grep coreutils
       - name: Install bats-core
         run: |
           git clone https://github.com/bats-core/bats-core.git
@@ -51,10 +50,12 @@ jobs:
       - name: Run bats tests
         run: make shell-tests
       - name: Coverage report
+        if: runner.os == 'Linux'
         run: |
           kcov --include-path=src /tmp/coverage bats tests/*.bats
           cp $(find /tmp/coverage -type f -name 'cobertura.xml') coverage.xml
       - uses: codecov/codecov-action@v2
+        if: runner.os == 'Linux'
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
@@ -64,26 +65,27 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-22.04, macos-12 ]
+        os: [ ubuntu-22.04, macos-13 ]
     steps:
       - uses: actions/checkout@v3
-      - name: Install os dependencies
-        run: |
-          if [ "${{ runner.os }}" = "Linux" ]; then
-            sudo apt update && sudo apt install wget curl
-          else
-            brew install wget curl
-          fi
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt update && sudo apt install wget curl
+      - name: Install macOS dependencies
+        if: runner.os == 'macOS'
+        run: brew install wget curl
       - name: Install using wget
         run: |
           sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh)"
           dropboxignore version
           sudo rm /usr/local/bin/dropboxignore
+          sudo rm -rf /usr/local/lib/dropboxignore
       - name: Install using curl
         run: |
           sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh)"
           dropboxignore version
           sudo rm /usr/local/bin/dropboxignore
+          sudo rm -rf /usr/local/lib/dropboxignore
       - name: Install from source
         run: |
           sudo make install
