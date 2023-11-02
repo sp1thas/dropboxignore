@@ -9,3 +9,6 @@ class ListCommand(BaseCommand):
 
     def run_report(self) -> str:
         return f"Number of listed files: {self.c.listed}"
+
+    def run(self):
+        raise NotImplementedError('This command is not supported yet.')

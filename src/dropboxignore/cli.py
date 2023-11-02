@@ -28,7 +28,12 @@ class Cli:
 
     def list(self, path: str = ".", v: int = 1):
         """List ignored files and folders under the given path."""
-        pass
+        from dropboxignore.commands.list import ListCommand
+        from dropboxignore.filterers.dropboxignore import DropboxIgnoreFilterer
+
+        cmd = ListCommand(path=self.path, filterer=DropboxIgnoreFilterer)
+        cmd.run()
+
 
     def delete(self):
         """Delete specific .dropboxignore file or every .dropboxignore file under the given path."""
