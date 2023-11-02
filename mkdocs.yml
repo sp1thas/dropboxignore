@@ -35,3 +35,7 @@ nav:
   - 'Development':
       - Contributing: 'contributing.md'
       - Testing: 'testing.md'
+
+extra:
+  version:
+    provider: mike
