@@ -33,10 +33,10 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
-        run: sudo apt update && sudo apt install attr kcov
+        run: sudo apt-get -qq update && sudo apt-get -qq install attr kcov
       - name: Install macOS dependencies
         if: runner.os == 'macOS'
-        run: brew install kcov diffutils grep coreutils
+        run: brew install --quite kcov diffutils grep coreutils
       - name: Install bats-core
         run: |
           git clone https://github.com/bats-core/bats-core.git
@@ -44,9 +44,9 @@ jobs:
           sudo ./install.sh /usr/local
       - name: Install bats extras
         run: |
-          git clone https://github.com/bats-core/bats-assert.git libs/bats-assert
-          git clone https://github.com/bats-core/bats-support.git libs/bats-support
-          git clone https://github.com/bats-core/bats-file.git libs/bats-file
+          git clone https://github.com/bats-core/bats-assert.git /opt/bats-assert
+          git clone https://github.com/bats-core/bats-support.git /opt/bats-support
+          git clone https://github.com/bats-core/bats-file.git /opt/bats-file
       - name: Run bats tests
         run: make test-ci
       - name: Coverage report
@@ -70,10 +70,10 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
-        run: sudo apt update && sudo apt install wget curl
+        run: sudo apt-get update -qq && sudo apt-get install -qq wget curl
       - name: Install macOS dependencies
         if: runner.os == 'macOS'
-        run: brew install wget curl
+        run: brew install --quite wget curl
       - name: Install using wget
         run: |
           sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh)"
