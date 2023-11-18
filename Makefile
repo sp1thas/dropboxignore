@@ -8,6 +8,9 @@ DESTLIBDIR=/usr/local/lib/dropboxignore
 test :
 	docker-compose run dropboxignore-tests
 
+test-ci:
+	bats tests
+
 # install dropboxignore
 install :
 	$(info installing dropboxignore in $(DESTDIR))

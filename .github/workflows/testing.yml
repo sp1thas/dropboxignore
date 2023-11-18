@@ -48,7 +48,7 @@ jobs:
           git clone https://github.com/bats-core/bats-support.git libs/bats-support
           git clone https://github.com/bats-core/bats-file.git libs/bats-file
       - name: Run bats tests
-        run: make shell-tests
+        run: make test-ci
       - name: Coverage report
         if: runner.os == 'Linux'
         run: |
