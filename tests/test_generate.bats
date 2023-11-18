@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 # shellcheck shell=bash
+# shellcheck disable=SC2034
 setup() {
     load 'test_helper/common-setup'
     _common_setup
 }
 
 @test "Test generate command when .dropboxignore file not exists" {
-  rm -rf "$BATS_TEST_TMPDIR/$DROPBOXIGNORE_NAME"
-  run $dropboxignore generate "$BATS_TEST_TMPDIR"
+  rm -rf "${BATS_TEST_TMPDIR:?}/$DROPBOXIGNORE_NAME"
+  run ${dropboxignore:?} generate "$BATS_TEST_TMPDIR"
   assert_success
   assert_file_exist "$BATS_TEST_TMPDIR/$DROPBOXIGNORE_NAME"
   assert_output --partial "Created file: .dropboxignore"
@@ -15,7 +16,7 @@ setup() {
 }
 
 @test "Test generate command when .dropboxignore file exists" {
-  run $dropboxignore generate "$BATS_TEST_TMPDIR"
+  run ${dropboxignore:?} generate "$BATS_TEST_TMPDIR"
   assert_success
   assert_file_exist "$BATS_TEST_TMPDIR/$DROPBOXIGNORE_NAME"
   assert_output --partial "Total number of generated files: 0"
@@ -23,7 +24,7 @@ setup() {
 
 @test "Test generate command when .gitignore file not exists" {
   rm "$BATS_TEST_TMPDIR/$GITIGNORE_NAME" "$BATS_TEST_TMPDIR/$DROPBOXIGNORE_NAME"
-  run $dropboxignore generate "$BATS_TEST_TMPDIR"
+  run ${dropboxignore:?} generate "$BATS_TEST_TMPDIR"
   assert_success
   assert_file_not_exist "$BATS_TEST_TMPDIR/$DROPBOXIGNORE_NAME"
   assert_file_not_exist "$BATS_TEST_TMPDIR/$GITIGNORE_NAME"
@@ -34,7 +35,7 @@ setup() {
   rm "$BATS_TEST_TMPDIR/$DROPBOXIGNORE_NAME"
   echo "a
   !something" > "$BATS_TEST_TMPDIR/$GITIGNORE_NAME"
-  run $dropboxignore generate "$BATS_TEST_TMPDIR"
+  run ${dropboxignore:?} generate "$BATS_TEST_TMPDIR"
   assert_success
   assert_file_not_exist "$BATS_TEST_TMPDIR/$DROPBOXIGNORE_NAME"
   assert_output --partial ".gitignore contains exception patterns, will be ignored"

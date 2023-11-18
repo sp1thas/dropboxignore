@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # shellcheck shell=bash
+# shellcheck disable=SC2034
 setup() {
     load 'test_helper/common-setup'
     _common_setup
@@ -77,12 +78,12 @@ setup() {
 }
 
 @test "Test unknown command" {
-    run $dropboxignore foo
+    run ${dropboxignore:?} foo
     assert_output --partial "dropboxignore: 'foo' is not a dropboxignore command"
     assert_failure 1
 }
 
 @test "Test unknown option" {
-    run $dropboxignore list -a
+    run ${dropboxignore:?} list -a
     assert_failure 2
 }

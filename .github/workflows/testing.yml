@@ -1,29 +1,24 @@
 name: Shell Testing
 
 on:
-  push:
-    branches: [ master ]
-    paths:
-      - 'src/**.sh'
-      - 'tests/*.bats'
-      - '.github/workflows/shell-testing.yml'
   pull_request:
     branches: [ master ]
     paths:
-      - 'src/**.sh'
-      - 'tests/*.bats'
-      - '.github/workflows/shell-testing.yml'
-  workflow_run:
-    workflows:
-      - 'Shellcheck'
-    types:
-      - completed
+      - '**.sh'
+      - '**.bats'
+      - '.github/workflows/testing.yml'
 
 env:
   HOMEBREW_NO_AUTO_UPDATE: 1
 
 jobs:
+  checkout-code:
+    steps:
+      - uses: pre-commit/action@v3.0.0
+      - uses: pre-commit-ci/lite-action@v1.0.1
+        if: always()
   unit:
+    needs: [checkout-code]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false

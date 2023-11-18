@@ -6,13 +6,13 @@ setup() {
 }
 
 @test "Test help command" {
-  run $dropboxignore help
+  run ${dropboxignore:?} help
   assert_success
-  run $dropboxignore
+  run ${dropboxignore:?}
   assert_success
 }
 
 @test "Test help command without passing the sub-command" {
-  run $dropboxignore
+  run ${dropboxignore:?}
   assert_success
 }

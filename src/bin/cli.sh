@@ -7,6 +7,8 @@ SCRIPT_PATH="$(cd -- "$(dirname "$0")" >/dev/null 2>&1 && pwd -P )"
 
 if [ "$SCRIPT_PATH" == "/usr/local/bin" ]; then
   LIB_PATH="/usr/local/lib/dropboxignore"
+elif [ "$SCRIPT_PATH" == "/code" ]; then
+  LIB_PATH="/code/src/lib"
 else
   LIB_PATH="$SCRIPT_PATH/../lib"
 fi

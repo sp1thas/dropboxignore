@@ -6,8 +6,8 @@ setup() {
 }
 
 @test "Test genupi command" {
-  rm -rf "$BATS_TEST_TMPDIR/$DROPBOXIGNORE_NAME"
-  run $dropboxignore genupi "$BATS_TEST_TMPDIR"
+  rm -rf "${BATS_TEST_TMPDIR:?}/$DROPBOXIGNORE_NAME"
+  run ${dropboxignore:?} genupi "$BATS_TEST_TMPDIR"
   assert_success
   assert_file_exist "$BATS_TEST_TMPDIR/$DROPBOXIGNORE_NAME"
   assert_file_exist "$BATS_TEST_TMPDIR/$GITIGNORE_NAME"

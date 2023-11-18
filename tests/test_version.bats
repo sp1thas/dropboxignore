@@ -6,6 +6,6 @@ setup() {
 }
 
 @test "Test version command" {
-  run $dropboxignore version
+  run ${dropboxignore:?} version
   assert_success
 }

@@ -4,15 +4,9 @@ DESTLIBDIR=/usr/local/lib/dropboxignore
 
 # run shell tests
 # bats should be in PATH
-shell-tests :
-	git submodule update --init
-	bats tests
 
-# run python tests
-python-tests :
-	poetry run pytest --cov=src tests/
-
-test : shell-tests python-tests
+test :
+	docker-compose run dropboxignore-tests
 
 # install dropboxignore
 install :

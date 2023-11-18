@@ -33,6 +33,7 @@ nav:
   - 'Get started': 'getting-started.md'
   - 'CLI': 'cli.md'
   - 'Development':
+      - Development: 'development.md'
       - Contributing: 'contributing.md'
       - Testing: 'testing.md'
 
