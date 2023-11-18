@@ -36,7 +36,7 @@ jobs:
         run: sudo apt-get -qq update && sudo apt-get -qq install attr kcov
       - name: Install macOS dependencies
         if: runner.os == 'macOS'
-        run: brew install --quite kcov diffutils grep coreutils
+        run: brew install --quiet kcov diffutils grep coreutils
       - name: Install bats-core
         run: |
           git clone https://github.com/bats-core/bats-core.git
@@ -73,7 +73,7 @@ jobs:
         run: sudo apt-get update -qq && sudo apt-get install -qq wget curl
       - name: Install macOS dependencies
         if: runner.os == 'macOS'
-        run: brew install --quite wget curl
+        run: brew install --quiet wget curl
       - name: Install using wget
         run: |
           sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh)"
