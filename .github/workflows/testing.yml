@@ -13,6 +13,7 @@ env:
 
 jobs:
   checkout-code:
+    runs-on: ubuntu-latest
     steps:
       - uses: pre-commit/action@v3.0.0
       - uses: pre-commit-ci/lite-action@v1.0.1
