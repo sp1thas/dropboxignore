@@ -44,9 +44,9 @@ jobs:
           sudo ./install.sh /usr/local
       - name: Install bats extras
         run: |
-          git clone https://github.com/bats-core/bats-assert.git /opt/bats-assert
-          git clone https://github.com/bats-core/bats-support.git /opt/bats-support
-          git clone https://github.com/bats-core/bats-file.git /opt/bats-file
+          git clone https://github.com/bats-core/bats-assert.git
+          git clone https://github.com/bats-core/bats-support.git
+          git clone https://github.com/bats-core/bats-file.git
       - name: Run bats tests
         run: make test-ci
       - name: Coverage report
