@@ -39,6 +39,6 @@ Linux systems.  For macOS, Homebrew is required.
     ```bash
     git clone https://github.com/sp1thas/dropboxignore.git
     cd dropboxignore
-    make shell-tests  # optional step, bats should be in your PATH
+    make test  # optional step, Docker and docker-compose should be installed
     sudo make install
     ```

@@ -14,6 +14,7 @@ For something that is bigger than a one or two line fix:
     * Be sure you have followed the code style for the project.
     * Update documentation accordingly
     * Add test cases if is applicable.
+    * follow ![development](development.md) guidelines
 
 ## How to report a bug
 

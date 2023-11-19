@@ -8,7 +8,7 @@ setup() {
 @test "Test delete command" {
   mkdir "$BATS_TEST_TMPDIR/other"
   touch "$BATS_TEST_TMPDIR/other/$DROPBOXIGNORE_NAME"
-  run $dropboxignore delete "$BATS_TEST_TMPDIR"
+  run ${dropboxignore:?} delete "$BATS_TEST_TMPDIR"
   assert_success
   assert_file_not_exist "$BATS_TEST_TMPDIR/$DROPBOXIGNORE_NAME"
   assert_file_not_exist "$BATS_TEST_TMPDIR/other/$DROPBOXIGNORE_NAME"

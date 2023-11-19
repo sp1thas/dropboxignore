@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  dropboxignore-tests:
+    build:
+      context: "."
+      dockerfile: "Dockerfile"
+    image: "alpine-dropboxignore:latest"
+    volumes:
+      - './src:/opt/src'
+      - './tests:/opt/tests'

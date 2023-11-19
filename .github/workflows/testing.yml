@@ -1,29 +1,29 @@
 name: Shell Testing
 
 on:
-  push:
-    branches: [ master ]
-    paths:
-      - 'src/**.sh'
-      - 'tests/*.bats'
-      - '.github/workflows/shell-testing.yml'
   pull_request:
     branches: [ master ]
     paths:
-      - 'src/**.sh'
-      - 'tests/*.bats'
-      - '.github/workflows/shell-testing.yml'
-  workflow_run:
-    workflows:
-      - 'Shellcheck'
-    types:
-      - completed
+      - '**.sh'
+      - '**.bats'
+      - '.github/workflows/testing.yml'
 
 env:
   HOMEBREW_NO_AUTO_UPDATE: 1
 
 jobs:
+  checkout-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      - uses: pre-commit/action@v3.0.0
+      - uses: pre-commit-ci/lite-action@v1.0.1
+        if: always()
   unit:
+    needs: [checkout-code]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -33,10 +33,10 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
-        run: sudo apt update && sudo apt install attr kcov
+        run: sudo apt-get -qq update && sudo apt-get -qq install attr kcov
       - name: Install macOS dependencies
         if: runner.os == 'macOS'
-        run: brew install kcov diffutils grep coreutils
+        run: brew install --quiet kcov diffutils grep coreutils
       - name: Install bats-core
         run: |
           git clone https://github.com/bats-core/bats-core.git
@@ -44,11 +44,11 @@ jobs:
           sudo ./install.sh /usr/local
       - name: Install bats extras
         run: |
-          git clone https://github.com/bats-core/bats-assert.git libs/bats-assert
-          git clone https://github.com/bats-core/bats-support.git libs/bats-support
-          git clone https://github.com/bats-core/bats-file.git libs/bats-file
+          git clone https://github.com/bats-core/bats-assert.git
+          git clone https://github.com/bats-core/bats-support.git
+          git clone https://github.com/bats-core/bats-file.git
       - name: Run bats tests
-        run: make shell-tests
+        run: make test-ci
       - name: Coverage report
         if: runner.os == 'Linux'
         run: |
@@ -70,10 +70,10 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
-        run: sudo apt update && sudo apt install wget curl
+        run: sudo apt-get update -qq && sudo apt-get install -qq wget curl
       - name: Install macOS dependencies
         if: runner.os == 'macOS'
-        run: brew install wget curl
+        run: brew install --quiet wget curl
       - name: Install using wget
         run: |
           sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh)"
