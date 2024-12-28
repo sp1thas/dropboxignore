@@ -18,7 +18,7 @@ $ dropboxignore genupi .
 !!! warning "Important warning"
     In order to prevent unpleasant data losses, exception patterns are not supported. Both `.gitignore` and
     `.dropboxignore` files with at least one exceptional pattern will be bypassed (for further details:
-    [#3](https://github.com/sp1thas/dropboxignore/issues/3)).
+    [#3](https://codeberg.org/sp1thas/dropboxignore/issues/3)).
 
 !!! note "Keep in mind"
     Automatic generation of `.dropboxignore` files is an optional step, therefore, may not be a necessary action for

@@ -1,11 +1,9 @@
 <div align="center">
     <h1>dropboxignore</h1>
-    <img src="https://raw.githubusercontent.com/sp1thas/dropboxignore/master/docs/static/icons/128.png" alt="dropboxignore-logo">
+    <img src="https://codeberg.org/sp1thas/dropboxignore/raw/branch/master/docs/static/icons/128.png" alt="dropboxignore-logo">
     <p>It's all about the missing <code>.dropboxignore</code> file.</p>
-    <img src="https://github.com/sp1thas/dropboxignore/workflows/Testing/badge.svg">
-    <img src="https://github.com/sp1thas/dropboxignore/workflows/Shellcheck/badge.svg">
-    <a href='https://dropboxignore.simakis.me/en/latest/?utm=gh'>
-        <img src='https://github.com/sp1thas/dropboxignore/actions/workflows/docs-deployment.yml/badge.svg' alt='Documentation Status' />
+    <a href='https://results.pre-commit.ci/latest/github/sp1thas/dropboxignore/master'>
+        <img src='https://results.pre-commit.ci/badge/github/sp1thas/dropboxignore/master.svg' alt='pre-commit.ci status' />
     </a>
     <a href="https://codecov.io/gh/sp1thas/dropboxignore">
     <img src="https://codecov.io/gh/sp1thas/dropboxignore/branch/master/graph/badge.svg?token=LBVA80F2DV"/>
@@ -38,10 +36,10 @@ dropboxignore is installed by running one of the following commands in your term
 
 | Method | Command                                                        |
 |--------|----------------------------------------------------------------|
-| curl   | <code>sudo sh -c "$(curl -fsSL https://rb.gy/g4plll)" c</code> |
-| wget   | <code>sudo sh -c "$(wget -qO- https://rb.gy/g4plll)" w</code>  |
+| curl   | <code>sudo sh -c "$(curl -fsSL https://rb.gy/nnp9p9)" c</code> |
+| wget   | <code>sudo sh -c "$(wget -qO- https://rb.gy/nnp9p9)" w</code>  |
 
-Worried about mysterious shorted urls like? Take a look at the installation script here: [`https://rb.gy/g4plll --> https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh`](https://raw.githubusercontent.com/sp1thas/dropboxignore/master/src/utils/install.sh))
+Worried about mysterious shorted urls like? Take a look at the installation script here: [`https://rb.gy/nnp9p9 --> https://codeberg.org/sp1thas/dropboxignore/raw/branch/master/src/utils/install.sh`](https://codeberg.org/sp1thas/dropboxignore/raw/branch/master/src/utils/install.sh))
 ### Snap
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/dropboxignore)
@@ -58,7 +56,7 @@ $ flatpak install flathub me.simakis.dropboxignore
 
 ### From source
 ```shell
-$ git clone https://github.com/sp1thas/dropboxignore.git
+$ git clone https://codeberg.org/sp1thas/dropboxignore.git
 $ cd dropboxignore
 $ make test  # optional step, Docker and docker-compose should be installed
 $ sudo make install
@@ -90,7 +88,7 @@ $ dropboxignore genupi .
 
 **Warning:** In order to prevent unpleasant data losses, exception patterns are not supported. Both `.gitignore` and
 `.dropboxignore` files with at least one exceptional pattern will be bypassed (for further details:
-[#3](https://github.com/sp1thas/dropboxignore/issues/3)).
+[#3](https://codeberg.org/sp1thas/dropboxignore/issues/3)).
 
 **Note:** Automatic generation of `.dropboxignore` files is an optional step, therefore, may not be a necessary action
 for your case.

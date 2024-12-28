@@ -8,7 +8,7 @@ improving the documentation, adding extra test-cases, submitting bug reports and
 
 For something that is bigger than a one or two line fix:
 
- 1. Fork the [repo](https://github.com/sp1thas/dropboxignore)
+ 1. Fork the [repo](https://codeberg.org/sp1thas/dropboxignore.git)
  2. Commit the changes
  3. If you like the change and think the project could use it:
     * Be sure you have followed the code style for the project.
@@ -18,12 +18,12 @@ For something that is bigger than a one or two line fix:
 
 ## How to report a bug
 
-Go to [the issue tracker](https://github.com/sp1thas/dropboxignore/issues) and create a new issue and follow the
+Go to [the issue tracker](https://codeberg.org/sp1thas/dropboxignore/issues) and create a new issue and follow the
 template.
 
 ## Contributors
 
 **Made with ❤️ by**:
-<a href="https://github.com/sp1thas/dropboxignore/graphs/contributors">
+<a href="https://codeberg.org/sp1thas/dropboxignore/activity/contributors">
   <img src="https://contrib.rocks/image?repo=sp1thas/dropboxignore" style="height: 30px;"/>
 </a>
