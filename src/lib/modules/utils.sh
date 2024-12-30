@@ -23,7 +23,7 @@ check_os() {
 #   MACHINE
 #######################################
 check_dependencies() {
-  if command -v realpath &>/dev/null; then
+  if command -v "$REALPATH_CMD" &>/dev/null; then
     log_debug "realpath command is installed"
   elif command -v python &>/dev/null; then
     log_debug "python is installed"
