@@ -53,12 +53,12 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           kcov --include-path=src /tmp/coverage bats tests/*.bats
-          cp $(find /tmp/coverage -type f -name 'cobertura.xml') coverage.xml
-      - uses: codecov/codecov-action@v3
+          cp $(find /tmp/coverage -type f -name 'cobertura.xml') cobertura.xml
+      - name: Upload test results to Codecov
         if: runner.os == 'Linux'
+        uses: codecov/test-results-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
   integration:
     needs: [unit]
     runs-on: ${{ matrix.os }}
