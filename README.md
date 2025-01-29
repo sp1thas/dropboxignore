@@ -2,8 +2,8 @@
     <h1>dropboxignore</h1>
     <img src="https://codeberg.org/sp1thas/dropboxignore/raw/branch/master/docs/static/icons/128.png" alt="dropboxignore-logo">
     <p>It's all about the missing <code>.dropboxignore</code> file.</p>
-    <a href='https://results.pre-commit.ci/latest/github/sp1thas/dropboxignore/master'>
-        <img src='https://results.pre-commit.ci/badge/github/sp1thas/dropboxignore/master.svg' alt='pre-commit.ci status' />
+    <a href="https://ci.codeberg.org/repos/14141" target="_blank">
+        <img src="https://ci.codeberg.org/api/badges/14141/status.svg" alt="status-badge" />
     </a>
     <a href="https://codecov.io/gh/sp1thas/dropboxignore">
     <img src="https://codecov.io/gh/sp1thas/dropboxignore/branch/master/graph/badge.svg?token=LBVA80F2DV"/>
