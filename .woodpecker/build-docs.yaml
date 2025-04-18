@@ -1,0 +1,18 @@
+when:
+  - event: push
+    branch: master
+
+steps:
+  - name: build-docs
+    image: woodpeckerci/plugin-mkdocs:minimal
+    settings:
+      pip_install_file: ./docs/requirements.txt
+  - name: publish-docs
+    image: codeberg.org/xfix/plugin-codeberg-pages-deploy:1
+    settings:
+      folder: site
+      ssh_key:
+        from_secret: codeberg-ssh-key
+
+depends_on:
+  - checkout-code
