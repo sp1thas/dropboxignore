@@ -1,2 +1,2 @@
-mkdocs-material==9.0.13
-mike
+mkdocs-material==9.6.12
+mike==2.1.3
