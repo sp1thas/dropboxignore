@@ -5,6 +5,6 @@ steps:
   - name: run-pre-commit-hooks
     image: python:3
     commands:
-      - python -m pip install -q --no-cache-dir --no-warn-script-location 'pre-commit==4.1.0'
+      - python -m pip install -q --no-cache-dir --no-warn-script-location pre-commit
       - pre-commit install
       - pre-commit run
