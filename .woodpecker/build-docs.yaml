@@ -3,15 +3,11 @@ when:
     branch: master
 
 steps:
-  - name: build-docs
+  - name: build
     image: woodpeckerci/plugin-mkdocs:minimal
     settings:
       pip_install_file: ./docs/requirements.txt
-  - name: copy-domains-file
-    image: busybox
-    commands:
-      - cp docs/.domains site/.
-  - name: publish-docs
+  - name: publish
     image: codeberg.org/xfix/plugin-codeberg-pages-deploy:1
     settings:
       folder: site

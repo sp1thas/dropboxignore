@@ -95,17 +95,17 @@ for your case.
 
 ### Long story short
 
-[Here](https://dropboxignore.simakis.me/getting-started/#long-story-short) you can find some of the most common cases
+[Here](https://sp1thas.codeberg.page/dropboxignore/getting-started/#long-story-short) you can find some of the most common cases
 that dropboxignore could be useful.
 
 ## CLI
 
-[Here](https://dropboxignore.simakis.me/cli/?utm=gh) you will find extensive documentation about the dropboxignore command line
+[Here](https://sp1thas.codeberg.page/dropboxignore/cli) you will find extensive documentation about the dropboxignore command line
 interface.
 
 ## How to contribute
 
-If you want to contribute, read the [contribution guideline](https://dropboxignore.simakis.me/contributing/?utm=gh) for
+If you want to contribute, read the [contribution guideline](https://sp1thas.codeberg.page/dropboxignore/contributing) for
 further details.
 
 ---
