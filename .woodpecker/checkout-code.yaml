@@ -3,8 +3,7 @@ when:
 
 steps:
   - name: run-pre-commit-hooks
-    image: python:3
-    commands:
-      - python -m pip install -q --no-cache-dir --no-warn-script-location pre-commit
-      - pre-commit install
-      - pre-commit run
+    image: sp1thas92/woodpecker-ci-pre-commit-runner:0.1.0
+    settings:
+      args: "--all-files"
+      skip: "shellcheck,docker-compose-check"
