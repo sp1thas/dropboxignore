@@ -17,7 +17,8 @@ Linux systems.  For macOS, Homebrew is required.
         sudo sh -c "$(wget -qO- https://rb.gy/g4plll)" w
         ```
 
-    Worried about mysterious shorted urls like? Take a look at the installation script here: [`https://rb.gy/nnp9p9`](https://rb.gy/nnp9p9) --> [`https://codeberg.org/sp1thas/dropboxignore/.../install.sh`](https://codeberg.org/sp1thas/dropboxignore/raw/branch/master/src/utils/install.sh)
+    Worried about the short URL? It points to the install script in this repo:
+    [`https://codeberg.org/sp1thas/dropboxignore/raw/branch/master/src/utils/install.sh`](https://codeberg.org/sp1thas/dropboxignore/raw/branch/master/src/utils/install.sh)
 
 === "Snap"
 
@@ -34,7 +35,7 @@ Linux systems.  For macOS, Homebrew is required.
 === "From source"
 
     !!! note
-        Make source that the following packages are installed in your system: `git`, `attr`
+        Make sure the following packages are installed in your system: `git`, `attr`
 
     ```bash
     git clone https://codeberg.org/sp1thas/dropboxignore.git

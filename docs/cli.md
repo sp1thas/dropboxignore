@@ -1,6 +1,6 @@
 # Command Line Interface
 
-Below you will find the list of supported  commands. For every command, a description and an example will be provided.
+Below you will find the list of supported commands. For every command, a description and an example are provided.
 
 ## Synopsis
 

@@ -29,3 +29,10 @@ This tool provides the following usage features:
  - Revert ignored folders or files.
  - Delete `.dropboxignore` files.
  - List ignored files and folders.
+
+## Get started
+
+- Installation guide: [Installation](./installation.md)
+- First steps and common scenarios: [Getting started](./getting-started.md)
+- Full command reference: [CLI](./cli.md)
+- How to contribute: [Contributing](./contributing.md)
