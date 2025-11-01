@@ -1,11 +1,13 @@
-when:
-  - event: push
-
 steps:
   - name: build
     image: woodpeckerci/plugin-mkdocs:minimal
     settings:
       pip_install_file: ./docs/requirements.txt
+    when:
+      - event: push
+      - path:
+          include:
+            - 'docs/**'
   - name: publish
     image: codeberg.org/xfix/plugin-codeberg-pages-deploy:1
     settings:
@@ -13,6 +15,10 @@ steps:
       ssh_key:
         from_secret: codeberg-ssh-key
     when:
+      - event: push
+      - path:
+          include:
+            - 'docs/**'
       - branch: master
 
 depends_on:
