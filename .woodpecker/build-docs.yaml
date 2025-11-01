@@ -1,6 +1,5 @@
 when:
   - event: push
-    branch: master
 
 steps:
   - name: build
@@ -13,6 +12,8 @@ steps:
       folder: site
       ssh_key:
         from_secret: codeberg-ssh-key
+    when:
+      - branch: master
 
 depends_on:
   - checkout-code
