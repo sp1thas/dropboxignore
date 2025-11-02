@@ -1,0 +1,36 @@
+when:
+  - event: push
+    path:
+      include:
+        - '.woodpecker/build.yaml'
+        - 'Makefile'
+        - 'src/**'
+        - 'tests/**'
+
+steps:
+  - name: alpine3
+    image: alpine:3
+    environment:
+      BATS_SUPPORT_VERSION: "0.3.0"
+      BATS_ASSERT_VERSION: "2.2.4"
+      BATS_FILE_VERSION: "0.4.0"
+    commands:
+      - apk update --quiet && apk add --quiet --no-cache attr bats coreutils diffutils grep make
+      - make install
+      - wget -q "https://github.com/bats-core/bats-support/archive/refs/tags/v$${BATS_SUPPORT_VERSION}.zip" -O support.zip
+      - unzip -q support.zip
+      - mv bats-support-$${BATS_SUPPORT_VERSION} bats-support
+      - rm support.zip
+      - wget -q "https://github.com/bats-core/bats-assert/archive/refs/tags/v$${BATS_ASSERT_VERSION}.zip" -O assert.zip
+      - unzip -q assert.zip
+      - mv bats-assert-$${BATS_ASSERT_VERSION} bats-assert
+      - rm assert.zip
+      - wget -q "https://github.com/bats-core/bats-file/archive/refs/tags/v$${BATS_FILE_VERSION}.zip" -O file.zip
+      - unzip -q file.zip
+      - mv bats-file-$${BATS_FILE_VERSION} bats-file
+      - rm file.zip
+      - make test-ci
+      - make uninstall
+
+depends_on:
+  - preflight

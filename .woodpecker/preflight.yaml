@@ -2,8 +2,8 @@ when:
   - event: push
 
 steps:
-  - name: run-pre-commit-hooks
-    image: sp1thas92/woodpecker-ci-pre-commit-runner:0.1.0
+  - name: precommit-hooks
+    image: codeberg.org/sp1thas/woodpecker-ci-pre-commit-runner:0.2
     settings:
       args: "--all-files"
       skip: "shellcheck,docker-compose-check"
