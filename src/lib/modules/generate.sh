@@ -21,6 +21,6 @@ generate_dropboxignore_file() {
 $(cat "${1}")
 # ----
 EOF
-    log_info "Created file: $(get_relative_path "$dropboxignore_file_path" "$BASE_FOLDER") $DEFAULT"
+    log_info "Created file: $(get_relative_path "$dropboxignore_file_path" "$BASE_FOLDER")"
   fi
 }

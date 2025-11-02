@@ -1,10 +1,24 @@
 #!/bin/bash
 
-DEFAULT="\e[0m"
-GREEN="\e[32m"
-BLUE="\e[34m"
-RED="\e[31m"
-YELLOW="\e[33m"
+# Initialize colors using tput with safe fallbacks
+if command -v tput >/dev/null 2>&1; then
+  ncolors=$(tput colors 2>/dev/null || echo 0)
+else
+  ncolors=0
+fi
+if [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
+  DEFAULT="$(tput sgr0)"
+  GREEN="$(tput setaf 2)"
+  BLUE="$(tput setaf 4)"
+  RED="$(tput setaf 1)"
+  YELLOW="$(tput setaf 3)"
+else
+  DEFAULT=""
+  GREEN=""
+  BLUE=""
+  RED=""
+  YELLOW=""
+fi
 
 #######################################
 # Log info message.
@@ -17,7 +31,7 @@ YELLOW="\e[33m"
 #######################################
 log_info() {
   if [ "$VERBOSITY" -ge 1 ]; then
-    printf "%s %s [  INFO ] %s %s", "$(date)", "$GREEN", "$1", "$DEFAULT"
+    echo "$(date) ${GREEN}[  INFO ]${DEFAULT} $1"
   fi
 }
 
@@ -32,7 +46,7 @@ log_info() {
 #######################################
 log_debug() {
   if [ "$VERBOSITY" -ge 2 ]; then
-    printf "%s %s [ DEBUG ] %s %s", "$(date)", "$BLUE", "$1", "$DEFAULT"
+    echo "$(date) ${BLUE}[ DEBUG ]${DEFAULT} $1"
   fi
 }
 
@@ -48,7 +62,7 @@ log_debug() {
 #######################################
 log_error() {
   if [ "$VERBOSITY" -ge 0 ]; then
-    printf "%s %s [ ERROR ] %s %s", "$(date)", "$RED", "$1", "$DEFAULT"
+    echo "$(date) ${RED}[ ERROR ]${DEFAULT} $1"
   fi
   if [ -z "$2" ]; then
     exit 1
@@ -68,6 +82,6 @@ log_error() {
 #######################################
 log_warning() {
   if [ "$VERBOSITY" -ge 1 ]; then
-    printf "%s %s [WARNING] %s %s", "$(date)", "$YELLOW", "$1", "$DEFAULT"
+    echo "$(date) ${YELLOW}[WARNING]${DEFAULT} $1"
   fi
 }
