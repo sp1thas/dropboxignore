@@ -18,11 +18,11 @@ cmd_delete() {
       ((n_results++))
       rm "$file_path"
     done < <(find "$1" -type f -name "$DROPBOX_IGNORE_FILE_NAME")
-    printf "%s Deleted files: %s %s", "$YELLOW", "$n_results", "$DEFAULT"
+    printf "%s🗑️ Deleted files: %s %s", "$YELLOW", "$n_results", "$DEFAULT"
   elif [ -f "$1" ]; then
     if [ "$(basename "$1")" == "$DROPBOX_IGNORE_FILE_NAME" ]; then
       rm "$1"
-      printf "%s Removed file: %s %s", "$YELLOW", "$(get_relative_path "$1" "$BASE_FOLDER")", "$DEFAULT"
+      printf "%s🗑️ Removed file: %s %s", "$YELLOW", "$(get_relative_path "$1" "$BASE_FOLDER")", "$DEFAULT"
     else
       log_error "Given file is not a $DROPBOX_IGNORE_FILE_NAME file."
     fi

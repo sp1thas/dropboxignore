@@ -17,7 +17,7 @@ cmd_revert() {
         revert_ignored "$file_path"
       fi
     done < <(find "$1" -type f)
-    printf "%sTotal number of reverted files: %s %s", "$BLUE", "$TOTAL_N_REVERTED_FILES", "$DEFAULT"
+    printf "%s↩️ Total number of reverted files: %s %s", "$BLUE", "$TOTAL_N_REVERTED_FILES", "$DEFAULT"
     TOTAL_N_REVERTED_FILES=0
     while read -r file_path; do
       file_ignore_status "$file_path"
@@ -26,6 +26,6 @@ cmd_revert() {
         ((n_results++))
       fi
     done < <(find "$1" -type d)
-    printf "%sTotal number of reverted folders: %s %s", "$BLUE", "$TOTAL_N_REVERTED_FILES", "$DEFAULT"
+    printf "%s📁 Total number of reverted folders: %s %s", "$BLUE", "$TOTAL_N_REVERTED_FILES", "$DEFAULT"
   fi
 }
