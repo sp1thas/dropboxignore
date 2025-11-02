@@ -3,7 +3,8 @@
 IFS='
 '
 set -f
-VERSION=v1.2.3
+echo "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/VERSION"
+VERSION="$(tr -d '\n' < "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/VERSION" | xargs)"
 DROPBOX_IGNORE_FILE_NAME=".dropboxignore"
 GIT_IGNORE_FILE_NAME=".gitignore"
 MACHINE="$(uname -s)"
