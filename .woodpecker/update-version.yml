@@ -20,6 +20,7 @@ steps:
       - echo -n "$VERSION-${CI_COMMIT_SHA:0:8}" > /tmp/VERSION
       - git config --global user.email "ci-bot@local"
       - git config --global user.name "Woodpecker CI"
+      - git remote add origin git@codeberg.org:${CI_REPO_OWNER}/${CI_REPO_NAME}.git
       # fetch & switch to default branch
       - git fetch --all --prune
       - git checkout -B "${CI_REPO_DEFAULT_BRANCH}" "origin/${CI_REPO_DEFAULT_BRANCH}"
@@ -28,6 +29,8 @@ steps:
       - git add src/lib/modules/VERSION
       - git commit -m "Update VERSION [skip ci]"
       # push via SSH
-      - git push git@codeberg.org:${CI_REPO_OWNER}/${CI_REPO_NAME}.git "${CI_REPO_DEFAULT_BRANCH}"
+      - git push origin "${CI_REPO_DEFAULT_BRANCH}"
       - git tag -f $VERSION
-      - git push git@codeberg.org:${CI_REPO_OWNER}/${CI_REPO_NAME}.git $VERSION
+      - git push origin $VERSION
+      # delete release branch
+      - git push -d origin ${CI_COMMIT_BRANCH}
