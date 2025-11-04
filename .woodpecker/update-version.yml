@@ -1,5 +1,5 @@
 when:
-  event: tag
+  - branch: release/*
 
 steps:
   update-version-file:
@@ -8,6 +8,7 @@ steps:
       CODEBERG_SSH_KEY:
         from_secret: codeberg-ssh-key
     commands:
+      - VERSION="${CI_COMMIT_BRANCH#release/}"
       # prepare ssh
       - apk add --no-cache openssh-client
       - mkdir -p ~/.ssh
@@ -16,7 +17,7 @@ steps:
       # trust Codeberg host key (you could hard-code known_hosts instead)
       - ssh-keyscan codeberg.org >> ~/.ssh/known_hosts
       # version bump
-      - echo -n "${CI_COMMIT_TAG}-${CI_COMMIT_SHA:0:8}" > /tmp/VERSION
+      - echo -n "$VERSION-${CI_COMMIT_SHA:0:8}" > /tmp/VERSION
       - git config --global user.email "ci-bot@local"
       - git config --global user.name "Woodpecker CI"
       # fetch & switch to default branch
@@ -28,3 +29,5 @@ steps:
       - git commit -m "Update VERSION [skip ci]"
       # push via SSH
       - git push git@codeberg.org:${CI_REPO_OWNER}/${CI_REPO_NAME}.git "${CI_REPO_DEFAULT_BRANCH}"
+      - git tag -f $VERSION
+      - git push git@codeberg.org:${CI_REPO_OWNER}/${CI_REPO_NAME}.git $VERSION
