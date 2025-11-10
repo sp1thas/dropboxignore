@@ -18,7 +18,7 @@ steps:
       # trust Codeberg host key (you could hard-code known_hosts instead)
       - ssh-keyscan codeberg.org >> ~/.ssh/known_hosts
       # version bump
-      - echo -n "$VERSION-${CI_COMMIT_SHA:0:8}" > /tmp/VERSION
+      - echo -n "$VERSION" > /tmp/VERSION
       - git config --global user.email "ci-bot@local"
       - git config --global user.name "Woodpecker CI"
       - git remote set-url origin git@codeberg.org:${CI_REPO_OWNER}/${CI_REPO_NAME}.git

@@ -22,16 +22,14 @@ apps:
 parts:
 
   get-version:
-    build-packages:
-      - curl
     plugin: nil
     override-pull: |
       snapcraftctl pull
-      snapcraftctl set-version "$(curl -sSL https://codeberg.org/sp1thas/dropboxignore/raw/branch/master/src/lib/modules/base.sh | grep -oP '^VERSION=(.*)$' | sed -r 's/^VERSION=//')"
+      snapcraftctl set-version "$(tr -d '\n' < src/VERSION | xargs)"
 
   main-part:
     stage-packages:
       - attr
-    source-type: git
-    source: https://codeberg.org/sp1thas/dropboxignore.git
+    source-type: local
+    source: .
     plugin: dump

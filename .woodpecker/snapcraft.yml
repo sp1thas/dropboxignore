@@ -1,0 +1,35 @@
+when:
+  event: tag
+
+steps:
+  snap-build-and-publish:
+    image: snapcore/snapcraft:stable
+    environment:
+      SNAPCRAFT_LOGIN:
+        from_secret: SNAPCRAFT_LOGIN
+    commands:
+      - set -euxo pipefail
+      - VERSION="${CI_COMMIT_TAG#v}"
+      # Determine channel based on version pattern
+      - CHANNEL=""
+      - |
+        if echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+rc[0-9]+$'; then
+          CHANNEL="candidate"
+        elif echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+          CHANNEL="stable"
+        else
+          echo "Tag '$TAG' (version '$VERSION') does not match expected patterns" >&2
+          exit 1
+        fi
+      - echo "Building version=$VERSION, channel=$CHANNEL"
+      - printf "%s" "$SNAPCRAFT_LOGIN" > snapcraft_login.key
+      - snapcraft login --with snapcraft_login.key
+      - apt-get update
+      - export SNAP_VERSION="$VERSION"
+      - snapcraft --destructive-mode
+      - SNAP_FILE=$(ls -1 *.snap | head -n1)
+      - test -n "$SNAP_FILE" && echo "Uploading $SNAP_FILE to channel $CHANNEL"
+      - snapcraft upload "$SNAP_FILE" --release="$CHANNEL"
+      - rm snapcraft_login.key
+depends_on:
+  - build
